@@ -1,0 +1,179 @@
+/* Banner Section Styles */
+.banner-section-two {
+  position: relative;
+  // margin-bottom: -120px;
+  .slide-item {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    max-height: 880px;  
+    position: relative;
+    .bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+      height: 100%;
+    }
+    .content-column {
+      position: relative;
+      z-index: 2;
+      .content-box {
+        position: relative;
+        @media (max-width: 767.98px) {
+          padding: 80px 0;
+        }
+        .sub-title {
+          color: #7d8185;
+          display: inline-block;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 30px;
+          letter-spacing: .1em;
+          position: relative;
+          text-transform: uppercase;
+          &:before {
+            background: url(../images/main-slider/icon/icon-lines.png) center no-repeat;
+            content: "";
+            height: 15px;
+            left: 0;
+            position: absolute;
+            top: 100%;
+            width: 221px;
+          }
+        }  
+        .title {
+          color: #191e24;
+          display: block;
+          font-size: 84px;
+          font-weight: 900;
+          line-height: 1em;
+          margin-bottom: 40px;
+          margin-top: 30px;  
+          position: relative;
+          @media (max-width: 1199.98px) {
+            font-size: 60px;
+          }
+          @media (max-width: 991.98px) {
+            font-size: 50px;
+          }
+          .colored {
+            color: var(--bg-theme-color3);
+          }
+        }  
+        .style-font {
+          color: #f89321;
+          display: inline-block;
+          font-weight: 400;
+        }  
+        .btn-box {
+          .theme-btn {
+            &:hover {
+              color: #fff;
+            }
+            &::before {
+              background-color: #000;
+            }
+          }
+        }
+      }
+      .tp-caption {
+        padding: 0;
+        text-align: top;
+        .text {
+        color: #7d8185;
+        font-size: 18px;
+        line-height: 1.5em;
+        margin: 20px 0;
+        margin-bottom: 30px;
+      }
+      }
+    }
+    .image-column {
+      margin-bottom: 120px;
+      position: relative;
+      z-index: 9;  
+      .image-box {
+        position: relative;  
+        .cirkle {
+          position: absolute;
+          width: 700px; /* Adjust as per your needs */
+          height: 600px;           
+          overflow: hidden; /* Ensure the image fits inside the circle */           
+          display: block;
+          z-index: -1;
+          background-color: transparent; /* Or any color to match the design */
+        }
+        .cirkle-1 {
+          position: absolute;
+          width: 800px; 
+          height: 600px;
+          border-radius: 50%;
+          overflow: hidden; /* Ensure the image fits inside the circle */
+          margin-top:-700px;           
+          z-index: -1;
+          background-color: transparent;
+        }  
+        .cirkle-2 {
+          top: 300px;
+          left: -180px;
+          width: 300px;
+          height: 300px;
+          z-index: 1;
+        }  
+        .cirkle-3 {
+          top: 57px;
+          left: 111px;
+          width: 200px;
+          height: 200px;
+        }  
+        .animate-circle {
+          animation: slideIn 1.5s ease-in-out 2s forwards;
+          opacity: 0;
+        }  
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(100%);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }  
+        .image {
+          margin-top: 200px;
+          margin-right: -150px;
+          @media (max-width: 1439.98px) {
+            margin-right: 0;
+          }
+          img {
+            border: 10px solid #ffffff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+    }
+  }
+}
+  
+.banner-carousel {
+  .swiper-slide {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #f89321;
+    font-size: 20px;
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}  
