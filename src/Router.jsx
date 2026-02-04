@@ -1,4 +1,4 @@
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomeOne from "./components/HomeOne/index.jsx";
 import HomeOneSingle from "./components/HomeOne/index-single.jsx";
 import HomeOneBoxed from "./components/HomeOne/index-boxed.jsx";
@@ -23,130 +23,130 @@ import Error from "./components/ErrorPages/Error.jsx";
 import Products from "./components/ShopPages/Products.jsx";
 import ProductsSidebar from "./components/ShopPages/ProductsSidebar.jsx";
 import ProductsDetails from "./components/ShopPages/ProductsDetails.jsx";
-import Cart from "./components/ShopPages/Cart.jsx"
+import Cart from "./components/ShopPages/Cart.jsx";
 import Checkout from "./components/ShopPages/Checkout.jsx";
+
+/** Develop initialized */
 
 const router = createBrowserRouter([
   {
-    path:'/',
-    Component:Layout,
-    children:[
+    path: "/",
+    Component: Layout,
+    children: [
       {
-        index:true,
-        element: <HomeOne />
+        index: true,
+        element: <HomeOne />,
       },
-     
+
       {
         path: "/home-one-single",
-        element: <HomeOneSingle />
+        element: <HomeOneSingle />,
       },
-    
-     
+
       {
         path: "/home-one-boxed",
-        element: <HomeOneBoxed />
+        element: <HomeOneBoxed />,
       },
-     
+
       {
         path: "/home-two",
-        element: <HomeTwo />
+        element: <HomeTwo />,
       },
       {
         path: "/home-two-single",
-        element: <HomeTwoSingle />
+        element: <HomeTwoSingle />,
       },
-      
+
       {
         path: "/home-two-boxed",
-        element: <HomeTwoBoxed />
+        element: <HomeTwoBoxed />,
       },
       {
         path: "/about-us",
-        element: <AboutUs />
+        element: <AboutUs />,
       },
       {
         path: "/projects",
-        element: <Projects />
+        element: <Projects />,
       },
       {
         path: "/products",
-        element: <Products />
+        element: <Products />,
       },
       {
         path: "/cart",
-        element: <Cart />
+        element: <Cart />,
       },
       {
         path: "/checkout",
-        element: <Checkout />
+        element: <Checkout />,
       },
       {
         path: "/products-sidebar",
-        element: <ProductsSidebar />
+        element: <ProductsSidebar />,
       },
       {
         path: "/products-details",
-        element: <ProductsDetails />
+        element: <ProductsDetails />,
       },
       {
         path: "/news",
-        element: <News />
+        element: <News />,
       },
       {
         path: "/news-details",
-        element: <NewsDetails />
+        element: <NewsDetails />,
       },
       {
         path: "/course",
-        element: <Course />
+        element: <Course />,
       },
       {
         path: "/course-details",
-        element: <CourseDetails />
+        element: <CourseDetails />,
       },
       {
         path: "/contact",
-        element: <Contact Pages />
+        element: <Contact Pages />,
       },
       {
         path: "/team",
-        element: <Team />
+        element: <Team />,
       },
       {
         path: "/team-details",
-        element: <TeamDetails />
+        element: <TeamDetails />,
       },
       {
         path: "/testimonial",
-        element: <Testimonial />
+        element: <Testimonial />,
       },
       {
         path: "/projects-details",
-        element: <ProjectsDetails />
+        element: <ProjectsDetails />,
       },
       {
         path: "/Faq",
-        element: <Faq />
+        element: <Faq />,
       },
       {
         path: "/pricing",
-        element: <Pricing />
+        element: <Pricing />,
       },
-     
-     
+
       {
         path: "*",
-        element: <Error />
+        element: <Error />,
       },
-    ]
-  }
+    ],
+  },
 ]);
 
 function Router() {
   return (
-      <>
-        <RouterProvider router={router} />
-      </>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 }
 
