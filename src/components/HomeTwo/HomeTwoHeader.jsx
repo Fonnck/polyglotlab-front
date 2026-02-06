@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import Stickylogo from "../../assets/images/logo.png";
@@ -6,6 +8,8 @@ import MobileLogo from "../../assets/images/logo-2.png";
 import StickyHeader from "../../lib/StickyMenu.js";
 import Navigation from "../Navigation.jsx";
 import MobileMenu from "../MobileMenu.jsx";
+import { useScrollStore } from "../../hooks/useScrollSrore.js";
+import { scrollWithOffset } from "../../hooks/utils/index.js";
 
 function Header({ className = "", scroll = false }) {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -43,6 +47,9 @@ function Header({ className = "", scroll = false }) {
     setSearchPopupOpen(false);
     document.body.classList.remove("mobile-search-active");
   };
+
+  const sectionRef = useScrollStore((state) => state.sectionRef);
+
   return (
     <>
       <header className={`main-header header-style-two ${className || ""}`}>
@@ -157,9 +164,12 @@ function Header({ className = "", scroll = false }) {
                     </Link>
                   </div>
 
-                  <Link href="/contact" className="theme-btn btn-style-two">
-                    <span className="btn-title">Try For Free</span>
-                  </Link>
+                  <div
+                    className="theme-btn btn-style-two pointer"
+                    onClick={() => scrollWithOffset(sectionRef.current, 13)}
+                  >
+                    <span className="btn-title">Inscribirsesss</span>
+                  </div>
                 </div>
               </div>
             </div>

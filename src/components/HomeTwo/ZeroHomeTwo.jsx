@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
@@ -11,6 +10,8 @@ import MainImage from "../../assets/images/main-slider/image-2.jpg";
 import Bulb from "../../assets/images/main-slider/icon/shape-1.png";
 import Circle2 from "../../assets/images/main-slider/icon/icon-paper-pin.png";
 import Circle3 from "../../assets/images/main-slider/icon/icon-circle-3.png";
+import { scrollWithOffset } from "../../hooks/utils";
+import { useScrollStore } from "../../hooks/useScrollSrore";
 
 const swiperOptions = {
   modules: [Autoplay, Pagination, Navigation],
@@ -24,6 +25,7 @@ const swiperOptions = {
 };
 
 function BannerSection() {
+  const sectionRef = useScrollStore((state) => state.sectionRef);
   return (
     <section className="banner-section-two">
       <Swiper {...swiperOptions} className="banner-carousel">
@@ -51,12 +53,14 @@ function BannerSection() {
                     </div>
                   </div>
                   <div className="btn-box animate-4">
-                    <Link
-                      to="/about-us"
-                      className="theme-btn btn-style-one bg-theme-color2"
+                    <div
+                      className="theme-btn btn-style-one bg-theme-color2 pointer"
+                      onClick={() => {
+                        scrollWithOffset(sectionRef.current, 13);
+                      }}
                     >
                       <span className="btn-title">Find Course</span>
-                    </Link>
+                    </div>
                   </div>
                 </div>
               </div>

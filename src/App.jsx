@@ -1,6 +1,7 @@
 import Router from "./Router.jsx";
 import { useEffect, useState } from "react";
 import Loader from "./components/Helper/Loader.jsx";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -21,6 +22,7 @@ function App() {
       <div className={`appie-visible ${loading === false ? "active" : ""}`}>
         <Router />
       </div>
+      <Toaster position="top-center" />
     </>
   );
 }
