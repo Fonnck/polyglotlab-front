@@ -26,20 +26,20 @@ function HomeTwo() {
     <>
       <HomeTwoHeader action={drawerAction.toggle} />
       <ZeroHomeOne />
-      <CategoriesSectionCurrentTwo />
-      <AboutHomeTwo />
-      <FunFactSection />
-      <CoursesSectionTwo />
-      <ClientHomeOne />
-      <FaqSection />
+      {/* <CategoriesSectionCurrentTwo /> */}
       <VideoSection />
       <SignupSectionTwo />
-      <PricingSection />
-      <GallerySection />
+      <ClientHomeOne />
+      <AboutHomeTwo />
+      <FunFactSection />
+      {/* <CoursesSectionTwo /> */}
+      {/* <PricingSection /> */}
+      {/* <GallerySection /> */}
       <FeatureHomeTwo />
-      <AboutSectionFour />
-      <EventSection />
-      <NewsSectionTwo />
+      <FaqSection />
+      {/*   */}
+      {/* <EventSection /> */}
+      {/* <NewsSectionTwo /> */}
       <FooterHomeOne />
       <BackToTop />
     </>

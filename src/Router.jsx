@@ -34,7 +34,7 @@ const router = createBrowserRouter([
     Component: Layout,
     children: [
       {
-        index: true,
+        path: "/home-one",
         element: <HomeOne />,
       },
 
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/home-two",
+        index: true,
         element: <HomeTwo />,
       },
       {
