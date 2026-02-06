@@ -1,5 +1,12 @@
+import logo from "../../assets/images/loader-logo.png";
+
 function Loader() {
-  return <div className="preloader"></div>;
+  return (
+    <>
+      <img src={logo} alt="Loader" height={100} />
+      <div className="preloader"></div>
+    </>
+  );
 }
 
 export default Loader;
