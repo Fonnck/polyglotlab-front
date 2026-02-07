@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import useToggle from "../../hooks/useToggle.js";
 import BackToTop from "../BackToTop.jsx";
@@ -20,6 +21,7 @@ import EventSection from "./Event.jsx";
 import NewsSectionTwo from "./News.jsx";
 
 function HomeTwo() {
+  // eslint-disable-next-line no-unused-vars
   const [drawer, drawerAction] = useToggle(false);
 
   return (
