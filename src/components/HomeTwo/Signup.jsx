@@ -113,6 +113,7 @@ function SignupSectionTwo() {
                   id="contact-form"
                   className="d-flex flex-column gap-1"
                 >
+                  <small>Información del acudiente</small>
                   <div className="d-flex gap-2">
                     <div className="form-group w-50">
                       <input
@@ -137,7 +138,7 @@ function SignupSectionTwo() {
                   <div className="form-group">
                     <input
                       className="solid_input"
-                      type="text"
+                      type="email"
                       name="Email"
                       placeholder="Correo electrónico *"
                       required
@@ -146,7 +147,7 @@ function SignupSectionTwo() {
                   <div className="form-group">
                     <input
                       className="solid_input"
-                      type="text"
+                      type="number"
                       name="Phone"
                       placeholder="Celular *"
                       required
@@ -236,22 +237,22 @@ function SignupSectionTwo() {
                       />
                     </div>
                     <div className="form-group" style={{ width: "40%" }}>
-                      <small>Edad</small>
+                      <small>Edad *</small>
                       <input
                         className="solid_input"
-                        type="text"
-                        name="Subject"
+                        type="number  "
+                        name="edad"
                         required
                       />
                     </div>
                   </div>
-                  <div className="mt-2">
+                  <div className="mt-3">
                     <button
                       className="button-74"
                       type="submit"
                       name="submit-form"
                     >
-                      Aprender {english ? "Inglés!" : "Francés!"}
+                      Enviar inscripción a {english ? "Inglés!" : "Francés!"}
                     </button>
                   </div>
                 </form>

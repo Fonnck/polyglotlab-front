@@ -5675,7 +5675,8 @@ Section Title
 }
 .signup-form-two form {
   padding: 60px 55px;
-  padding-top: 40px;
+  padding-top: 25px;
+  padding-bottom: 40px;
   border: 2px solid #f1f1f1;
   border-top: 0;
 }
@@ -11814,4 +11815,14 @@ Sidebar
     min-width: 120px;
     padding: 0 25px;
   }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
