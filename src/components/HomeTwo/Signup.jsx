@@ -97,50 +97,71 @@ function SignupSectionTwo() {
               {/* Sign Form */}
               <div className="signup-form-two wow fadeInLeft">
                 <div className="title-box">
-                  <h4 className="title">Get free courses</h4>
+                  <h4 className="title">Inscríbete ahora!</h4>
                 </div>
 
                 {/* Contact Form */}
-                <form method="" action="" id="contact-form">
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      name="full_name"
-                      placeholder="Your name"
-                      required
-                    />
+                <form
+                  method=""
+                  action=""
+                  id="contact-form"
+                  className="d-flex flex-column gap-2"
+                >
+                  <div className="d-flex gap-2">
+                    <div className="form-group w-50">
+                      <input
+                        className="solid_input"
+                        type="text"
+                        name="full_name"
+                        placeholder="Nombre *"
+                        required
+                      />
+                    </div>
+                    <div className="form-group w-50">
+                      <input
+                        className="solid_input"
+                        type="text"
+                        name="full_name"
+                        placeholder="Apellido *"
+                        required
+                      />
+                    </div>
                   </div>
+
                   <div className="form-group">
                     <input
+                      className="solid_input"
                       type="text"
                       name="Email"
-                      placeholder="Email Address"
+                      placeholder="Correo electrónico *"
                       required
                     />
                   </div>
                   <div className="form-group">
                     <input
+                      className="solid_input"
                       type="text"
                       name="Phone"
-                      placeholder="Phone Number"
+                      placeholder="Celular *"
                       required
                     />
                   </div>
                   <div className="form-group">
                     <input
+                      className="solid_input"
                       type="text"
                       name="Subject"
-                      placeholder="Subject"
+                      placeholder="No. identificación *"
                       required
                     />
                   </div>
-                  <div className="form-group">
+                  <div className="">
                     <button
-                      className="theme-btn btn-style-one bg-theme-color4"
+                      className="button-74"
                       type="submit"
                       name="submit-form"
                     >
-                      Apply Now
+                      Obtener acceso
                     </button>
                   </div>
                 </form>

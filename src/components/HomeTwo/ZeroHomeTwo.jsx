@@ -56,7 +56,7 @@ function BannerSection() {
                     <div
                       className="theme-btn btn-style-one bg-theme-color2 pointer"
                       onClick={() => {
-                        scrollWithOffset(sectionRef.current, 13);
+                        scrollWithOffset(sectionRef.current, 11);
                       }}
                     >
                       <span className="btn-title">Find Course</span>

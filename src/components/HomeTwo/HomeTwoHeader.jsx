@@ -166,7 +166,7 @@ function Header({ className = "", scroll = false }) {
 
                   <div
                     className="theme-btn btn-style-two pointer"
-                    onClick={() => scrollWithOffset(sectionRef.current, 13)}
+                    onClick={() => scrollWithOffset(sectionRef.current, 11)}
                   >
                     <span className="btn-title">Inscribirsesss</span>
                   </div>
