@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useScrollStore } from "../../hooks/useScrollSrore";
+import Boy from "../../assets/images/boy.png";
+import Girl from "../../assets/images/girl.png";
+import Usa from "../../assets/images/usa.png";
+import France from "../../assets/images/france.png";
+import { useSignInStore } from "../../hooks/useSignUp";
 
 function SignupSectionTwo() {
   const [timeLeft, setTimeLeft] = useState({
@@ -11,6 +16,8 @@ function SignupSectionTwo() {
 
   const sectionRef = useRef(null);
   const setSectionRef = useScrollStore((state) => state.setSectionRef);
+
+  const { itsboy, setItsBoy, english, setEnglish } = useSignInStore();
 
   useEffect(() => {
     setSectionRef(sectionRef);
@@ -99,13 +106,12 @@ function SignupSectionTwo() {
                 <div className="title-box">
                   <h4 className="title">Inscríbete ahora!</h4>
                 </div>
-
                 {/* Contact Form */}
                 <form
                   method=""
                   action=""
                   id="contact-form"
-                  className="d-flex flex-column gap-2"
+                  className="d-flex flex-column gap-1"
                 >
                   <div className="d-flex gap-2">
                     <div className="form-group w-50">
@@ -155,11 +161,16 @@ function SignupSectionTwo() {
                       required
                     />
                   </div>
-                  <div className="d-flex col-12 gap-4">
+                  <div className="d-flex col-12 gap-3 mt-2">
                     <div className="d-flex gap-2 w-50">
                       <div className="form-group w-50">
-                        <input
-                          className="solid_input"
+                        <img
+                          src={Boy}
+                          className={
+                            "_selector pointer " +
+                            (itsboy ? " _active" : " _noactive")
+                          }
+                          onClick={() => setItsBoy(true)}
                           type="button"
                           name="full_name"
                           placeholder="Boy - Garçon"
@@ -167,19 +178,29 @@ function SignupSectionTwo() {
                         />
                       </div>
                       <div className="form-group w-50">
-                        <input
-                          className="solid_input"
+                        <img
+                          src={Girl}
+                          className={
+                            "_selector pointer " +
+                            (itsboy ? " _noactive" : " _active")
+                          }
+                          onClick={() => setItsBoy(false)}
                           type="button"
                           name="full_name"
-                          placeholder="Apellido *"
+                          placeholder="Boy - Garçon"
                           required
                         />
                       </div>
                     </div>
                     <div className="d-flex gap-2 w-50">
                       <div className="form-group w-50">
-                        <input
-                          className="solid_input"
+                        <img
+                          src={Usa}
+                          className={
+                            "_selector pointer " +
+                            (english ? " _active" : " _noactive")
+                          }
+                          onClick={() => setEnglish(true)}
                           type="button"
                           name="full_name"
                           placeholder="Boy - Garçon"
@@ -187,32 +208,50 @@ function SignupSectionTwo() {
                         />
                       </div>
                       <div className="form-group w-50">
-                        <input
-                          className="solid_input"
+                        <img
+                          src={France}
+                          className={
+                            "_selector pointer " +
+                            (english ? " _noactive" : " _active")
+                          }
+                          onClick={() => setEnglish(false)}
                           type="button"
                           name="full_name"
-                          placeholder="Apellido *"
+                          placeholder="Boy - Garçon"
                           required
                         />
                       </div>
                     </div>
                   </div>
-                  <div className="form-group">
-                    <input
-                      className="solid_input"
-                      type="text"
-                      name="Subject"
-                      placeholder="No. identificación *"
-                      required
-                    />
+                  <div className="d-flex col-12 gap-3">
+                    <div className="form-group" style={{ width: "60%" }}>
+                      <small>
+                        {itsboy ? "Nombre del niño *" : "Nombre de la niña *"}
+                      </small>
+                      <input
+                        className="solid_input"
+                        type="text"
+                        name="Subject"
+                        required
+                      />
+                    </div>
+                    <div className="form-group" style={{ width: "40%" }}>
+                      <small>Edad</small>
+                      <input
+                        className="solid_input"
+                        type="text"
+                        name="Subject"
+                        required
+                      />
+                    </div>
                   </div>
-                  <div className="">
+                  <div className="mt-2">
                     <button
                       className="button-74"
                       type="submit"
                       name="submit-form"
                     >
-                      Obtener acceso
+                      Aprender {english ? "Inglés!" : "Francés!"}
                     </button>
                   </div>
                 </form>

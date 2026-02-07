@@ -11700,6 +11700,28 @@ Sidebar
   box-shadow: 5.5px 7px 0 black;
 }
 
+.solid_input:active {
+  box-shadow: 2.5px 3px 0 #ffae1e;
+}
+
+._selector {
+  width: 88%;
+  height: 60px;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+  box-shadow: 5.5px 7px 0 #444444;
+  transition: ease 0.25s;
+}
+
+._active {
+  box-shadow: 2.5px 3px 0 #ffae1e;
+}
+
+._noactive {
+  filter: grayscale(100%);
+  box-shadow: 5.5px 7px 0 #444444;
+}
+
 .button-56 {
   align-items: center;
   background-color: #fee6e3;
