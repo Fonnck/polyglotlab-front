@@ -109,20 +109,24 @@ function SignupSectionTwo() {
                 >
                   <div className="d-flex gap-2">
                     <div className="form-group w-50">
+                      <small>
+                        <small>Nombre *</small>
+                      </small>
                       <input
                         className="solid_input"
                         type="text"
                         name="full_name"
-                        placeholder="Nombre *"
                         required
                       />
                     </div>
                     <div className="form-group w-50">
+                      <small>
+                        <small>Apellido *</small>
+                      </small>
                       <input
                         className="solid_input"
                         type="text"
                         name="full_name"
-                        placeholder="Apellido *"
                         required
                       />
                     </div>
@@ -145,6 +149,57 @@ function SignupSectionTwo() {
                       placeholder="Celular *"
                       required
                     />
+                  </div>
+                  <div className="form-group">
+                    <input
+                      className="solid_input"
+                      type="text"
+                      name="Subject"
+                      placeholder="No. identificación *"
+                      required
+                    />
+                  </div>
+                  <div className="d-flex col-12 gap-4">
+                    <div className="d-flex gap-2 w-50">
+                      <div className="form-group w-50">
+                        <input
+                          className="solid_input"
+                          type="button"
+                          name="full_name"
+                          placeholder="Boy - Garçon"
+                          required
+                        />
+                      </div>
+                      <div className="form-group w-50">
+                        <input
+                          className="solid_input"
+                          type="button"
+                          name="full_name"
+                          placeholder="Apellido *"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="d-flex gap-2 w-50">
+                      <div className="form-group w-50">
+                        <input
+                          className="solid_input"
+                          type="button"
+                          name="full_name"
+                          placeholder="Boy - Garçon"
+                          required
+                        />
+                      </div>
+                      <div className="form-group w-50">
+                        <input
+                          className="solid_input"
+                          type="button"
+                          name="full_name"
+                          placeholder="Apellido *"
+                          required
+                        />
+                      </div>
+                    </div>
                   </div>
                   <div className="form-group">
                     <input

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import ModalVideo from "react-modal-video";
 import "react-modal-video/css/modal-video.min.css";

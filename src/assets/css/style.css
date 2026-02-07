@@ -5675,6 +5675,7 @@ Section Title
 }
 .signup-form-two form {
   padding: 60px 55px;
+  padding-top: 40px;
   border: 2px solid #f1f1f1;
   border-top: 0;
 }
@@ -11684,7 +11685,8 @@ Sidebar
 
 .solid_input {
   max-width: 100%;
-  max-height: 15px;
+  max-height: 12px;
+  height: 10px;
   padding: 0.875rem;
   border: 1px solid #000;
   border-radius: 0.5rem;
