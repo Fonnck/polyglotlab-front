@@ -109,24 +109,20 @@ function SignupSectionTwo() {
                 >
                   <div className="d-flex gap-2">
                     <div className="form-group w-50">
-                      <small>
-                        <small>Nombre *</small>
-                      </small>
                       <input
                         className="solid_input"
                         type="text"
                         name="full_name"
+                        placeholder="Nombre *"
                         required
                       />
                     </div>
                     <div className="form-group w-50">
-                      <small>
-                        <small>Apellido *</small>
-                      </small>
                       <input
                         className="solid_input"
                         type="text"
                         name="full_name"
+                        placeholder="Apellido *"
                         required
                       />
                     </div>

@@ -77,9 +77,9 @@ License: copyright commercial
   --headings-color: var(--theme-color1);
   --link-color: var(--theme-color1);
   --link-hover-color: var(--theme-color1);
-  --text-font: "DM Sans", sans-serif;
-  --title-font: "DM Sans", sans-serif;
-  --style-font: "Reey";
+  --text-font: "defante", sans-serif;
+  --title-font: "defante", sans-serif;
+  --style-font: "defante";
   --body-font-size: 18px;
   --body-line-height: 30px;
   --body-font-weight: 400;
@@ -639,14 +639,14 @@ textarea.form-control {
     margin-right: 0;
   }
 }
-/* @font-face {
+@font-face {
   font-family: "defante";
-  src: url("../fonts/defante.otf") format("otf");
+  src: url("../fonts/defante.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
-} */
-@font-face {
+}
+/* @font-face {
   font-family: "Reey";
   src:
     url("../fonts/Reey-Regular.woff2") format("woff2"),
@@ -654,7 +654,7 @@ textarea.form-control {
   font-weight: normal;
   font-style: normal;
   font-display: swap;
-}
+} */
 /*** 
 
 ====================================================================
