@@ -29,6 +29,11 @@ function HomeTwo() {
       <HomeTwoHeader action={drawerAction.toggle} />
       <ZeroHomeOne />
       {/* <CategoriesSectionCurrentTwo /> */}
+      <img
+        className="stickers-img"
+        src="/src/assets/images/background/stickers.png"
+        alt="Hero Image"
+      />
       <VideoSection />
       <SignupSectionTwo />
       <AboutHomeOne />
