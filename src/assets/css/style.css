@@ -3624,6 +3624,10 @@ Section Title
 }
 .about-section .image-column .image-1 img {
   width: 100%;
+  border-radius: 25px;
+  box-shadow: 10px 10px 66px 1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 10px 66px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 66px 1px rgba(0, 0, 0, 0.75);
 }
 .about-section .image-column .image-2 {
   position: absolute;
