@@ -22,7 +22,7 @@ function App() {
       <div className={`appie-visible ${loading === false ? "active" : ""}`}>
         <Router />
       </div>
-      <Toaster position="top-center" />
+      <Toaster position="top-right" />
     </>
   );
 }

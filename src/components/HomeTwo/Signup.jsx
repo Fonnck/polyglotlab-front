@@ -1,56 +1,89 @@
-import { useState, useEffect, useRef } from "react";
+/* eslint-disable no-unused-vars */
+import { useEffect, useRef, useState } from "react";
 import { useScrollStore } from "../../hooks/useScrollSrore";
 import Boy from "../../assets/images/boy.png";
 import Girl from "../../assets/images/girl.png";
 import Usa from "../../assets/images/usa.png";
 import France from "../../assets/images/france.png";
-import { useSignInStore } from "../../hooks/useSignUp";
+import { useFormik } from "formik";
+import toast from "react-hot-toast";
 
 function SignupSectionTwo() {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  // const { itsboy, setItsBoy, english, setEnglish } = useSignInStore();
+  const [itsboy, setItsboy] = useState();
+  const [english, setEnglish] = useState();
 
   const sectionRef = useRef(null);
   const setSectionRef = useScrollStore((state) => state.setSectionRef);
-
-  const { itsboy, setItsBoy, english, setEnglish } = useSignInStore();
 
   useEffect(() => {
     setSectionRef(sectionRef);
   }, [setSectionRef]);
 
-  const calculateTimeLeft = () => {
-    const targetDate = new Date("2025-02-02T00:00:00");
-    const now = new Date();
-    const difference = targetDate - now;
+  const validate = (values) => {
+    const errors = {};
 
-    if (difference > 0) {
-      setTimeLeft({
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      });
-    } else {
-      setTimeLeft({
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      });
+    if (!values.first_name) {
+      errors.first_name = "Necesitamos saber tu nombre";
+    } else if (values.first_name.length < 2) {
+      errors.first_name = "Tu nombre debe tener al menos 2 caracteres";
     }
+
+    if (!values.last_name) {
+      errors.last_name = "Necesitamos saber tu apellido";
+    } else if (values.last_name.length < 2) {
+      errors.last_name = "Tu apellido debe tener al menos 2 caracteres";
+    }
+
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      errors.email = "Correo electrónico inválido";
+    }
+
+    if (!values.phone) {
+      errors.phone = "Necesitamos tu número de celular";
+    } else if (values.phone.toString().length < 7) {
+      errors.phone = "Número de celular demasiado corto";
+    } else if (values.phone.toString().length > 15) {
+      errors.phone = "Número de celular demasiado largo";
+    }
+
+    if (!values.identification) {
+      errors.identification = "Necesitamos tu número de identificación";
+    } else if (values.identification.length < 5) {
+      errors.identification = "Número de identificación demasiado corto";
+    } else if (values.identification.length > 20) {
+      errors.identification = "Número de identificación demasiado largo";
+    }
+
+    if (!values.child_name) {
+      errors.child_name =
+        "Necesitamos saber el nombre de tu " + (itsboy ? "niño 👦🏻" : "niña 👧🏻");
+    } else if (values.child_name.length < 2) {
+      errors.child_name = `El nombre de tu ${itsboy ? "niño 👦🏻" : "niña 👧🏻"} debe tener al menos 2 caracteres`;
+    }
+    if (!values.child_age) {
+      errors.child_age = `Necesitamos saber la edad de tu ${itsboy ? "niño 👦🏻" : "niña 👧🏻"}`;
+    }
+    return errors;
   };
 
-  useEffect(() => {
-    const timer = setInterval(calculateTimeLeft, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  const { handleChange, handleSubmit, values, errors } = useFormik({
+    initialValues: {
+      first_name: "",
+      last_name: "",
+      email: "",
+      phone: 0,
+      identification: "",
+      child_name: "",
+      child_age: 0,
+      gender: itsboy ? "boy" : "girl",
+      language: english ? "english" : "french",
+    },
+    onSubmit: (values) => {
+      values && toast.success("¡Inscripción enviada con éxito!");
+    },
+    validate,
+  });
 
   return (
     <section className="signup-section-two">
@@ -78,7 +111,7 @@ function SignupSectionTwo() {
                   odio sit amet.
                 </div>
               </div>
-              <div className="time-countdown time-counter-two">
+              {/* <div className="time-countdown time-counter-two">
                 <div className="time-box time-box-days">
                   <span>{timeLeft.days}</span> <small>Days</small>
                 </div>
@@ -91,7 +124,7 @@ function SignupSectionTwo() {
                 <div className="time-box time-box-seconds">
                   <span>{timeLeft.seconds}</span> <small>Seconds</small>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -108,10 +141,10 @@ function SignupSectionTwo() {
                 </div>
                 {/* Contact Form */}
                 <form
-                  method=""
-                  action=""
                   id="contact-form"
                   className="d-flex flex-column gap-1"
+                  noValidate
+                  onSubmit={handleSubmit}
                 >
                   <small>Información del acudiente</small>
                   <div className="d-flex gap-2">
@@ -119,18 +152,22 @@ function SignupSectionTwo() {
                       <input
                         className="solid_input"
                         type="text"
-                        name="full_name"
+                        name="first_name"
                         placeholder="Nombre *"
                         required
+                        value={values.first_name}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group w-50">
                       <input
                         className="solid_input"
                         type="text"
-                        name="full_name"
+                        name="last_name"
                         placeholder="Apellido *"
                         required
+                        value={values.last_name}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -139,27 +176,33 @@ function SignupSectionTwo() {
                     <input
                       className="solid_input"
                       type="email"
-                      name="Email"
+                      name="email"
                       placeholder="Correo electrónico *"
                       required
+                      value={values.email}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="form-group">
                     <input
                       className="solid_input"
                       type="number"
-                      name="Phone"
+                      name="phone"
                       placeholder="Celular *"
                       required
+                      value={values.phone === 0 ? "" : values.phone}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="form-group">
                     <input
                       className="solid_input"
                       type="text"
-                      name="Subject"
+                      name="identification"
                       placeholder="No. identificación *"
                       required
+                      value={values.identification}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="d-flex col-12 gap-3 mt-2">
@@ -171,11 +214,9 @@ function SignupSectionTwo() {
                             "_selector pointer " +
                             (itsboy ? " _active" : " _noactive")
                           }
-                          onClick={() => setItsBoy(true)}
+                          onClick={() => setItsboy(true)}
                           type="button"
-                          name="full_name"
-                          placeholder="Boy - Garçon"
-                          required
+                          alt="boy"
                         />
                       </div>
                       <div className="form-group w-50">
@@ -185,11 +226,9 @@ function SignupSectionTwo() {
                             "_selector pointer " +
                             (itsboy ? " _noactive" : " _active")
                           }
-                          onClick={() => setItsBoy(false)}
+                          onClick={() => setItsboy(false)}
                           type="button"
-                          name="full_name"
-                          placeholder="Boy - Garçon"
-                          required
+                          alt="girl"
                         />
                       </div>
                     </div>
@@ -203,9 +242,7 @@ function SignupSectionTwo() {
                           }
                           onClick={() => setEnglish(true)}
                           type="button"
-                          name="full_name"
-                          placeholder="Boy - Garçon"
-                          required
+                          alt="usa"
                         />
                       </div>
                       <div className="form-group w-50">
@@ -217,9 +254,7 @@ function SignupSectionTwo() {
                           }
                           onClick={() => setEnglish(false)}
                           type="button"
-                          name="full_name"
-                          placeholder="Boy - Garçon"
-                          required
+                          alt="france"
                         />
                       </div>
                     </div>
@@ -232,8 +267,10 @@ function SignupSectionTwo() {
                       <input
                         className="solid_input"
                         type="text"
-                        name="Subject"
+                        name="child_name"
                         required
+                        value={values.child_name}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group" style={{ width: "40%" }}>
@@ -241,8 +278,10 @@ function SignupSectionTwo() {
                       <input
                         className="solid_input"
                         type="number  "
-                        name="edad"
+                        name="child_age"
                         required
+                        value={values.child_age === 0 ? "" : values.child_age}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -251,6 +290,9 @@ function SignupSectionTwo() {
                       className="button-74"
                       type="submit"
                       name="submit-form"
+                      onClick={() => {
+                        errors && toast.error(Object.entries(errors)[0][1]);
+                      }}
                     >
                       Enviar inscripción a {english ? "Inglés!" : "Francés!"}
                     </button>

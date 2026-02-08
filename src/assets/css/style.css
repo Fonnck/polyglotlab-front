@@ -5698,7 +5698,7 @@ Section Title
   display: block;
   height: 78px;
   width: 100%;
-  padding: 25px 40px;
+  padding: 25px 25px;
   font-size: 22px;
   color: var(--theme-color1);
   line-height: 26px;
