@@ -6489,9 +6489,9 @@ Section Title
 }
 .call-to-action .image-column .image {
   position: relative;
-  margin-top: -90px;
+  margin-top: 140px;
   margin-right: -375px;
-  margin-left: -30px;
+  margin-left: -150px;
   margin-bottom: 0;
 }
 
@@ -11719,8 +11719,9 @@ Sidebar
 }
 
 ._noactive {
-  filter: grayscale(100%);
-  box-shadow: 5.5px 7px 0 #444444;
+  filter: grayscale(80%);
+  opacity: 0.5;
+  box-shadow: 5.5px 7px 0 #d8d8d8;
 }
 
 .button-56 {

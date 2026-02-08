@@ -14,7 +14,7 @@ import ClientHomeOne from "./Client.jsx";
 import FaqSection from "./FaqHomeTwo.jsx";
 import VideoSection from "./VideoHomeTwo.jsx";
 import SignupSectionTwo from "./Signup.jsx";
-import PricingSection from "./Pricing.jsx";
+import AboutHomeOne from "../HomeOne/AboutHomeOne.jsx";
 import GallerySection from "./Gallery.jsx";
 import AboutSectionFour from "./About2nd.jsx";
 import EventSection from "./Event.jsx";
@@ -31,8 +31,9 @@ function HomeTwo() {
       {/* <CategoriesSectionCurrentTwo /> */}
       <VideoSection />
       <SignupSectionTwo />
+      <AboutHomeOne />
       <ClientHomeOne />
-      <AboutHomeTwo />
+      {/* <AboutHomeTwo /> */}
       <FunFactSection />
       {/* <CoursesSectionTwo /> */}
       {/* <PricingSection /> */}

@@ -7,12 +7,13 @@ import Usa from "../../assets/images/usa.png";
 import France from "../../assets/images/france.png";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function SignupSectionTwo() {
   // const { itsboy, setItsBoy, english, setEnglish } = useSignInStore();
-  const [itsboy, setItsboy] = useState();
-  const [english, setEnglish] = useState();
-
+  const [itsboy, setItsboy] = useState(true);
+  const [english, setEnglish] = useState("english");
+  const nav = useNavigate();
   const sectionRef = useRef(null);
   const setSectionRef = useScrollStore((state) => state.setSectionRef);
 
@@ -81,6 +82,7 @@ function SignupSectionTwo() {
     },
     onSubmit: (values) => {
       values && toast.success("¡Inscripción enviada con éxito!");
+      nav("/thank-you");
     },
     validate,
   });
@@ -103,8 +105,16 @@ function SignupSectionTwo() {
           <div className="title-column col-xl-6 col-lg-7 col-md-12 col-sm-12">
             <div className="inner-column">
               <div className="sec-title">
-                <h2>Register now get premium online courses for free!</h2>
-                <div className="text">
+                <h2 style={{ fontSize: "70px" }}>
+                  Un nuevo
+                  <span style={{ color: "#ffae1e" }}>{" Idioma "}</span>
+                  está a punto de convertirse en tu
+                  <span style={{ color: "#ffae1e" }}>{" Superpoder."}</span>
+                </h2>
+                <div
+                  className="text"
+                  style={{ fontSize: "24px", maxWidth: "85%" }}
+                >
                   Lorem ipsum gravida nibh vel velit auctor aliquetnean
                   sollicitudin, lorem quis bibendum auci elit consequat is
                   simply free text available in the psutis sem nibh id eis sed
@@ -216,6 +226,7 @@ function SignupSectionTwo() {
                           }
                           onClick={() => setItsboy(true)}
                           type="button"
+                          title="Niño - Boy - Gárcon"
                           alt="boy"
                         />
                       </div>
@@ -228,6 +239,7 @@ function SignupSectionTwo() {
                           }
                           onClick={() => setItsboy(false)}
                           type="button"
+                          title="Niña - Girl - Filla"
                           alt="girl"
                         />
                       </div>
@@ -241,7 +253,9 @@ function SignupSectionTwo() {
                             (english ? " _active" : " _noactive")
                           }
                           onClick={() => setEnglish(true)}
+                          name="language"
                           type="button"
+                          title="Inglés English Anglais"
                           alt="usa"
                         />
                       </div>
@@ -249,11 +263,12 @@ function SignupSectionTwo() {
                         <img
                           src={France}
                           className={
-                            "_selector pointer " +
+                            "_selector pointer" +
                             (english ? " _noactive" : " _active")
                           }
                           onClick={() => setEnglish(false)}
                           type="button"
+                          title="Francés French Français"
                           alt="france"
                         />
                       </div>
@@ -277,7 +292,7 @@ function SignupSectionTwo() {
                       <small>Edad *</small>
                       <input
                         className="solid_input"
-                        type="number  "
+                        type="number"
                         name="child_age"
                         required
                         value={values.child_age === 0 ? "" : values.child_age}

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import BackgroundImage from "../../assets/images/background/1.jpg";
-import CtaImage from "../../assets/images/resource/cta.png";
+import BackgroundImage from "../../assets/images/background/4.jpg";
+import CtaImage from "../../assets/images/resource/schoolchildren.png";
 
 function CallToAction({ className }) {
   return (
