@@ -227,11 +227,12 @@
   }
 
   .signup-section-two .title-column .inner-column {
+    padding-bottom: 100px;
     margin-right: 0;
   }
 
   .signup-section-two .form-column .signup-form-two {
-    margin-top: -50px;
+    margin: 0 auto;
   }
 
   .about-section-four .content-column .sec-title .text {

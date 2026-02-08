@@ -1580,7 +1580,7 @@ Scroll To Top style
   position: absolute;
   left: 0;
   top: 0;
-  right: 0;
+  right: -280px;
   height: 100%;
   width: 100%;
   max-width: 1170px;
@@ -5534,7 +5534,9 @@ Section Title
   position: relative;
 }
 .signup-section-two .title-column .inner-column {
-  padding: 100px 0 140px;
+  padding: 80px 0 140px;
+  padding-right: 50px;
+  padding-left: 50px;
   margin-right: -30px;
 }
 .signup-section-two .title-column .sec-title {
@@ -5549,6 +5551,7 @@ Section Title
   padding-bottom: 120px;
 }
 .signup-section-two .form-column .signup-form-two {
+  max-width: 500px;
   border-radius: 25px;
   /* border: 0.2px solid #000; */
   margin-top: -88px;
@@ -5565,6 +5568,7 @@ Section Title
   height: 383px;
   background-image: url(../images/icons/pattern-3.png);
   content: "";
+  display: none;
 }
 .signup-section-two .time-countdown {
   display: -webkit-box;
@@ -6489,17 +6493,19 @@ Section Title
 }
 .call-to-action .title-column .style-font {
   display: block;
-  font-size: 44px;
+  font-size: 65px;
+  max-width: 500px;
   color: var(--theme-color4);
-  margin-left: 190px;
   line-height: 1.2em;
   margin-bottom: 20px;
+  margin-left: 35px;
 }
 .call-to-action .image-column .image {
   position: relative;
-  margin-top: 140px;
-  margin-right: -375px;
-  margin-left: -150px;
+  margin-top: 150px;
+  margin-right: -295px;
+  width: 900px;
+  margin-left: -250px;
   margin-bottom: 0;
 }
 

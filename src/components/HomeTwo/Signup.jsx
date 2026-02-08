@@ -156,64 +156,9 @@ function SignupSectionTwo() {
                   noValidate
                   onSubmit={handleSubmit}
                 >
-                  <small>Información del acudiente</small>
-                  <div className="d-flex gap-2">
-                    <div className="form-group w-50">
-                      <input
-                        className="solid_input"
-                        type="text"
-                        name="first_name"
-                        placeholder="Nombre *"
-                        required
-                        value={values.first_name}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="form-group w-50">
-                      <input
-                        className="solid_input"
-                        type="text"
-                        name="last_name"
-                        placeholder="Apellido *"
-                        required
-                        value={values.last_name}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <input
-                      className="solid_input"
-                      type="email"
-                      name="email"
-                      placeholder="Correo electrónico *"
-                      required
-                      value={values.email}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      className="solid_input"
-                      type="number"
-                      name="phone"
-                      placeholder="Celular *"
-                      required
-                      value={values.phone === 0 ? "" : values.phone}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      className="solid_input"
-                      type="text"
-                      name="identification"
-                      placeholder="No. identificación *"
-                      required
-                      value={values.identification}
-                      onChange={handleChange}
-                    />
+                  <div className="d-flex gap-5">
+                    <span>Selecciona el género :</span>
+                    <span>Selecciona el idioma :</span>
                   </div>
                   <div className="d-flex col-12 gap-3 mt-2">
                     <div className="d-flex gap-2 w-50">
@@ -226,7 +171,7 @@ function SignupSectionTwo() {
                           }
                           onClick={() => setItsboy(true)}
                           type="button"
-                          title="Niño - Boy - Gárcon"
+                          title="Niño-Boy-Gárcon"
                           alt="boy"
                         />
                       </div>
@@ -300,7 +245,70 @@ function SignupSectionTwo() {
                       />
                     </div>
                   </div>
-                  <div className="mt-3">
+                  <small className="mt-1">Información del acudiente</small>
+                  <div className="d-flex gap-2">
+                    <div className="form-group w-50">
+                      <input
+                        className="solid_input"
+                        type="text"
+                        name="first_name"
+                        placeholder="Nombre *"
+                        required
+                        value={values.first_name}
+                        onChange={handleChange}
+                      />
+                    </div>
+
+                    <div className="form-group w-50">
+                      <input
+                        className="solid_input"
+                        type="text"
+                        name="last_name"
+                        placeholder="Apellido *"
+                        required
+                        value={values.last_name}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <input
+                      className="solid_input"
+                      type="email"
+                      name="email"
+                      placeholder="Correo electrónico *"
+                      required
+                      value={values.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <input
+                      className="solid_input"
+                      type="number"
+                      name="phone"
+                      placeholder="Celular *"
+                      required
+                      value={values.phone === 0 ? "" : values.phone}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <input
+                      className="solid_input"
+                      type="text"
+                      name="identification"
+                      placeholder="No. identificación *"
+                      required
+                      value={values.identification}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="mt-4">
                     <button
                       className="button-74"
                       type="submit"

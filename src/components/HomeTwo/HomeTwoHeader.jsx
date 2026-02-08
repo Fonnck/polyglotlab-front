@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import Stickylogo from "../../assets/images/logo.png";
 import MobileLogo from "../../assets/images/logo-2.png";
@@ -15,6 +15,8 @@ function Header({ className = "", scroll = false }) {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchPopupOpen, setSearchPopupOpen] = useState(false);
   const [isDarkMode, setDarkMode] = useState(false);
+
+  const { pathname } = useLocation();
 
   useEffect(() => {
     StickyHeader();
@@ -102,7 +104,7 @@ function Header({ className = "", scroll = false }) {
           <div className="auto-container">
             <div className="inner-container">
               <div className="logo-box">
-                <div className="logo">
+                <div className="logo pointer">
                   <Link to="/">
                     <img src={logo} alt="Logo" />
                   </Link>
@@ -145,34 +147,36 @@ function Header({ className = "", scroll = false }) {
         {/* Header Lower */}
         <div className="header-lower">
           <div className="auto-container">
-            <div className="main-box">
-              <div className="nav-outer">
-                <nav className="nav main-menu">
-                  <Navigation />
-                </nav>
+            {pathname !== "/thank-you" && (
+              <div className="main-box">
+                <div className="nav-outer">
+                  <nav className="nav main-menu">
+                    <Navigation />
+                  </nav>
 
-                <div className="outer-box">
-                  <div className="ui-btn-outer">
-                    <button
-                      className="ui-btn ui-btn search-btn"
-                      onClick={toggleSearchPopup}
+                  <div className="outer-box">
+                    <div className="ui-btn-outer">
+                      <button
+                        className="ui-btn ui-btn search-btn"
+                        onClick={toggleSearchPopup}
+                      >
+                        <span className="icon lnr lnr-icon-search"></span>
+                      </button>
+                      <Link href="/cart" className="ui-btn">
+                        <i className="lnr-icon-shopping-cart"></i>
+                      </Link>
+                    </div>
+
+                    <div
+                      className="theme-btn btn-style-two pointer"
+                      onClick={() => scrollWithOffset(sectionRef.current, 11)}
                     >
-                      <span className="icon lnr lnr-icon-search"></span>
-                    </button>
-                    <Link href="/cart" className="ui-btn">
-                      <i className="lnr-icon-shopping-cart"></i>
-                    </Link>
-                  </div>
-
-                  <div
-                    className="theme-btn btn-style-two pointer"
-                    onClick={() => scrollWithOffset(sectionRef.current, 11)}
-                  >
-                    <span className="btn-title">Inscribirsesss</span>
+                      <span className="btn-title">Inscribirsesss</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
         {/* Mobile Menu */}

@@ -20,10 +20,10 @@ function CallToAction({ className }) {
           <div className="title-column col-lg-8">
             <div className="inner-column">
               <div className="sec-title light">
-                <span className="style-font">Get your quality</span>
+                <span className="style-font">¡Gracias por inscribirse!</span>
                 <h1>
-                  Skills certificate <br />
-                  from the edulerns
+                  En breve nos pondremos <br />
+                  en contacto
                 </h1>
                 <Link to="/course-details" className="theme-btn btn-style-one">
                   <span className="btn-title">Get started now</span>

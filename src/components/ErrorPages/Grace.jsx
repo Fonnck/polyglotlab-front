@@ -18,7 +18,7 @@ function Grace({ className }) {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 300);
   });
 
   return (

@@ -19,6 +19,7 @@ import GallerySection from "./Gallery.jsx";
 import AboutSectionFour from "./About2nd.jsx";
 import EventSection from "./Event.jsx";
 import NewsSectionTwo from "./News.jsx";
+import Stickers from "../../assets/images/background/stickers.png";
 
 function HomeTwo() {
   // eslint-disable-next-line no-unused-vars
@@ -29,11 +30,7 @@ function HomeTwo() {
       <HomeTwoHeader action={drawerAction.toggle} />
       <ZeroHomeOne />
       {/* <CategoriesSectionCurrentTwo /> */}
-      <img
-        className="stickers-img"
-        src="/src/assets/images/background/stickers.png"
-        alt="Hero Image"
-      />
+      <img className="stickers-img" src={Stickers} alt="Hero Image" />
       <VideoSection />
       <SignupSectionTwo />
       <AboutHomeOne />
