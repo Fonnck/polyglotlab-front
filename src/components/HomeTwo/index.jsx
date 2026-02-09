@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import { useEffect } from "react";
 import useToggle from "../../hooks/useToggle.js";
 import BackToTop from "../BackToTop.jsx";
 import FooterHomeOne from "./FooterHomeOne.jsx";
@@ -20,10 +20,27 @@ import AboutSectionFour from "./About2nd.jsx";
 import EventSection from "./Event.jsx";
 import NewsSectionTwo from "./News.jsx";
 import Stickers from "../../assets/images/background/stickers.png";
+import { supabase } from "../../supabase/client.js";
+import { useNavigate } from "react-router-dom";
 
 function HomeTwo() {
   // eslint-disable-next-line no-unused-vars
   const [drawer, drawerAction] = useToggle(false);
+  const nav = useNavigate();
+
+  useEffect(() => {
+    /* supabase.auth.onAuthStateChange((event, session) => {
+      console.log(event);
+
+      if (event !== "SIGNED_IN") {
+        if (!session) {
+          nav("/");
+        } else {
+          nav("/products-sidebar");
+        }
+      }
+    }); */
+  }, []);
 
   return (
     <>

@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import SlideImage1 from "../../assets/images/main-slider/1.jpg";
+import SlideImage1 from "../../assets/images/main-slider/bg.jpg";
 import MainImage from "../../assets/images/main-slider/main.png";
 import Bulb from "../../assets/images/main-slider/icon/shape-01.png";
 import Circle2 from "../../assets/images/main-slider/icon/icon-paper-pin.png";

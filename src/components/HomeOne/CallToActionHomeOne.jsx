@@ -25,8 +25,10 @@ function CallToAction({ className }) {
                   En breve nos pondremos <br />
                   en contacto
                 </h1>
-                <Link to="/course-details" className="theme-btn btn-style-one">
-                  <span className="btn-title">Get started now</span>
+                <Link to="/" className="theme-btn btn-style-three">
+                  <span className="theme-btn btn-style-one bg-theme-color2 pointer">
+                    Volver a la página principal
+                  </span>
                 </Link>
               </div>
             </div>

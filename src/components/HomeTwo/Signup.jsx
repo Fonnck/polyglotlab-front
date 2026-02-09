@@ -8,65 +8,17 @@ import France from "../../assets/images/france.png";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useSignInStore, useSignUp } from "../../hooks/useSignUp";
 
 function SignupSectionTwo() {
-  // const { itsboy, setItsBoy, english, setEnglish } = useSignInStore();
-  const [itsboy, setItsboy] = useState(true);
-  const [english, setEnglish] = useState("english");
-  const nav = useNavigate();
+  const { itsboy, setItsboy, english, setEnglish, validate, signUp } =
+    useSignUp();
   const sectionRef = useRef(null);
   const setSectionRef = useScrollStore((state) => state.setSectionRef);
 
   useEffect(() => {
     setSectionRef(sectionRef);
   }, [setSectionRef]);
-
-  const validate = (values) => {
-    const errors = {};
-
-    if (!values.first_name) {
-      errors.first_name = "Necesitamos saber tu nombre";
-    } else if (values.first_name.length < 2) {
-      errors.first_name = "Tu nombre debe tener al menos 2 caracteres";
-    }
-
-    if (!values.last_name) {
-      errors.last_name = "Necesitamos saber tu apellido";
-    } else if (values.last_name.length < 2) {
-      errors.last_name = "Tu apellido debe tener al menos 2 caracteres";
-    }
-
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      errors.email = "Correo electrónico inválido";
-    }
-
-    if (!values.phone) {
-      errors.phone = "Necesitamos tu número de celular";
-    } else if (values.phone.toString().length < 7) {
-      errors.phone = "Número de celular demasiado corto";
-    } else if (values.phone.toString().length > 15) {
-      errors.phone = "Número de celular demasiado largo";
-    }
-
-    if (!values.identification) {
-      errors.identification = "Necesitamos tu número de identificación";
-    } else if (values.identification.length < 5) {
-      errors.identification = "Número de identificación demasiado corto";
-    } else if (values.identification.length > 20) {
-      errors.identification = "Número de identificación demasiado largo";
-    }
-
-    if (!values.child_name) {
-      errors.child_name =
-        "Necesitamos saber el nombre de tu " + (itsboy ? "niño 👦🏻" : "niña 👧🏻");
-    } else if (values.child_name.length < 2) {
-      errors.child_name = `El nombre de tu ${itsboy ? "niño 👦🏻" : "niña 👧🏻"} debe tener al menos 2 caracteres`;
-    }
-    if (!values.child_age) {
-      errors.child_age = `Necesitamos saber la edad de tu ${itsboy ? "niño 👦🏻" : "niña 👧🏻"}`;
-    }
-    return errors;
-  };
 
   const { handleChange, handleSubmit, values, errors } = useFormik({
     initialValues: {
@@ -80,9 +32,9 @@ function SignupSectionTwo() {
       gender: itsboy ? "boy" : "girl",
       language: english ? "english" : "french",
     },
-    onSubmit: (values) => {
-      values && toast.success("¡Inscripción enviada con éxito!");
-      nav("/thank-you");
+    onSubmit: async (values) => {
+      console.log(values);
+      signUp(values);
     },
     validate,
   });

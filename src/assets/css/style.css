@@ -1578,9 +1578,9 @@ Scroll To Top style
 ***/
 .anim-icons {
   position: absolute;
-  left: 0;
+  left: -310px;
   top: 0;
-  right: -280px;
+  right: -310px;
   height: 100%;
   width: 100%;
   max-width: 1170px;
@@ -6469,7 +6469,7 @@ Section Title
 }
 .call-to-action .icon-calculator {
   top: -50px;
-  left: -410px;
+  left: -270px;
 }
 .call-to-action .icon-pin-clip {
   left: -320px;

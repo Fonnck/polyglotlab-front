@@ -10,10 +10,13 @@ import HomeTwoHeader from "../HomeTwo/HomeTwoHeader.jsx";
 import Loader from "../Helper/Loader.jsx";
 import FooterHomeOne from "../HomeOne/FooterHomeOne.jsx";
 import BackToTop from "../BackToTop.jsx";
+import ReactConfetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
 function Grace({ className }) {
   const [drawer, drawerAction] = useToggle(false);
   const [loading, setLoading] = useState(true);
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     setTimeout(() => {
@@ -23,6 +26,12 @@ function Grace({ className }) {
 
   return (
     <>
+      <ReactConfetti
+        width={width}
+        height={height}
+        numberOfPieces={500}
+        style={{ zIndex: "10" }}
+      />
       {loading && (
         <div className={`appie-loader ${loading ? "active" : ""}`}>
           <Loader />
