@@ -34,7 +34,11 @@ function SignupSectionTwo() {
     },
     onSubmit: async (values) => {
       console.log(values);
-      signUp(values);
+      signUp({
+        ...values,
+        gender: itsboy ? "boy" : "girl",
+        language: english ? "english" : "french",
+      });
     },
     validate,
   });
@@ -266,7 +270,11 @@ function SignupSectionTwo() {
                       type="submit"
                       name="submit-form"
                       onClick={() => {
-                        errors && toast.error(Object.entries(errors)[0][1]);
+                        errors &&
+                          toast.error(
+                            Object.entries(errors)[0][1] &&
+                              Object.entries(errors)[0][1],
+                          );
                       }}
                     >
                       Enviar inscripción a {english ? "Inglés!" : "Francés!"}

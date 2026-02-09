@@ -83,36 +83,6 @@ export const useSignUp = () => {
     }
   };
 
-  const createStudent = async (values, parent_id) => {
-    setLoading(true);
-    try {
-      const result = await supabase
-        .from("students")
-        .insert({
-          user_id: parent_id,
-          first_name: values.child_name,
-          age: values.child_age,
-          language: values.language,
-          gender: values.gender,
-        })
-        .then((response) => {
-          if (response.error) {
-            setLoading(false);
-            throw response.error;
-          }
-          console.log("response: ", response);
-          response.data && toast.success("¡Estudiante Creado!");
-          nav("/thank-you");
-          /* return response.data; */
-        });
-      console.log("result: ", result);
-    } catch (error) {
-      setLoading(false);
-      toast.error("Error al enviar la inscripción");
-      console.error("Error inserting data: ", error);
-    }
-  };
-
   const createUser = async (values) => {
     setLoading(true);
     try {
@@ -127,12 +97,47 @@ export const useSignUp = () => {
           password: values.identification + "",
           role: "customer",
         })
-        .select();
-      if (result.data) {
-        console.log("response: ", result);
-        result.error === null && toast.success("¡Usuario Creado!");
-        // createStudent(values, result.data.id);
-      }
+        .select()
+        .then((response) => {
+          if (response.data !== null) {
+            console.log("response: ", response);
+            response.error === null && toast.success("¡Usuario Creado!");
+            createStudent(values, response.data[0].id);
+          }
+        });
+    } catch (error) {
+      setLoading(false);
+      toast.error("Error al enviar la inscripción");
+      console.error("Error inserting data: ", error);
+    }
+  };
+
+  const createStudent = async (values, parent_id) => {
+    setLoading(true);
+    console.log(parent_id);
+    try {
+      const result = await supabase
+        .from("students")
+        .insert({
+          user_id: parent_id,
+          first_name: values.child_name,
+          last_name: values.last_name,
+          age: values.child_age,
+          language: values.language,
+          gender: values.gender,
+        })
+        .select()
+        .then((response) => {
+          if (response.error) {
+            setLoading(false);
+            throw response.error;
+          }
+          setLoading(false);
+          console.log("response: ", response);
+          response.data !== null && toast.success("¡Estudiante Creado!");
+          response.data !== null && nav("/thank-you");
+          /* return response.data; */
+        });
       console.log("result: ", result);
     } catch (error) {
       setLoading(false);
