@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
@@ -7,11 +9,17 @@ import StickyHeader from "../../lib/StickyMenu.js";
 import Navigation from "../Navigation.jsx";
 import MobileMenu from "../MobileMenu.jsx";
 import SingleMenu1 from "../SingleMenu1.jsx";
+import { useScrollStore } from "../../hooks/useScrollSrore.js";
+import { scrollWithOffset } from "../../hooks/utils/index.js";
+import { useSignInStore } from "../../hooks/useSignUp.js";
+import toast from "react-hot-toast";
 
 function Header({ className = "", scroll = false }) {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchPopupOpen, setSearchPopupOpen] = useState(false);
   const [isDarkMode, setDarkMode] = useState(false);
+  const { sectionRef } = useScrollStore()
+  const { setWannaLogIn } = useSignInStore()
 
   useEffect(() => {
     StickyHeader();
@@ -44,6 +52,13 @@ function Header({ className = "", scroll = false }) {
     setSearchPopupOpen(false);
     document.body.classList.remove("mobile-search-active");
   };
+
+  const onRegister = () => {
+    toast.success('touched')
+    setWannaLogIn(true);
+    scrollWithOffset(sectionRef, 10);
+  }
+
   return (
     <>
       <header className={`main-header header-style-two ${className || ""}`}>
@@ -61,8 +76,8 @@ function Header({ className = "", scroll = false }) {
                   <li>
                     <Link to="#">Login</Link>
                   </li>
-                  <li>
-                    <Link to="#">Register</Link>
+                  <li onClick={() => onRegister()}>
+                    <Link to={'/#sregister'}>Register</Link>
                   </li>
                 </ul>
                 <ul className="social-icon-one light">

@@ -10,6 +10,8 @@ import Navigation from "../Navigation.jsx";
 import MobileMenu from "../MobileMenu.jsx";
 import { useScrollStore } from "../../hooks/useScrollSrore.js";
 import { scrollWithOffset } from "../../hooks/utils/index.js";
+import toast from "react-hot-toast";
+import { useSignInStore } from "../../hooks/useSignUp.js";
 
 function Header({ className = "", scroll = false }) {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -50,7 +52,16 @@ function Header({ className = "", scroll = false }) {
     document.body.classList.remove("mobile-search-active");
   };
 
-  const sectionRef = useScrollStore((state) => state.sectionRef);
+  const {sectionRef, setWannaLogIn} = useScrollStore();
+
+  const onLogin = () => {
+    setWannaLogIn(true);
+    scrollWithOffset(sectionRef.current, 11);
+  }
+
+  const onRegister = () => {
+    scrollWithOffset(sectionRef.current, 11);
+  }
 
   return (
     <>
@@ -66,11 +77,11 @@ function Header({ className = "", scroll = false }) {
               </div>
               <div className="top-right">
                 <ul className="useful-links">
-                  <li>
-                    <Link to="#">&nbsp;&nbsp;&nbsp;Login</Link>
+                  <li className="pointer" onClick={() => onLogin()}>
+                    &nbsp;&nbsp;&nbsp;Login
                   </li>
-                  <li>
-                    <Link to="#">Register</Link>
+                  <li className="pointer" onClick={() => onRegister()}>
+                    Register
                   </li>
                 </ul>
                 <ul className="social-icon-one light">

@@ -68,6 +68,7 @@ export const useSignUp = () => {
           password: "2d6ef242fm..-",
         })
         .then((response) => {
+          setLoading(false);
           if (response.error) {
             setLoading(false);
             throw response.error;
@@ -78,8 +79,8 @@ export const useSignUp = () => {
         });
     } catch (error) {
       setLoading(false);
-      toast.error("Error al enviar la inscripción");
-      console.error("Error inserting data: ", error);
+      toast.error("Error al enviar la inscripción: " + error.message);
+      console.error("Error inserting data: ", error.message);
     }
   };
 
@@ -99,6 +100,7 @@ export const useSignUp = () => {
         })
         .select()
         .then((response) => {
+          setLoading(false);
           if (response.data !== null) {
             console.log("response: ", response);
             response.error === null && toast.success("¡Usuario Creado!");
@@ -107,8 +109,8 @@ export const useSignUp = () => {
         });
     } catch (error) {
       setLoading(false);
-      toast.error("Error al enviar la inscripción");
-      console.error("Error inserting data: ", error);
+      toast.error("Error al enviar la inscripción: " + error.message);
+      console.error("Error inserting data: ", error.message);
     }
   };
 
@@ -128,21 +130,19 @@ export const useSignUp = () => {
         })
         .select()
         .then((response) => {
+          setLoading(false);
           if (response.error) {
-            setLoading(false);
             throw response.error;
           }
-          setLoading(false);
           console.log("response: ", response);
           response.data !== null && toast.success("¡Estudiante Creado!");
           response.data !== null && nav("/thank-you");
-          /* return response.data; */
         });
       console.log("result: ", result);
     } catch (error) {
       setLoading(false);
-      toast.error("Error al enviar la inscripción");
-      console.error("Error inserting data: ", error);
+      toast.error("Error al enviar la inscripción: /n" + error.message);
+      console.error("Error inserting data: ", error.message);
     }
   };
 

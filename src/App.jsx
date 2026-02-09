@@ -1,8 +1,9 @@
 import Router from "./Router.jsx";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Loader from "./components/Helper/Loader.jsx";
 import { Toaster } from "react-hot-toast";
 import { useLoader } from "./hooks/useLoader.js";
+import { useScrollStore } from "./hooks/useScrollSrore.js";
 
 function App() {
   const { loading, setLoading } = useLoader();
@@ -10,6 +11,13 @@ function App() {
     setTimeout(() => {
       setLoading(false);
     }, 2000);
+  }, []);
+
+  const {setSectionRef} = useScrollStore()
+
+  const sectionRef = useRef(null);
+  useEffect(() => {
+    setSectionRef(sectionRef);
   }, []);
 
   return (
