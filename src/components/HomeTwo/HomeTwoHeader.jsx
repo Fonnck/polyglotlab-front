@@ -52,13 +52,13 @@ function Header({ className = "", scroll = false }) {
     document.body.classList.remove("mobile-search-active");
   };
 
-  const {sectionRef, setWannaLogIn} = useScrollStore();
+  const { sectionRef, setWannaLogIn } = useScrollStore();
 
   const onLogin = () => {
     setWannaLogIn(true);
     scrollWithOffset(sectionRef.current, 11);
   }
-  
+
   const onRegister = () => {
     setWannaLogIn(false);
     scrollWithOffset(sectionRef.current, 11);
@@ -181,7 +181,10 @@ function Header({ className = "", scroll = false }) {
 
                     <div
                       className="theme-btn btn-style-two pointer"
-                      onClick={() => scrollWithOffset(sectionRef.current, 11)}
+                      onClick={() => {
+                        setWannaLogIn(false);
+                        scrollWithOffset(sectionRef.current, 11)
+                      }}
                     >
                       <span className="btn-title">Inscribirsesss</span>
                     </div>
@@ -299,7 +302,7 @@ function Header({ className = "", scroll = false }) {
             </div>
           </div>
         </div>
-      </header>
+      </header >
     </>
   );
 }

@@ -3,13 +3,15 @@ import { useState } from "react";
 import { create } from "zustand";
 import { useLoader } from "./useLoader";
 import { supabase } from "../supabase/client";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useScrollStore } from "./useScrollSrore";
+import toast from "react-hot-toast";
 
 export const useSignUp = () => {
   const [itsboy, setItsboy] = useState(true);
   const [english, setEnglish] = useState("english");
   const { setLoading } = useLoader();
+
   const nav = useNavigate();
 
   const validate = (values) => {
@@ -179,6 +181,133 @@ export const useSignUp = () => {
     }
   };
 
+  const getUser = async (
+    email,
+    identification
+  ) => {
+    setLoading(true);
+    try {
+      await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email)
+        .eq('identification', identification)
+        .then((response) => {
+          console.log('This is the response', response.data[0]);
+          setLoading(false)
+          if (response.data.length > 0) {
+            console.log('Enviando a: ' + response.data[0].email);
+            console.log('Enviando a: ' + response.data[0].identification);
+            signInWithPassword(response.data[0].email, "2d6ef242fm..-",)
+            return response.data;
+          } else {
+            console.log('error: ' + response.error);
+            throw 'Credenciales Incorrectas o Usuario NO registrado';
+          }
+        });
+    } catch (error) {
+      setLoading(false);
+      toast.error(error);
+      console.error("Error LogIn data: ", error);
+    }
+  };
+
+  const getMagicLink = async (
+    email
+  ) => {
+    setLoading(true);
+    try {
+      await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+          // set this to false if you do not want the user to be automatically signed up
+          shouldCreateUser: false,
+          emailRedirectTo: 'https://polyglotlabacademy.com/products-sidebar',
+        },
+      })
+        .then((response) => {
+          console.log('This is the response MagicLink', response);
+          setLoading(false)
+          if (response.error === null) {
+            console.log('datas: ' + response.data);
+            toast.success('Link de inicio de sesión enviado éxitosamente!')
+            return response.data;
+          } else {
+            console.log('error: ' + response.error);
+            throw 'Credenciales Incorrectas o Usuario NO registrado';
+          }
+        });
+    } catch (error) {
+      setLoading(false);
+      toast.error(error);
+      console.error("Error LogIn data: ", error);
+    }
+  };
+
+  const signInWithPassword = async (
+    email,
+    password
+  ) => {
+    setLoading(true);
+    try {
+      await supabase.auth.signInWithPassword({
+        email,
+        password
+      })
+        .then((response) => {
+          console.log('This is the response MagicLink', response);
+          setLoading(false)
+          if (response.data.user) {
+            console.log('datas: ' + response.data);
+            toast.success('Inicio de sesión éxitosamente!')
+            nav('/products-sidebar')
+            return response.data;
+          } else {
+            console.log('error: ' + response.error);
+            throw 'Credenciales Incorrectas o Usuario NO registrado';
+          }
+        });
+    } catch (error) {
+      setLoading(false);
+      toast.error(error);
+      console.error("Error LogIn data: ", error);
+    }
+  };
+
+
+  const logIn = async ({ email, identification }) => {
+    setLoading(true);
+    try {
+      getUser(email, identification);
+      /* await supabase.auth.signInWithPassword({
+        email,
+        password
+      })
+        .then(({ data, error }) => {
+          console.log('This is the response', { data, error });
+          setLoading(false);
+          if (error === null) {
+            console.log('dataUser', data);
+          } else {
+            console.log('LogIn Error: ', error);
+            toast.error('LogIn Error: ', error.message)
+            throw error;
+          }
+        }) */
+    } catch (error) {
+      setLoading(false);
+      toast.error('LogIn Error: ', error)
+    }
+  }
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error('Error al cerrar sesión:', error.message);
+    }
+  };
+
   return {
     itsboy,
     setItsboy,
@@ -186,6 +315,8 @@ export const useSignUp = () => {
     setEnglish,
     validate,
     signUp,
+    logIn,
+    signOut,
     validateLogIn
   };
 };

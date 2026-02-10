@@ -29,9 +29,9 @@ function HomeTwo() {
   const nav = useNavigate();
 
   useEffect(() => {
-    /* supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange((event, session) => {
       console.log(event);
-
+      console.log(session);
       if (event !== "SIGNED_IN") {
         if (!session) {
           nav("/");
@@ -39,7 +39,7 @@ function HomeTwo() {
           nav("/products-sidebar");
         }
       }
-    }); */
+    });
   }, []);
 
   return (

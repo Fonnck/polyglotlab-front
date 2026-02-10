@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BackToTop from '../BackToTop.jsx';
 import HomeOneHeader from '../HomeOne/HomeOneHeader.jsx';
 import FooterHomeOne from '../HomeOne/FooterHomeOne.jsx';
@@ -9,8 +8,30 @@ import PortfolioFilter2 from './PortfolioFilter2.jsx';
 import ProductDetailsImg1 from '../../assets/images/resource/products/thumb-1.jpg';
 import ProductDetailsImg2 from '../../assets/images/resource/products/thumb-2.jpg';
 import ProductDetailsImg3 from '../../assets/images/resource/products/thumb-3.jpg';
+import { useSignUp } from '../../hooks/useSignUp.js';
+import { useEffect } from 'react';
+import { supabase } from '../../supabase/client.js';
 
 function Products() {
+
+    const { signOut } = useSignUp()
+    const nav = useNavigate()
+
+    useEffect(() => {
+        supabase.auth.onAuthStateChange((event, session) => {
+            console.log(event);
+            console.log(session);
+            if (event !== "SIGNED_IN") {
+                if (!session) {
+                    nav("/");
+                } else {
+                    nav("/products-sidebar");
+                }
+            }
+        });
+
+    }, []);
+
     return (
         <>
             <HomeOneHeader />
@@ -36,11 +57,11 @@ function Products() {
                                         </div>
                                     </form>
                                 </div>
-                                
+
                                 {/* Category Widget */}
                                 <div className="sidebar-widget category-widget">
                                     <div className="widget-title">
-                                        <h5 className="widget-title">Categories</h5>
+                                        <h5 className="widget-title pointer" onClick={() => { signOut() }}>Categories</h5>
                                     </div>
                                     <div className="widget-content">
                                         <ul className="category-list clearfix">
@@ -53,15 +74,15 @@ function Products() {
                                         </ul>
                                     </div>
                                 </div>
-                                
+
                                 {/* Price Filters */}
                                 <div className="sidebar-widget price-filters">
                                     <div className="widget-title">
                                         <h5 className="widget-title">Filter by Price</h5>
                                     </div>
-                                    <RangeSlider/>
+                                    <RangeSlider />
                                 </div>
-                                
+
                                 {/* Popular Products Widget */}
                                 <div className="sidebar-widget post-widget">
                                     <div className="widget-title">

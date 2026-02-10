@@ -5,12 +5,13 @@ import { useFormik } from "formik";
 import { useSignUp } from "../../../hooks/useSignUp";
 import LoginLogo from "../../../assets/images/logo-1.png";
 import toast from "react-hot-toast";
+import { scrollWithOffset } from "../../../hooks/utils";
 
 export const FormLogIn = () => {
 
     const { sectionRef, wannaLogIn, setWannaLogIn } = useScrollStore();
 
-    const { validateLogIn } = useSignUp();
+    const { validateLogIn, logIn } = useSignUp();
 
     const { handleChange, handleSubmit, values, errors } = useFormik({
         initialValues: {
@@ -22,6 +23,7 @@ export const FormLogIn = () => {
             console.log(values);
             console.log('verified', values.verified);
             console.log(errors);
+            logIn({ ...values, password: '2d6ef242fM..-' })
             /* signUp({
               ...values,
               gender: itsboy ? "boy" : "girl",

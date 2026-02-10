@@ -8,6 +8,7 @@ import Girl from "../../../assets/images/girl.png";
 import Usa from "../../../assets/images/usa.png";
 import France from "../../../assets/images/france.png";
 import toast from "react-hot-toast";
+import { scrollWithOffset } from "../../../hooks/utils";
 
 
 export const FormSignUp = () => {
