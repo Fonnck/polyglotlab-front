@@ -15,6 +15,16 @@ export const useSignUp = () => {
   const validate = (values) => {
     const errors = {};
 
+    if (!values.child_name) {
+      errors.child_name =
+        "Necesitamos saber el nombre de tu " + (itsboy ? "niño 👦🏻" : "niña 👧🏻");
+    } else if (values.child_name.length < 2) {
+      errors.child_name = `El nombre de tu ${itsboy ? "niño 👦🏻" : "niña 👧🏻"} debe tener al menos 2 caracteres`;
+    }
+    if (!values.child_age) {
+      errors.child_age = `Necesitamos saber la edad de tu ${itsboy ? "niño 👦🏻" : "niña 👧🏻"}`;
+    }
+
     if (!values.first_name) {
       errors.first_name = "Necesitamos saber tu nombre";
     } else if (values.first_name.length < 2) {
@@ -46,17 +56,44 @@ export const useSignUp = () => {
     } else if (values.identification.length > 20) {
       errors.identification = "Número de identificación demasiado largo";
     }
+    console.log(values.verified);
 
-    if (!values.child_name) {
-      errors.child_name =
-        "Necesitamos saber el nombre de tu " + (itsboy ? "niño 👦🏻" : "niña 👧🏻");
-    } else if (values.child_name.length < 2) {
-      errors.child_name = `El nombre de tu ${itsboy ? "niño 👦🏻" : "niña 👧🏻"} debe tener al menos 2 caracteres`;
+    if (!values.verified) {
+      errors.verified = `Debes aceptar los términos y condiciones, antes de continuar`;
     }
-    if (!values.child_age) {
-      errors.child_age = `Necesitamos saber la edad de tu ${itsboy ? "niño 👦🏻" : "niña 👧🏻"}`;
-    }
+
     return errors;
+  };
+  const validateLogIn = (values) => {
+    const logInErrors = {};
+
+    console.log('doinggg', values);
+
+
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      logInErrors.email = "Correo electrónico inválido";
+    }
+
+    if (!values.identification) {
+      logInErrors.identification = "Necesitamos tu número de identificación";
+    } else if (values.identification.length < 5) {
+      logInErrors.identification = "Número de identificación demasiado corto";
+    } else if (values.identification.length > 20) {
+      logInErrors.identification = "Número de identificación demasiado largo";
+    }
+
+    console.log(values.verified);
+
+    if (!values.verified) {
+      logInErrors.verified = `Debes aceptar los términos y condiciones, antes de continuar`;
+    }
+
+    toast.error(
+      Object.entries(logInErrors)[0][1] &&
+      Object.entries(logInErrors)[0][1],
+    );
+
+    return logInErrors;
   };
 
   const signUp = async (values) => {
@@ -153,6 +190,7 @@ export const useSignUp = () => {
     setEnglish,
     validate,
     signUp,
+    validateLogIn
   };
 };
 

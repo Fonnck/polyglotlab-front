@@ -60,7 +60,7 @@ function AboutSection({ className }) {
               <figure className="image-1 overlay-anim wow fadeInUp">
                 <img src={aboutImage1} alt="About 1" />
               </figure>
-              <figure className="image-2 overlay-anim wow fadeInRight">
+              <figure className="image-2 overlay-anim wow fadeInRight zoom-one">
                 <img src={aboutImage2} alt="About 2" />
               </figure>
               <div className="experience bounce-y">

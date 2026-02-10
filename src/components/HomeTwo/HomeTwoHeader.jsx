@@ -58,8 +58,9 @@ function Header({ className = "", scroll = false }) {
     setWannaLogIn(true);
     scrollWithOffset(sectionRef.current, 11);
   }
-
+  
   const onRegister = () => {
+    setWannaLogIn(false);
     scrollWithOffset(sectionRef.current, 11);
   }
 
