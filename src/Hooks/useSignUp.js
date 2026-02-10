@@ -25,6 +25,14 @@ export const useSignUp = () => {
       errors.child_age = `Necesitamos saber la edad de tu ${itsboy ? "niño 👦🏻" : "niña 👧🏻"}`;
     }
 
+    if (!values.identification) {
+      errors.identification = "Necesitamos tu número de identificación";
+    } else if (values.identification.length < 5) {
+      errors.identification = "Número de identificación demasiado corto";
+    } else if (values.identification.length > 20) {
+      errors.identification = "Número de identificación demasiado largo";
+    }
+
     if (!values.first_name) {
       errors.first_name = "Necesitamos saber tu nombre";
     } else if (values.first_name.length < 2) {
@@ -49,13 +57,6 @@ export const useSignUp = () => {
       errors.phone = "Número de celular demasiado largo";
     }
 
-    if (!values.identification) {
-      errors.identification = "Necesitamos tu número de identificación";
-    } else if (values.identification.length < 5) {
-      errors.identification = "Número de identificación demasiado corto";
-    } else if (values.identification.length > 20) {
-      errors.identification = "Número de identificación demasiado largo";
-    }
     console.log(values.verified);
 
     if (!values.verified) {
@@ -87,11 +88,6 @@ export const useSignUp = () => {
     if (!values.verified) {
       logInErrors.verified = `Debes aceptar los términos y condiciones, antes de continuar`;
     }
-
-    toast.error(
-      Object.entries(logInErrors)[0][1] &&
-      Object.entries(logInErrors)[0][1],
-    );
 
     return logInErrors;
   };

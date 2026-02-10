@@ -1,13 +1,11 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
 import { useScrollStore } from "../../hooks/useScrollSrore";
 import { FormSignUp } from "./components/FormSignUp";
 import { FormLogIn } from "./components/FormLogIn";
 
 function SignupSectionTwo() {
 
-  const { sectionRef, wannaLogIn, setWannaLogIn } = useScrollStore();
-  const [verified, setVerified] = useState(false)
+  const { wannaLogIn } = useScrollStore();
+
 
   return (
     <section className="signup-section-two">
