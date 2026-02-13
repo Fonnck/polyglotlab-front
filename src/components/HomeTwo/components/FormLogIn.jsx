@@ -74,9 +74,9 @@ export const FormLogIn = () => {
                         <div className="form-group">
                             <input
                                 className="solid_input"
-                                type="text"
+                                type="password"
                                 name="identification"
-                                placeholder="No. identificación *"
+                                placeholder="Contraseña *"
                                 required
                                 value={values.identification}
                                 onChange={handleChange}
@@ -118,13 +118,13 @@ export const FormLogIn = () => {
                         <div className="d-flex mt-5 justify-content-between">
                             <small>
                                 <small>
-                                    Hecho con ♥️✨ por
+                                    | Diseñado por
                                     <a
                                         className="text-muted"
                                         target="_blank"
                                         href="codexdiamonds.com"
                                     >
-                                        &nbsp;CodexDiamonds
+                                        &nbsp;CodexDiamonds✨
                                     </a>
                                 </small>
                             </small>

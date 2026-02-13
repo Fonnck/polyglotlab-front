@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Link, useNavigate } from 'react-router-dom';
 import BackToTop from '../BackToTop.jsx';
 import HomeOneHeader from '../HomeOne/HomeOneHeader.jsx';
@@ -14,11 +15,11 @@ import { supabase } from '../../supabase/client.js';
 
 function Products() {
 
-    const { signOut } = useSignUp()
-    const nav = useNavigate()
+    const { signOut } = useSignUp();
+    const nav = useNavigate();
 
     useEffect(() => {
-        supabase.auth.onAuthStateChange((event, session) => {
+        /* supabase.auth.onAuthStateChange((event, session) => {
             console.log(event);
             console.log(session);
             if (event !== "SIGNED_IN") {
@@ -28,8 +29,7 @@ function Products() {
                     nav("/products-sidebar");
                 }
             }
-        });
-
+        }); */
     }, []);
 
     return (

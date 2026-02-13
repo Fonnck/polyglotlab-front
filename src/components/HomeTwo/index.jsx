@@ -52,11 +52,11 @@ function HomeTwo() {
       <SignupSectionTwo />
       <AboutHomeOne />
       <ClientHomeOne />
-      {/* <AboutHomeTwo /> */}
+      <AboutHomeTwo />
       <FunFactSection />
       {/* <CoursesSectionTwo /> */}
       {/* <PricingSection /> */}
-      {/* <GallerySection /> */}
+      <GallerySection />
       <FeatureHomeTwo />
       <FaqSection />
       {/*   */}

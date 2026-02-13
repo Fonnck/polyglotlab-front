@@ -10,6 +10,7 @@ import Bulb from "../../assets/images/main-slider/icon/shape-01.png";
 import Circle2 from "../../assets/images/main-slider/icon/icon-paper-pin.png";
 import { scrollWithOffset } from "../../hooks/utils";
 import { useScrollStore } from "../../hooks/useScrollSrore";
+import { Link } from "react-router-dom";
 
 const swiperOptions = {
   modules: [Autoplay, Pagination, Navigation],
@@ -78,7 +79,7 @@ function BannerSection() {
             </div>
           </div>
         </SwiperSlide>
-        {/* <SwiperSlide className="slide-item">
+        <SwiperSlide className="slide-item">
           <div
             className="bg-image"
             style={{ backgroundImage: `url(${SlideImage1})` }}
@@ -121,14 +122,14 @@ function BannerSection() {
                   <figure className="cirkle cirkle-2 animate-circle">
                     <img src={Circle2} alt="Circle Icon 2" />
                   </figure>
-                  <figure className="cirkle cirkle-3 animate-circle">
+                  {/* <figure className="cirkle cirkle-3 animate-circle">
                     <img src={Circle3} alt="Circle Icon 3" />
-                  </figure>
+                  </figure> */}
                 </div>
               </div>
             </div>
           </div>
-        </SwiperSlide> */}
+        </SwiperSlide>
       </Swiper>
     </section>
   );

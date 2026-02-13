@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
+import { scrollWithOffset } from "../hooks/utils";
+import { useScrollStore } from "../hooks/useScrollSrore";
 
 function Navigation() {
+
+  const { sectionRef } = useScrollStore()
+
   return (
     <ul className="navigation">
       <li className="current dropdown">
-        <Link to="/">Home</Link>
-        <ul>
+        <Link to="/">Inicio</Link>
+        {/* <ul>
           <li>
             <Link to="/">Home page 01</Link>
           </li>
@@ -35,11 +40,11 @@ function Navigation() {
               </li>
             </ul>
           </li>
-        </ul>
+        </ul> */}
       </li>
       <li className="dropdown">
-        <Link to="#">Pages</Link>
-        <ul>
+        <Link to="#">Cursos</Link>
+        {/* <ul>
           <li>
             <Link to="/about-us">About</Link>
           </li>
@@ -66,22 +71,11 @@ function Navigation() {
           <li>
             <Link to="/error">Page 404</Link>
           </li>
-        </ul>
+        </ul> */}
       </li>
       <li className="dropdown">
-        <Link to="#">Courses</Link>
-        <ul>
-          <li>
-            <Link to="/course">Courses List</Link>
-          </li>
-          <li>
-            <Link to="/course-details">Course Details</Link>
-          </li>
-        </ul>
-      </li>
-      <li className="dropdown">
-        <Link to="#">Shop</Link>
-        <ul>
+        <Link to="#">Contacto</Link>
+        {/* <ul>
           <li>
             <Link to="/products">Products</Link>
           </li>
@@ -97,21 +91,18 @@ function Navigation() {
           <li>
             <Link to="/checkout">Checkout</Link>
           </li>
-        </ul>
+        </ul> */}
       </li>
       <li className="dropdown">
-        <Link to="#">News</Link>
-        <ul>
+        <Link to="#">Términos y Condiciones</Link>
+        {/* <ul>
           <li>
             <Link to="/news">News Grid</Link>
           </li>
           <li>
             <Link to="/news-details">News Details</Link>
           </li>
-        </ul>
-      </li>
-      <li>
-        <Link to="/contact">Contact</Link>
+        </ul> */}
       </li>
     </ul>
   );

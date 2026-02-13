@@ -29,7 +29,7 @@ function SignupSectionTwo() {
                   Un nuevo
                   <span style={{ color: "#ffae1e" }}>{" Idioma "}</span>
                   está a punto de convertirse en tu
-                  <span style={{ color: "#ffae1e" }}>{" Superpoder."}</span>
+                  <span style={{ color: "#ffae1e" }}>{" Superpoder"}</span>
                 </h2>
                 <div
                   className="text"

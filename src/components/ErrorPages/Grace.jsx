@@ -28,7 +28,7 @@ function Grace({ className }) {
     <>
       <ReactConfetti
         width={width}
-        height={height}
+        height={2200}
         numberOfPieces={500}
         style={{ zIndex: "10" }}
       />

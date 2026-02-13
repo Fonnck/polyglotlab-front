@@ -245,13 +245,13 @@ export const FormSignUp = () => {
                         <div className="d-flex mt-5 justify-content-between">
                             <small>
                                 <small>
-                                    Hecho con ♥️✨ por
+                                    | Diseñado por
                                     <a
                                         className="text-muted"
                                         target="_blank"
                                         href="https://www.codexdiamonds.com"
                                     >
-                                        &nbsp;CodexDiamonds
+                                        &nbsp;CodexDiamonds✨
                                     </a>
                                 </small>
                             </small>

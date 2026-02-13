@@ -11825,12 +11825,12 @@ Sidebar
   transform: translate(2px, 2px);
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .button-74 {
     min-width: 120px;
     padding: 0 25px;
   }
-}
+} */
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -11840,6 +11840,12 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+@media (max-width: 768px) {
+  .stickers-img {
+    height: 80px; /* altura para celulares */
+  }
 }
 
 .stickers-img {

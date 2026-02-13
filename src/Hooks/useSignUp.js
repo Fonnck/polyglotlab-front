@@ -101,6 +101,9 @@ export const useSignUp = () => {
         .signUp({
           email: values.email,
           password: "2d6ef242fm..-",
+          options: {
+            emailRedirectTo: 'https://polyglotlabacademy/product-sidebar',
+          },
         })
         .then((response) => {
           setLoading(false);
@@ -255,7 +258,6 @@ export const useSignUp = () => {
         password
       })
         .then((response) => {
-          console.log('This is the response MagicLink', response);
           setLoading(false)
           if (response.data.user) {
             console.log('datas: ' + response.data);

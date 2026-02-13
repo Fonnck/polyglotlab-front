@@ -2,8 +2,12 @@
 import { Link } from "react-router-dom";
 import BackgroundImage from "../../assets/images/background/4.jpg";
 import CtaImage from "../../assets/images/resource/schoolchildren.png";
+import { useSignUp } from "../../hooks/useSignUp";
 
 function CallToAction({ className }) {
+
+  const { signOut } = useSignUp()
+
   return (
     <section
       className={`call-to-action ${className || ""}`}
@@ -25,7 +29,7 @@ function CallToAction({ className }) {
                   En breve nos pondremos <br />
                   en contacto
                 </h1>
-                <Link to="/" className="theme-btn btn-style-three">
+                <Link to="/" onClick={() => { signOut() }} className="theme-btn btn-style-three">
                   <span className="theme-btn btn-style-one bg-theme-color2 pointer">
                     Volver a la página principal
                   </span>

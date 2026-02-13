@@ -5,6 +5,10 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import Stickylogo from "../../assets/images/logo.png";
 import MobileLogo from "../../assets/images/logo-2.png";
+import Whatsapp from "../../assets/images/icons/whatsapp.png";
+import Email from "../../assets/images/icons/email.png";
+import Location from "../../assets/images/icons/location.png";
+
 import StickyHeader from "../../lib/StickyMenu.js";
 import Navigation from "../Navigation.jsx";
 import MobileMenu from "../MobileMenu.jsx";
@@ -124,28 +128,39 @@ function Header({ className = "", scroll = false }) {
               </div>
               <ul className="contact-info-outer">
                 <li>
-                  <div className="contact-info-box">
-                    <i className="icon lnr-icon-phone-handset"></i>
-                    <span className="title">Escribenos o llamanos</span>
-                    <Link to="tel:+92880098670" className="text">
-                      + 98 (000) - 9630
-                    </Link>
-                  </div>
+                  <a href="https://wa.link/ri3zlj" target="_blank">
+                    <div className="contact-info-box pointer">
+                      {/* <i className="icon lnr-icon-phone-handset"></i> */}
+                      <img className="icon lnr-icon-phone-handset" src={Whatsapp} alt="wspicon" width={40} />
+                      <span className="title">Escribenos o llamanos</span>
+                      <Link to="https://wa.link/ri3zlj" className="text">
+                        + 57 (315) - 471 86 19
+                      </Link>
+                    </div>
+                  </a>
                 </li>
                 <li>
-                  <div className="contact-info-box">
-                    <i className="icon lnr-icon-envelope1"></i>
-                    <span className="title">Contactanos</span>
-                    <Link to="mailto:ambed@company.com" className="text">
-                      ambed@polyglotlab.com
-                    </Link>
-                  </div>
+                  <a href="mailto:contacto@polyglotlabacademy.com
+        ?subject=Consulta%20sobre%20programas%20de%20idiomas
+        &body=Hola%20Polyglot%20Lab%2C%0A%0AMe%20gustaría%20recibir%20más%20información." target="_blank">
+                    <div className="contact-info-box pointer">
+                      {/* <i className="icon lnr-icon-envelope1"></i> */}
+                      <img className="icon lnr-icon-phone-handset" src={Email} alt="wspicon" width={45} />
+                      <span className="title">Contactanos</span>
+                      <Link to="mailto:ambed@company.com" className="text">
+                        contacto@polyglotlab.com
+                      </Link>
+                    </div>
+                  </a>
                 </li>
                 <li>
-                  <div className="contact-info-box">
-                    <i className="icon lnr-icon-map-marker"></i>
-                    <span className="title">380 ST Kilda Road</span>
-                    <div className="text">Melbourne, Australia</div>
+                  <div className="contact-info-box pointer">
+                    {/* <i className="icon lnr-icon-map-marker"></i> */}
+                    <a href="" target="_blank">
+                      <img className="icon lnr-icon-phone-handset" src={Location} alt="wspicon" width={40} />
+                      <span className="title">Bucaramanga</span>
+                      <div className="text">Bucaramanga, Colombia</div>
+                    </a>
                   </div>
                 </li>
               </ul>
