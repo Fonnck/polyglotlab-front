@@ -1,20 +1,28 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import Stickylogo from "../../assets/images/logo.png";
 import MobileLogo from "../../assets/images/logo-2.png";
+import Whatsapp from "../../assets/images/icons/whatsapp.png";
+import Email from "../../assets/images/icons/email.png";
+import Location from "../../assets/images/icons/location.png";
+
 import StickyHeader from "../../lib/StickyMenu.js";
 import Navigation from "../Navigation.jsx";
 import MobileMenu from "../MobileMenu.jsx";
 import { useScrollStore } from "../../hooks/useScrollSrore.js";
 import { scrollWithOffset } from "../../hooks/utils/index.js";
+import toast from "react-hot-toast";
+import { useSignInStore } from "../../hooks/useSignUp.js";
 
 function Header({ className = "", scroll = false }) {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchPopupOpen, setSearchPopupOpen] = useState(false);
   const [isDarkMode, setDarkMode] = useState(false);
+
+  const { pathname } = useLocation();
 
   useEffect(() => {
     StickyHeader();
@@ -48,7 +56,17 @@ function Header({ className = "", scroll = false }) {
     document.body.classList.remove("mobile-search-active");
   };
 
-  const sectionRef = useScrollStore((state) => state.sectionRef);
+  const { sectionRef, setWannaLogIn } = useScrollStore();
+
+  const onLogin = () => {
+    setWannaLogIn(true);
+    scrollWithOffset(sectionRef.current, 11);
+  }
+
+  const onRegister = () => {
+    setWannaLogIn(false);
+    scrollWithOffset(sectionRef.current, 11);
+  }
 
   return (
     <>
@@ -64,11 +82,11 @@ function Header({ className = "", scroll = false }) {
               </div>
               <div className="top-right">
                 <ul className="useful-links">
-                  <li>
-                    <Link to="#">&nbsp;&nbsp;&nbsp;Login</Link>
+                  <li className="pointer" onClick={() => onLogin()}>
+                    &nbsp;&nbsp;&nbsp;Login
                   </li>
-                  <li>
-                    <Link to="#">Register</Link>
+                  <li className="pointer" onClick={() => onRegister()}>
+                    Register
                   </li>
                 </ul>
                 <ul className="social-icon-one light">
@@ -102,7 +120,7 @@ function Header({ className = "", scroll = false }) {
           <div className="auto-container">
             <div className="inner-container">
               <div className="logo-box">
-                <div className="logo">
+                <div className="logo pointer">
                   <Link to="/">
                     <img src={logo} alt="Logo" />
                   </Link>
@@ -110,28 +128,39 @@ function Header({ className = "", scroll = false }) {
               </div>
               <ul className="contact-info-outer">
                 <li>
-                  <div className="contact-info-box">
-                    <i className="icon lnr-icon-phone-handset"></i>
-                    <span className="title">Escribenos o llamanos</span>
-                    <Link to="tel:+92880098670" className="text">
-                      + 98 (000) - 9630
-                    </Link>
-                  </div>
+                  <a href="https://wa.link/ri3zlj" target="_blank">
+                    <div className="contact-info-box pointer">
+                      {/* <i className="icon lnr-icon-phone-handset"></i> */}
+                      <img className="icon lnr-icon-phone-handset" src={Whatsapp} alt="wspicon" width={40} />
+                      <span className="title">Escribenos o llamanos</span>
+                      <Link to="https://wa.link/ri3zlj" className="text">
+                        + 57 (315) - 471 86 19
+                      </Link>
+                    </div>
+                  </a>
                 </li>
                 <li>
-                  <div className="contact-info-box">
-                    <i className="icon lnr-icon-envelope1"></i>
-                    <span className="title">Contactanos</span>
-                    <Link to="mailto:ambed@company.com" className="text">
-                      ambed@polyglotlab.com
-                    </Link>
-                  </div>
+                  <a href="mailto:contacto@polyglotlabacademy.com
+        ?subject=Consulta%20sobre%20programas%20de%20idiomas
+        &body=Hola%20Polyglot%20Lab%2C%0A%0AMe%20gustaría%20recibir%20más%20información." target="_blank">
+                    <div className="contact-info-box pointer">
+                      {/* <i className="icon lnr-icon-envelope1"></i> */}
+                      <img className="icon lnr-icon-phone-handset" src={Email} alt="wspicon" width={45} />
+                      <span className="title">Contactanos</span>
+                      <Link to="mailto:ambed@company.com" className="text">
+                        contacto@polyglotlab.com
+                      </Link>
+                    </div>
+                  </a>
                 </li>
                 <li>
-                  <div className="contact-info-box">
-                    <i className="icon lnr-icon-map-marker"></i>
-                    <span className="title">380 ST Kilda Road</span>
-                    <div className="text">Melbourne, Australia</div>
+                  <div className="contact-info-box pointer">
+                    {/* <i className="icon lnr-icon-map-marker"></i> */}
+                    <a href="" target="_blank">
+                      <img className="icon lnr-icon-phone-handset" src={Location} alt="wspicon" width={40} />
+                      <span className="title">Bucaramanga</span>
+                      <div className="text">Bucaramanga, Colombia</div>
+                    </a>
                   </div>
                 </li>
               </ul>
@@ -145,34 +174,39 @@ function Header({ className = "", scroll = false }) {
         {/* Header Lower */}
         <div className="header-lower">
           <div className="auto-container">
-            <div className="main-box">
-              <div className="nav-outer">
-                <nav className="nav main-menu">
-                  <Navigation />
-                </nav>
+            {pathname !== "/thank-you" && (
+              <div className="main-box">
+                <div className="nav-outer">
+                  <nav className="nav main-menu">
+                    <Navigation />
+                  </nav>
 
-                <div className="outer-box">
-                  <div className="ui-btn-outer">
-                    <button
-                      className="ui-btn ui-btn search-btn"
-                      onClick={toggleSearchPopup}
+                  <div className="outer-box">
+                    <div className="ui-btn-outer">
+                      <button
+                        className="ui-btn ui-btn search-btn"
+                        onClick={toggleSearchPopup}
+                      >
+                        <span className="icon lnr lnr-icon-search"></span>
+                      </button>
+                      <Link href="/cart" className="ui-btn">
+                        <i className="lnr-icon-shopping-cart"></i>
+                      </Link>
+                    </div>
+
+                    <div
+                      className="theme-btn btn-style-two pointer"
+                      onClick={() => {
+                        setWannaLogIn(false);
+                        scrollWithOffset(sectionRef.current, 11)
+                      }}
                     >
-                      <span className="icon lnr lnr-icon-search"></span>
-                    </button>
-                    <Link href="/cart" className="ui-btn">
-                      <i className="lnr-icon-shopping-cart"></i>
-                    </Link>
-                  </div>
-
-                  <div
-                    className="theme-btn btn-style-two pointer"
-                    onClick={() => scrollWithOffset(sectionRef.current, 11)}
-                  >
-                    <span className="btn-title">Inscribirsesss</span>
+                      <span className="btn-title">Inscribirsesss</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
         {/* Mobile Menu */}
@@ -283,7 +317,7 @@ function Header({ className = "", scroll = false }) {
             </div>
           </div>
         </div>
-      </header>
+      </header >
     </>
   );
 }

@@ -1,17 +1,16 @@
-import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import SlideImage1 from "../../assets/images/main-slider/1.jpg";
-import MainImage from "../../assets/images/main-slider/image-2.jpg";
-import Bulb from "../../assets/images/main-slider/icon/shape-1.png";
+import SlideImage1 from "../../assets/images/main-slider/bg.jpg";
+import MainImage from "../../assets/images/main-slider/main.png";
+import Bulb from "../../assets/images/main-slider/icon/shape-01.png";
 import Circle2 from "../../assets/images/main-slider/icon/icon-paper-pin.png";
-import Circle3 from "../../assets/images/main-slider/icon/icon-circle-3.png";
 import { scrollWithOffset } from "../../hooks/utils";
 import { useScrollStore } from "../../hooks/useScrollSrore";
+import { Link } from "react-router-dom";
 
 const swiperOptions = {
   modules: [Autoplay, Pagination, Navigation],
@@ -66,17 +65,14 @@ function BannerSection() {
               </div>
               <div className="image-column col-lg-5 col-md-6 d-none d-md-block">
                 <div className="image-box">
-                  <figure className="image animate-5 animate-x">
+                  <figure className="image animate-5 zoom-two">
                     <img src={MainImage} alt="Main Image" />
                   </figure>
-                  <figure className="cirkle cirkle-1">
+                  <figure className="cirkle cirkle-1 zoom-two">
                     <img src={Bulb} alt="Bulb Icon" />
                   </figure>
-                  <figure className="cirkle cirkle-2 animate-circle">
+                  <figure className="cirkle cirkle-2 spin-one">
                     <img src={Circle2} alt="Circle Icon 2" />
-                  </figure>
-                  <figure className="cirkle cirkle-3 animate-circle">
-                    <img src={Circle3} alt="Circle Icon 3" />
                   </figure>
                 </div>
               </div>
@@ -126,9 +122,9 @@ function BannerSection() {
                   <figure className="cirkle cirkle-2 animate-circle">
                     <img src={Circle2} alt="Circle Icon 2" />
                   </figure>
-                  <figure className="cirkle cirkle-3 animate-circle">
+                  {/* <figure className="cirkle cirkle-3 animate-circle">
                     <img src={Circle3} alt="Circle Icon 3" />
-                  </figure>
+                  </figure> */}
                 </div>
               </div>
             </div>

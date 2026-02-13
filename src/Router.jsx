@@ -25,6 +25,7 @@ import ProductsSidebar from "./components/ShopPages/ProductsSidebar.jsx";
 import ProductsDetails from "./components/ShopPages/ProductsDetails.jsx";
 import Cart from "./components/ShopPages/Cart.jsx";
 import Checkout from "./components/ShopPages/Checkout.jsx";
+import Grace from "./components/ErrorPages/Grace.jsx";
 
 /** Develop initialized */
 
@@ -132,6 +133,11 @@ const router = createBrowserRouter([
       {
         path: "/pricing",
         element: <Pricing />,
+      },
+
+      {
+        path: "/thank-you",
+        element: <Grace />,
       },
 
       {

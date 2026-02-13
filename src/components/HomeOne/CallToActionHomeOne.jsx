@@ -1,9 +1,13 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import BackgroundImage from "../../assets/images/background/1.jpg";
-import CtaImage from "../../assets/images/resource/cta.png";
+import BackgroundImage from "../../assets/images/background/4.jpg";
+import CtaImage from "../../assets/images/resource/schoolchildren.png";
+import { useSignUp } from "../../hooks/useSignUp";
 
 function CallToAction({ className }) {
+
+  const { signOut } = useSignUp()
+
   return (
     <section
       className={`call-to-action ${className || ""}`}
@@ -20,13 +24,15 @@ function CallToAction({ className }) {
           <div className="title-column col-lg-8">
             <div className="inner-column">
               <div className="sec-title light">
-                <span className="style-font">Get your quality</span>
+                <span className="style-font">¡Gracias por inscribirse!</span>
                 <h1>
-                  Skills certificate <br />
-                  from the edulerns
+                  En breve nos pondremos <br />
+                  en contacto
                 </h1>
-                <Link to="/course-details" className="theme-btn btn-style-one">
-                  <span className="btn-title">Get started now</span>
+                <Link to="/" onClick={() => { signOut() }} className="theme-btn btn-style-three">
+                  <span className="theme-btn btn-style-one bg-theme-color2 pointer">
+                    Volver a la página principal
+                  </span>
                 </Link>
               </div>
             </div>

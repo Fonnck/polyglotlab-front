@@ -1,6 +1,6 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom';
-import PageTitleBackground from '/src/assets/images/background/page-title.jpg';
+import PageTitleBackground from '/src/assets/images/background/home.jpg';
 
 
 function HeroPageTitle({ className, title, breadcrumb = [] }) {
@@ -24,5 +24,4 @@ function HeroPageTitle({ className, title, breadcrumb = [] }) {
     );
 }
 export default HeroPageTitle;
-       
-           
+

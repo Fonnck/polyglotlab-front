@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
 import useToggle from "../../hooks/useToggle.js";
 import BackToTop from "../BackToTop.jsx";
 import FooterHomeOne from "./FooterHomeOne.jsx";

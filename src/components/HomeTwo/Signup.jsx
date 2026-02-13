@@ -1,56 +1,11 @@
-import { useState, useEffect, useRef } from "react";
 import { useScrollStore } from "../../hooks/useScrollSrore";
-import Boy from "../../assets/images/boy.png";
-import Girl from "../../assets/images/girl.png";
-import Usa from "../../assets/images/usa.png";
-import France from "../../assets/images/france.png";
-import { useSignInStore } from "../../hooks/useSignUp";
+import { FormSignUp } from "./components/FormSignUp";
+import { FormLogIn } from "./components/FormLogIn";
 
 function SignupSectionTwo() {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
 
-  const sectionRef = useRef(null);
-  const setSectionRef = useScrollStore((state) => state.setSectionRef);
+  const { wannaLogIn } = useScrollStore();
 
-  const { itsboy, setItsBoy, english, setEnglish } = useSignInStore();
-
-  useEffect(() => {
-    setSectionRef(sectionRef);
-  }, [setSectionRef]);
-
-  const calculateTimeLeft = () => {
-    const targetDate = new Date("2025-02-02T00:00:00");
-    const now = new Date();
-    const difference = targetDate - now;
-
-    if (difference > 0) {
-      setTimeLeft({
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      });
-    } else {
-      setTimeLeft({
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      });
-    }
-  };
-
-  useEffect(() => {
-    const timer = setInterval(calculateTimeLeft, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
 
   return (
     <section className="signup-section-two">
@@ -70,195 +25,33 @@ function SignupSectionTwo() {
           <div className="title-column col-xl-6 col-lg-7 col-md-12 col-sm-12">
             <div className="inner-column">
               <div className="sec-title">
-                <h2>Register now get premium online courses for free!</h2>
-                <div className="text">
+                <h2 style={{ fontSize: "70px" }}>
+                  Un nuevo
+                  <span style={{ color: "#ffae1e" }}>{" Idioma "}</span>
+                  está a punto de convertirse en tu
+                  <span style={{ color: "#ffae1e" }}>{" Superpoder"}</span>
+                </h2>
+                <div
+                  className="text"
+                  style={{ fontSize: "24px", maxWidth: "85%" }}
+                >
                   Lorem ipsum gravida nibh vel velit auctor aliquetnean
                   sollicitudin, lorem quis bibendum auci elit consequat is
                   simply free text available in the psutis sem nibh id eis sed
                   odio sit amet.
                 </div>
               </div>
-              <div className="time-countdown time-counter-two">
-                <div className="time-box time-box-days">
-                  <span>{timeLeft.days}</span> <small>Days</small>
-                </div>
-                <div className="time-box time-box-hours">
-                  <span>{timeLeft.hours}</span> <small>Hours</small>
-                </div>
-                <div className="time-box time-box-minutes">
-                  <span>{timeLeft.minutes}</span> <small>Minutes</small>
-                </div>
-                <div className="time-box time-box-seconds">
-                  <span>{timeLeft.seconds}</span> <small>Seconds</small>
-                </div>
-              </div>
             </div>
           </div>
 
+          {/* Login Form */}
+          {wannaLogIn && (
+            <FormLogIn />
+          )}
           {/* Form Column */}
-          <div
-            className="form-column col-xl-6 col-lg-5 col-md-12 col-sm-12"
-            ref={sectionRef}
-          >
-            <div className="inner-column">
-              {/* Sign Form */}
-              <div className="signup-form-two wow fadeInLeft">
-                <div className="title-box">
-                  <h4 className="title">Inscríbete ahora!</h4>
-                </div>
-                {/* Contact Form */}
-                <form
-                  method=""
-                  action=""
-                  id="contact-form"
-                  className="d-flex flex-column gap-1"
-                >
-                  <small>Información del acudiente</small>
-                  <div className="d-flex gap-2">
-                    <div className="form-group w-50">
-                      <input
-                        className="solid_input"
-                        type="text"
-                        name="full_name"
-                        placeholder="Nombre *"
-                        required
-                      />
-                    </div>
-                    <div className="form-group w-50">
-                      <input
-                        className="solid_input"
-                        type="text"
-                        name="full_name"
-                        placeholder="Apellido *"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <input
-                      className="solid_input"
-                      type="email"
-                      name="Email"
-                      placeholder="Correo electrónico *"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      className="solid_input"
-                      type="number"
-                      name="Phone"
-                      placeholder="Celular *"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      className="solid_input"
-                      type="text"
-                      name="Subject"
-                      placeholder="No. identificación *"
-                      required
-                    />
-                  </div>
-                  <div className="d-flex col-12 gap-3 mt-2">
-                    <div className="d-flex gap-2 w-50">
-                      <div className="form-group w-50">
-                        <img
-                          src={Boy}
-                          className={
-                            "_selector pointer " +
-                            (itsboy ? " _active" : " _noactive")
-                          }
-                          onClick={() => setItsBoy(true)}
-                          type="button"
-                          name="full_name"
-                          placeholder="Boy - Garçon"
-                          required
-                        />
-                      </div>
-                      <div className="form-group w-50">
-                        <img
-                          src={Girl}
-                          className={
-                            "_selector pointer " +
-                            (itsboy ? " _noactive" : " _active")
-                          }
-                          onClick={() => setItsBoy(false)}
-                          type="button"
-                          name="full_name"
-                          placeholder="Boy - Garçon"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="d-flex gap-2 w-50">
-                      <div className="form-group w-50">
-                        <img
-                          src={Usa}
-                          className={
-                            "_selector pointer " +
-                            (english ? " _active" : " _noactive")
-                          }
-                          onClick={() => setEnglish(true)}
-                          type="button"
-                          name="full_name"
-                          placeholder="Boy - Garçon"
-                          required
-                        />
-                      </div>
-                      <div className="form-group w-50">
-                        <img
-                          src={France}
-                          className={
-                            "_selector pointer " +
-                            (english ? " _noactive" : " _active")
-                          }
-                          onClick={() => setEnglish(false)}
-                          type="button"
-                          name="full_name"
-                          placeholder="Boy - Garçon"
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex col-12 gap-3">
-                    <div className="form-group" style={{ width: "60%" }}>
-                      <small>
-                        {itsboy ? "Nombre del niño *" : "Nombre de la niña *"}
-                      </small>
-                      <input
-                        className="solid_input"
-                        type="text"
-                        name="Subject"
-                        required
-                      />
-                    </div>
-                    <div className="form-group" style={{ width: "40%" }}>
-                      <small>Edad *</small>
-                      <input
-                        className="solid_input"
-                        type="number  "
-                        name="edad"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="mt-3">
-                    <button
-                      className="button-74"
-                      type="submit"
-                      name="submit-form"
-                    >
-                      Enviar inscripción a {english ? "Inglés!" : "Francés!"}
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+          {!wannaLogIn && (
+            <FormSignUp />
+          )}
         </div>
       </div>
     </section>
