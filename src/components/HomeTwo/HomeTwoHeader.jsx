@@ -86,7 +86,7 @@ function Header({ className = "", scroll = false }) {
                     &nbsp;&nbsp;&nbsp;Login
                   </li>
                   <li className="pointer" onClick={() => onRegister()}>
-                    Register
+                    Inscribirse
                   </li>
                 </ul>
                 <ul className="social-icon-one light">
@@ -156,7 +156,7 @@ function Header({ className = "", scroll = false }) {
                 <li>
                   <div className="contact-info-box pointer">
                     {/* <i className="icon lnr-icon-map-marker"></i> */}
-                    <a href="" target="_blank">
+                    <a href="https://maps.app.goo.gl/xsWMfi5n1Ye3tZuD8" target="_blank">
                       <img className="icon lnr-icon-phone-handset" src={Location} alt="wspicon" width={40} />
                       <span className="title">Bucaramanga</span>
                       <div className="text">Bucaramanga, Colombia</div>
