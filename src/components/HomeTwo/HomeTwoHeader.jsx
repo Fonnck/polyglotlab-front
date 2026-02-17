@@ -201,7 +201,7 @@ function Header({ className = "", scroll = false }) {
                         scrollWithOffset(sectionRef.current, 11)
                       }}
                     >
-                      <span className="btn-title">Inscribirsesss</span>
+                      <span className="btn-title">Inscribirse</span>
                     </div>
                   </div>
                 </div>

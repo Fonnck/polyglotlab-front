@@ -22,16 +22,17 @@ import NewsSectionTwo from "./News.jsx";
 import Stickers from "../../assets/images/background/stickers.png";
 import { supabase } from "../../supabase/client.js";
 import { useNavigate } from "react-router-dom";
+import { useSignInStore, useSignUp } from "../../hooks/useSignUp.js";
 
 function HomeTwo() {
   // eslint-disable-next-line no-unused-vars
   const [drawer, drawerAction] = useToggle(false);
+  const { setUser } = useSignInStore();
   const nav = useNavigate();
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      console.log(event);
-      console.log(session);
+      console.log(event)
       if (event !== "SIGNED_IN") {
         if (!session) {
           nav("/");
@@ -50,15 +51,15 @@ function HomeTwo() {
       <img className="stickers-img" src={Stickers} alt="Hero Image" />
       <VideoSection />
       <SignupSectionTwo />
-      <AboutHomeOne />
+      {/* <AboutHomeOne /> */}
       <ClientHomeOne />
-      <AboutHomeTwo />
-      <FunFactSection />
+      {/* <AboutHomeTwo /> */}
+      {/* <FunFactSection /> */}
       {/* <CoursesSectionTwo /> */}
       {/* <PricingSection /> */}
-      <GallerySection />
-      <FeatureHomeTwo />
-      <FaqSection />
+      {/* <GallerySection />
+      <FeatureHomeTwo /> */}
+      {/* <FaqSection /> */}
       {/*   */}
       {/* <EventSection /> */}
       {/* <NewsSectionTwo /> */}

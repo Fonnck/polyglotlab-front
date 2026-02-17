@@ -11844,7 +11844,7 @@ input[type="number"] {
 
 @media (max-width: 768px) {
   .stickers-img {
-    height: 80px; /* altura para celulares */
+    max-height: 80px; /* altura para celulares */
   }
 }
 
@@ -12007,4 +12007,11 @@ input[type="number"] {
   -o-animation: dothatopcheck-19 0.4s ease 0s forwards;
   -webkit-animation: dothatopcheck-19 0.4s ease 0s forwards;
   animation: dothatopcheck-19 0.4s ease 0s forwards;
+}
+
+.signout {
+  color: #780001;
+}
+.signout::hover {
+  color: #ffae1e;
 }

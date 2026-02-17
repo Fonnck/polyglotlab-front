@@ -162,7 +162,7 @@ function Header({ className = "", scroll = false }) {
                   </div>
 
                   <a href="/contact" className="theme-btn btn-style-two">
-                    <span className="btn-title">Try For Free</span>
+                    <span className="btn-title">Try For Freess</span>
                   </a>
                 </div>
               </div>

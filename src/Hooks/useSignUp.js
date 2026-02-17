@@ -4,13 +4,13 @@ import { create } from "zustand";
 import { useLoader } from "./useLoader";
 import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
-import { useScrollStore } from "./useScrollSrore";
 import toast from "react-hot-toast";
 
 export const useSignUp = () => {
   const [itsboy, setItsboy] = useState(true);
   const [english, setEnglish] = useState("english");
   const { setLoading } = useLoader();
+  const { user, setUser } = useSignInStore();
 
   const nav = useNavigate();
 
@@ -78,7 +78,7 @@ export const useSignUp = () => {
     }
 
     if (!values.identification) {
-      logInErrors.identification = "Necesitamos tu número de identificación";
+      logInErrors.identification = "Necesitamos tu contraseña";
     } else if (values.identification.length < 5) {
       logInErrors.identification = "Número de identificación demasiado corto";
     } else if (values.identification.length > 20) {
@@ -195,22 +195,28 @@ export const useSignUp = () => {
         .select('*')
         .eq('email', email)
         .eq('identification', identification)
+        .select()
         .then((response) => {
-          console.log('This is the response', response.data[0]);
+          // console.log('This is the response', response.data[0].email);
           setLoading(false)
           if (response.data.length > 0) {
             console.log('Enviando a: ' + response.data[0].email);
             console.log('Enviando a: ' + response.data[0].identification);
+            console.log('setting up', response.data[0])
+            setUser(response.data[0]);
             signInWithPassword(response.data[0].email, "2d6ef242fm..-",)
             return response.data;
           } else {
-            console.log('error: ' + response.error);
-            throw 'Credenciales Incorrectas o Usuario NO registrado';
+            throw 'Usuario o Contraseña Incorrectos';
           }
         });
     } catch (error) {
       setLoading(false);
-      toast.error(error);
+      console.log('userinfo: ' + user);
+
+      if (user === undefined) {
+        toast.error(error);
+      }
       console.error("Error LogIn data: ", error);
     }
   };
@@ -237,7 +243,7 @@ export const useSignUp = () => {
             return response.data;
           } else {
             console.log('error: ' + response.error);
-            throw 'Credenciales Incorrectas o Usuario NO registrado';
+            throw 'error: ' + response.error;
           }
         });
     } catch (error) {
@@ -303,8 +309,14 @@ export const useSignUp = () => {
   }
 
   const signOut = async () => {
+    console.log('Logout');
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
     const { error } = await supabase.auth.signOut();
-
+    setUser(undefined)
+    nav("/")
     if (error) {
       console.error('Error al cerrar sesión:', error.message);
     }
@@ -328,4 +340,6 @@ export const useSignInStore = create((set) => ({
   setItsBoy: (value) => set({ itsboy: value }),
   english: true,
   setEnglish: (value) => set({ english: value }),
+  user: undefined,
+  setUser: (values) => set({ user: { ...values } })
 }));

@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 // Header.js
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MainLogoBlack from '../../assets/images/logo.png';
 import MainLogoWhite from '../../assets/images/logo.png';
 import Stickylogo from '../../assets/images/logo.png';
@@ -8,11 +9,13 @@ import StickyHeader from '../../lib/StickyMenu.js';
 import Navigation from '../Navigation.jsx';
 import MobileMenu from '../MobileMenu.jsx';
 import { Link } from 'react-router-dom';
+import { useSignUp } from '../../hooks/useSignUp.js';
 
 function Header({ className = '', scroll = false }) {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isSearchPopupOpen, setSearchPopupOpen] = useState(false);
     const [isDarkMode, setDarkMode] = useState(false);
+    const { signOut } = useSignUp()
 
     useEffect(() => {
         StickyHeader();
@@ -69,7 +72,9 @@ function Header({ className = '', scroll = false }) {
                             </button>
                             <Link href="/cart" className="ui-btn"><i className="lnr-icon-shopping-cart"></i></Link>
                         </div>
-                        <Link href="/contact" className="theme-btn btn-style-one"><span className="btn-title">Try For Free</span></Link>
+                        <div className="theme-btn btn-style-one pointer" onClick={() => signOut()}>
+                            <span className="btn-title">Cerrar Sesión</span>
+                        </div>
                         <div className="mobile-nav-toggler" onClick={toggleMobileMenu}><span className="icon lnr-icon-bars"></span></div>
                     </div>
                 </div>
