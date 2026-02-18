@@ -12,25 +12,63 @@ import ProductDetailsImg3 from '../../assets/images/resource/products/thumb-3.jp
 import { useSignInStore, useSignUp } from '../../hooks/useSignUp.js';
 import { useEffect } from 'react';
 import { supabase } from '../../supabase/client.js';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { useDashboardStore } from '../../hooks/useDashboard.js';
+
+const admin_menu = [
+    {
+        name: 'Nuevas Solicitudes',
+        action: () => { }
+    },
+    {
+        name: 'Solicitudes Pendientes',
+        action: () => { }
+    },
+    {
+        name: 'Solicitudes Completadas',
+        action: () => { }
+    },
+    {
+        name: 'Pagos',
+        action: () => { }
+    },
+]
+const customer_menu = [
+    {
+        name: 'Nuevas solicitudes',
+        action: () => { }
+    },
+    {
+        name: 'Mi Suscripción',
+        action: () => { }
+    }
+]
+
 
 function Products() {
 
     const { signOut } = useSignUp();
     const { user } = useSignInStore();
+    const { setSelected } = useDashboardStore();
     const nav = useNavigate();
 
     useEffect(() => {
-        supabase.auth.onAuthStateChange((event, session) => {
-            console.log(event);
-            console.log(session);
-            if (event !== "SIGNED_IN") {
-                if (!session) {
-                    nav("/");
-                } else {
-                    nav("/products-sidebar");
+        console.log(user);
+        if (user !== undefined) {
+            supabase.auth.onAuthStateChange((event, session) => {
+                console.log(event);
+                console.log(session);
+                if (event !== "SIGNED_IN") {
+                    if (!session) {
+                        nav("/");
+                    } else {
+                        nav("/products-sidebar");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            nav("/");
+        }
     }, []);
 
     return (
@@ -53,8 +91,8 @@ function Products() {
                                 <div className="sidebar-search">
                                     <form action="shop-products" method="post" className="search-form">
                                         <div className="form-group">
-                                            <input type="search" name="search-field" placeholder="Search..." required />
-                                            <button><i className="lnr lnr-icon-search"></i></button>
+                                            <input type="search" name="search-field" placeholder="Buscar..." required />
+                                            <button disabled onClick={() => { }}><i className="lnr lnr-icon-search"></i></button>
                                         </div>
                                     </form>
                                 </div>
@@ -67,28 +105,33 @@ function Products() {
                                     <div className="widget-content">
                                         {user?.role === 'admin' &&
                                             <ul className="category-list clearfix">
-                                                <li><Link to="/products-details">Nuevas solicitudes</Link></li>
-                                                <li><Link to="/products-details">Solicitudes pendientes</Link></li>
-                                                <li><Link to="/products-details">Solicitudes completadas</Link></li>
-                                                <li><Link style={{ color: 'gray' }} to="/products-details">Pagos</Link></li>
-                                                {/* <li><Link to="/products-details">Web Development</Link></li>
-                                            <li><Link to="/products-details">Artificial Intelligence</Link></li> */}
+                                                {admin_menu.map((e, i) =>
+                                                    <li className='menu_item' key={i} onClick={() => {
+                                                        setSelected(e.name)
+                                                    }}>
+                                                        <a>
+                                                            {e.name}
+                                                        </a>
+                                                    </li>)}
                                             </ul>
                                         }
                                         {user?.role === 'customer' &&
                                             <ul className="category-list clearfix">
-                                                <li><Link to="/products-details">Nuevas solicitudes</Link></li>
-                                                <li><Link to="/products-details">Mi Suscripción</Link></li>
-                                                {/* <li><Link to="/products-details">Solicitudes completadas</Link></li> */}
-                                                {/* <li><Link to="/products-details">Documentos</Link></li> */}
-                                                {/* <li><Link to="/products-details">Web Development</Link></li>
-                                            <li><Link to="/products-details">Artificial Intelligence</Link></li> */}
+                                                {customer_menu.map((e, i) =>
+                                                    <li className='menu_item' key={i} onClick={() => {
+                                                        setSelected(e.name)
+                                                    }}>
+                                                        <a>
+                                                            {e.name}
+                                                        </a>
+                                                    </li>)}
                                             </ul>
                                         }
                                     </div>
-                                    <div className='mt-5 signout pointer'>
+                                    <div className='mt-5 signout pointer' onClick={() => signOut()}>
                                         <small>
-                                            <i className='fa fa-sign-out'></i>
+                                            <FaSignOutAlt />
+                                            &nbsp;
                                             <span>Cerrar Sessión</span>
                                         </small>
                                     </div>

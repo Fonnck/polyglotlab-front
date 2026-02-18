@@ -8217,7 +8217,8 @@ Section Title
   top: 0;
   height: 100%;
   width: 100%;
-  background: url(../images/icons/pattern-7.png) left bottom no-repeat;
+  background: url(../images/icons/pattern-7.jpg);
+  opacity: 0.15;
   background-size: 700px;
 }
 
@@ -8366,6 +8367,9 @@ Section Title
 
 .product-block .image img {
   width: auto;
+  border-radius: 30px;
+  padding-top: 2rem;
+  max-width: 65%;
   -webkit-transition: all 300ms ease;
   transition: all 300ms ease;
 }
@@ -12014,4 +12018,12 @@ input[type="number"] {
 }
 .signout::hover {
   color: #ffae1e;
+}
+
+.menu_item {
+  /* animation: transition ease 0.3; */
+}
+.menu_item::hover {
+  color: black;
+  cursor: pointer;
 }
