@@ -3,40 +3,82 @@ import { Link, useNavigate } from 'react-router-dom';
 import BackToTop from '../BackToTop.jsx';
 import HomeOneHeader from '../HomeOne/HomeOneHeader.jsx';
 import FooterHomeOne from '../HomeOne/FooterHomeOne.jsx';
-import RangeSlider from '../../lib/RangeSlider.jsx';
 import HeroPageTitle from '../HeroPageTitle.jsx';
 import PortfolioFilter2 from './PortfolioFilter2.jsx';
 import ProductDetailsImg1 from '../../assets/images/resource/products/thumb-1.jpg';
 import ProductDetailsImg2 from '../../assets/images/resource/products/thumb-2.jpg';
 import ProductDetailsImg3 from '../../assets/images/resource/products/thumb-3.jpg';
-import { useSignUp } from '../../hooks/useSignUp.js';
+import { useSignInStore, useSignUp } from '../../hooks/useSignUp.js';
 import { useEffect } from 'react';
 import { supabase } from '../../supabase/client.js';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { useDashboardStore } from '../../hooks/useDashboard.js';
+
+const admin_menu = [
+    {
+        name: 'Nuevas Solicitudes',
+        action: () => { }
+    },
+    {
+        name: 'Solicitudes Pendientes',
+        action: () => { }
+    },
+    {
+        name: 'Solicitudes Completadas',
+        action: () => { }
+    },
+    {
+        name: 'Pagos',
+        action: () => { }
+    },
+]
+const customer_menu = [
+    {
+        name: 'Nuevas solicitudes',
+        action: () => { }
+    },
+    {
+        name: 'Mi Suscripción',
+        action: () => { }
+    }
+]
+
 
 function Products() {
 
     const { signOut } = useSignUp();
+    const { user, setUser } = useSignInStore();
+    const { setSelected } = useDashboardStore();
+    const { getUserByEmail } = useSignUp();
     const nav = useNavigate();
 
     useEffect(() => {
-        /* supabase.auth.onAuthStateChange((event, session) => {
+        supabase.auth.onAuthStateChange((event, session) => {
             console.log(event);
             console.log(session);
-            if (event !== "SIGNED_IN") {
-                if (!session) {
-                    nav("/");
-                } else {
-                    nav("/products-sidebar");
+            if (session) {
+                if (user === undefined) {
+                    getUserByEmail(session.user.email)
                 }
+                if (event !== "SIGNED_IN") {
+                    if (!session) {
+                        nav("/");
+                    } else {
+                        nav("/products-sidebar");
+                    }
+                }
+            } else {
+                console.log(session);
+                nav("/confirmed");
             }
-        }); */
+        });
     }, []);
 
     return (
         <>
             <HomeOneHeader />
             <HeroPageTitle
-                title="Shop"
+                title="Bienvenido"
                 breadcrumb={[
                     { link: '/', title: 'Home' },
                     { link: '/products-sidebar', title: 'Products Sidebar' },
@@ -52,8 +94,8 @@ function Products() {
                                 <div className="sidebar-search">
                                     <form action="shop-products" method="post" className="search-form">
                                         <div className="form-group">
-                                            <input type="search" name="search-field" placeholder="Search..." required />
-                                            <button><i className="lnr lnr-icon-search"></i></button>
+                                            <input type="search" name="search-field" placeholder="Buscar..." required />
+                                            <button disabled onClick={() => { }}><i className="lnr lnr-icon-search"></i></button>
                                         </div>
                                     </form>
                                 </div>
@@ -61,63 +103,87 @@ function Products() {
                                 {/* Category Widget */}
                                 <div className="sidebar-widget category-widget">
                                     <div className="widget-title">
-                                        <h5 className="widget-title pointer" onClick={() => { signOut() }}>Categories</h5>
+                                        <h5 className="widget-title pointer" onClick={() => { signOut() }}>Matrículas</h5>
                                     </div>
                                     <div className="widget-content">
-                                        <ul className="category-list clearfix">
-                                            <li><Link to="/products-details">Cloud Solution</Link></li>
-                                            <li><Link to="/products-details">Cyber Data</Link></li>
-                                            <li><Link to="/products-details">SEO Marketing</Link></li>
-                                            <li><Link to="/products-details">UI/UX Design</Link></li>
-                                            <li><Link to="/products-details">Web Development</Link></li>
-                                            <li><Link to="/products-details">Artificial Intelligence</Link></li>
-                                        </ul>
+                                        {user?.role === 'admin' &&
+                                            <ul className="category-list clearfix">
+                                                {admin_menu.map((e, i) =>
+                                                    <li className='menu_item' key={i} onClick={() => {
+                                                        setSelected(e.name)
+                                                    }}>
+                                                        <a>
+                                                            {e.name}
+                                                        </a>
+                                                    </li>)}
+                                            </ul>
+                                        }
+                                        {user?.role === 'customer' &&
+                                            <ul className="category-list clearfix">
+                                                {customer_menu.map((e, i) =>
+                                                    <li className='menu_item' key={i} onClick={() => {
+                                                        setSelected(e.name)
+                                                    }}>
+                                                        <a>
+                                                            {e.name}
+                                                        </a>
+                                                    </li>)}
+                                            </ul>
+                                        }
+                                    </div>
+                                    <div className='mt-5 signout pointer' onClick={() => signOut()}>
+                                        <small>
+                                            <FaSignOutAlt />
+                                            &nbsp;
+                                            <span>Cerrar Sessión</span>
+                                        </small>
                                     </div>
                                 </div>
 
                                 {/* Price Filters */}
-                                <div className="sidebar-widget price-filters">
+                                {/* <div className="sidebar-widget price-filters">
                                     <div className="widget-title">
                                         <h5 className="widget-title">Filter by Price</h5>
                                     </div>
                                     <RangeSlider />
-                                </div>
+                                </div> */}
 
                                 {/* Popular Products Widget */}
-                                <div className="sidebar-widget post-widget">
-                                    <div className="widget-title">
-                                        <h5 className="widget-title">Popular Products</h5>
-                                    </div>
-                                    <div className="post-inner">
-                                        <div className="post">
-                                            <figure className="post-thumb"><Link to="/products-details"><img src={ProductDetailsImg1} alt="Product 1" /></Link></figure>
-                                            <Link to="/products-details">Jilted Juror</Link>
-                                            <span className="price">$45.00</span>
+                                {user?.role === 'customer' &&
+                                    <div className="sidebar-widget post-widget">
+                                        <div className="widget-title">
+                                            <h5 className="widget-title">Documentos Requeridos</h5>
                                         </div>
-                                        <div className="post">
-                                            <figure className="post-thumb"><Link to="/products-details"><img src={ProductDetailsImg2} alt="Product 2" /></Link></figure>
-                                            <Link to="/products-details">Giant Jackal</Link>
-                                            <span className="price">$34.00</span>
+                                        <div className="post-inner">
+                                            <div className="post">
+                                                <figure className="post-thumb"><Link to="/products-details"><img src={ProductDetailsImg1} alt="Product 1" /></Link></figure>
+                                                <Link to="/products-details">Tarjeta de Identidad</Link>
+                                                <span className="price">Pendiente</span>
+                                            </div>
+                                            <div className="post">
+                                                <figure className="post-thumb"><Link to="/products-details"><img src={ProductDetailsImg2} alt="Product 2" /></Link></figure>
+                                                <Link to="/products-details">Cédula Ciudadania (Copia)</Link>
+                                                <span className="price">Pendiente</span>
+                                            </div>
+                                            <div className="post">
+                                                <figure className="post-thumb"><Link to="/products-details"><img src={ProductDetailsImg3} alt="Product 3" /></Link></figure>
+                                                <Link to="/products-details">Registro Civil (Copia)</Link>
+                                                <span className="price">Pendiente</span>
+                                            </div>
                                         </div>
-                                        <div className="post">
-                                            <figure className="post-thumb"><Link to="/products-details"><img src={ProductDetailsImg3} alt="Product 3" /></Link></figure>
-                                            <Link to="/products-details">Spanish Baker</Link>
-                                            <span className="price">$29.00</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </div>}
                             </div>
                         </div>
 
                         {/* Products Grid */}
                         <div className="col-lg-9 content-side">
                             <div className="mixitup-gallery">
-                                <PortfolioFilter2 />
+                                <PortfolioFilter2 user={user} />
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
             <FooterHomeOne />
             <BackToTop />
         </>

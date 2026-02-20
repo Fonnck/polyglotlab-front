@@ -16,3 +16,4 @@ export const scrollWithOffset = (element, offsetRem = 10) => {
     behavior: "smooth",
   });
 };
+

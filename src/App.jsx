@@ -22,7 +22,6 @@ function App() {
   const sectionRef = useRef(null);
   useEffect(() => {
     setSectionRef(sectionRef);
-
   }, []);
 
   return (

@@ -40,7 +40,7 @@ function CallToAction({ className }) {
 
           <div className="image-column col-lg-4">
             <figure className="image">
-              <img src={CtaImage} alt="" />
+              <img src={CtaImage} alt="CtaImage2" />
             </figure>
           </div>
         </div>

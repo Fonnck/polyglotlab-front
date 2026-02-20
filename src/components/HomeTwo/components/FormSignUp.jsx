@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useFormik } from "formik";
 import { useSignUp } from "../../../hooks/useSignUp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useScrollStore } from "../../../hooks/useScrollSrore";
 import Boy from "../../../assets/images/boy.png";
 import Girl from "../../../assets/images/girl.png";
@@ -9,13 +9,17 @@ import Usa from "../../../assets/images/usa.png";
 import France from "../../../assets/images/france.png";
 import toast from "react-hot-toast";
 import { scrollWithOffset } from "../../../hooks/utils";
+import { TbTransfer } from "react-icons/tb";
 
+const ages = [
+    3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
+]
 
 export const FormSignUp = () => {
 
     const { sectionRef, setWannaLogIn } = useScrollStore();
 
-    const { itsboy, setItsboy, english, setEnglish, validate, signUp } =
+    const { itsboy, setItsboy, english, setEnglish, french, setFrench, validate, signUp } =
         useSignUp();
 
     const { handleChange, handleSubmit, values, errors } = useFormik({
@@ -26,6 +30,7 @@ export const FormSignUp = () => {
             phone: 0,
             identification: "",
             child_name: "",
+            child_lastname: "",
             child_age: 0,
             gender: itsboy ? "boy" : "girl",
             language: english ? "english" : "french",
@@ -37,11 +42,38 @@ export const FormSignUp = () => {
             signUp({
                 ...values,
                 gender: itsboy ? "boy" : "girl",
-                language: english ? "english" : "french",
+                language: getProgram(true),
             });
         },
         validate,
     });
+
+    useEffect(() => {
+        if (!english && !french) {
+            setEnglish(true)
+        }
+    }, [english, french]);
+
+
+    const getProgram = (insert) => {
+        if (!insert) {
+            if (english && !french) {
+                return "Solo Inglés"
+            } else if (!english && french) {
+                return "Solo Francés"
+            } else {
+                return "Inglés y Francés"
+            }
+        } else {
+            if (english && !french) {
+                return "english"
+            } else if (!english && french) {
+                return "french"
+            } else {
+                return "english/french"
+            }
+        }
+    }
 
     return (
         <div
@@ -66,7 +98,7 @@ export const FormSignUp = () => {
                             <span>Selecciona el idioma :</span>
                         </div>
                         <div className="d-flex col-12 gap-3 mt-2">
-                            <div className="d-flex gap-2 w-50">
+                            <div className="d-flex gap-1 w-50">
                                 <div className="form-group w-50">
                                     <img
                                         src={Boy}
@@ -102,7 +134,7 @@ export const FormSignUp = () => {
                                             "_selector pointer " +
                                             (english ? " _active" : " _noactive")
                                         }
-                                        onClick={() => setEnglish(true)}
+                                        onClick={() => setEnglish(!english)}
                                         name="language"
                                         type="button"
                                         title="Inglés English Anglais"
@@ -114,9 +146,9 @@ export const FormSignUp = () => {
                                         src={France}
                                         className={
                                             "_selector pointer" +
-                                            (english ? " _noactive" : " _active")
+                                            (french ? " _active" : " _noactive")
                                         }
-                                        onClick={() => setEnglish(false)}
+                                        onClick={() => setFrench(!french)}
                                         type="button"
                                         title="Francés French Français"
                                         alt="france"
@@ -124,13 +156,14 @@ export const FormSignUp = () => {
                                 </div>
                             </div>
                         </div>
+                        <small>
+                            {itsboy ? "Información del niño *" : "Información de la niña *"}
+                        </small>
                         <div className="d-flex col-12 gap-3">
                             <div className="form-group" style={{ width: "60%" }}>
-                                <small>
-                                    {itsboy ? "Nombre del niño *" : "Nombre de la niña *"}
-                                </small>
                                 <input
                                     className="solid_input"
+                                    placeholder="Nombres *"
                                     type="text"
                                     name="child_name"
                                     required
@@ -138,20 +171,40 @@ export const FormSignUp = () => {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="form-group" style={{ width: "40%" }}>
-                                <small>Edad *</small>
+                            <div className="form-group" style={{ width: "60%" }}>
                                 <input
                                     className="solid_input"
-                                    type="number"
-                                    name="child_age"
+                                    placeholder="Apellidos *"
+                                    type="text"
+                                    name="child_lastname"
                                     required
-                                    value={values.child_age === 0 ? "" : values.child_age}
+                                    value={values.child_lastname}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
-                        <small className="mt-1">Información del acudiente</small>
-
+                        <div className="d-flex col-12 gap-3">
+                            <div className="d-flex flex-column w-50">
+                                <small className="mt-1">Edad *</small>
+                                <div className="form-group" style={{ width: "80%" }}>
+                                    <input
+                                        className="solid_input "
+                                        name="child_age"
+                                        type="number"
+                                        required
+                                        value={values.child_age === 0 ? '' : values.child_age}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group mt-4">
+                                <span>Inscribirse a</span>
+                                <h4 className="d-flex flex-column">
+                                    {getProgram()}
+                                </h4>
+                            </div>
+                        </div>
+                        <small className="mt-2">Información del acudiente</small>
                         <div className="form-group">
                             <input
                                 className="solid_input"
@@ -239,7 +292,7 @@ export const FormSignUp = () => {
                                     );
                                 }}
                             >
-                                Enviar inscripción a {english ? "Inglés!" : "Francés!"}
+                                Enviar inscripción a {getProgram()}
                             </button>
                         </div>
                         <div className="d-flex mt-5 justify-content-between">

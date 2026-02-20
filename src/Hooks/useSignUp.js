@@ -4,13 +4,14 @@ import { create } from "zustand";
 import { useLoader } from "./useLoader";
 import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
-import { useScrollStore } from "./useScrollSrore";
 import toast from "react-hot-toast";
 
 export const useSignUp = () => {
   const [itsboy, setItsboy] = useState(true);
-  const [english, setEnglish] = useState("english");
+  const [english, setEnglish] = useState(true);
+  const [french, setFrench] = useState(false);
   const { setLoading } = useLoader();
+  const { user, setUser } = useSignInStore();
 
   const nav = useNavigate();
 
@@ -78,7 +79,7 @@ export const useSignUp = () => {
     }
 
     if (!values.identification) {
-      logInErrors.identification = "Necesitamos tu número de identificación";
+      logInErrors.identification = "Necesitamos tu contraseña";
     } else if (values.identification.length < 5) {
       logInErrors.identification = "Número de identificación demasiado corto";
     } else if (values.identification.length > 20) {
@@ -161,10 +162,14 @@ export const useSignUp = () => {
         .insert({
           user_id: parent_id,
           first_name: values.child_name,
-          last_name: values.last_name,
+          last_name: values.child_lastname,
           age: values.child_age,
           language: values.language,
           gender: values.gender,
+          parent_firstname: values.first_name,
+          parent_lastname: values.last_name,
+          parent_id: values.identification,
+          parent_email: values.email
         })
         .select()
         .then((response) => {
@@ -184,7 +189,7 @@ export const useSignUp = () => {
     }
   };
 
-  const getUser = async (
+  const getUserLogin = async (
     email,
     identification
   ) => {
@@ -195,22 +200,61 @@ export const useSignUp = () => {
         .select('*')
         .eq('email', email)
         .eq('identification', identification)
+        .select()
         .then((response) => {
-          console.log('This is the response', response.data[0]);
+          // console.log('This is the response', response.data[0].email);
           setLoading(false)
           if (response.data.length > 0) {
             console.log('Enviando a: ' + response.data[0].email);
             console.log('Enviando a: ' + response.data[0].identification);
+            console.log('setting up', response.data[0])
+            setUser(response.data[0]);
             signInWithPassword(response.data[0].email, "2d6ef242fm..-",)
             return response.data;
           } else {
-            console.log('error: ' + response.error);
-            throw 'Credenciales Incorrectas o Usuario NO registrado';
+            throw 'Usuario o Contraseña Incorrectos';
           }
         });
     } catch (error) {
       setLoading(false);
-      toast.error(error);
+      console.log('userinfo: ' + user);
+
+      if (user === undefined) {
+        toast.error(error);
+      }
+      console.error("Error LogIn data: ", error);
+    }
+  };
+
+  const getUserByEmail = async (
+    email
+  ) => {
+    setLoading(true);
+    try {
+      await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email)
+        .select()
+        .then((response) => {
+          // console.log('This is the response', response.data[0].email);
+          setLoading(false)
+          if (response.data.length > 0) {
+            console.log('Enviando a: ' + response.data[0].email);
+            console.log('setting up', response.data[0])
+            setUser(response.data[0]);
+            return response.data;
+          } else {
+            throw 'Usuario o Contraseña Incorrectos';
+          }
+        });
+    } catch (error) {
+      setLoading(false);
+      console.log('userinfo: ' + user);
+
+      if (user === undefined) {
+        toast.error(error);
+      }
       console.error("Error LogIn data: ", error);
     }
   };
@@ -225,7 +269,7 @@ export const useSignUp = () => {
         options: {
           // set this to false if you do not want the user to be automatically signed up
           shouldCreateUser: false,
-          emailRedirectTo: 'https://polyglotlabacademy.com/products-sidebar',
+          emailRedirectTo: 'https://polyglotlabacademy.com/confirmed',
         },
       })
         .then((response) => {
@@ -237,7 +281,7 @@ export const useSignUp = () => {
             return response.data;
           } else {
             console.log('error: ' + response.error);
-            throw 'Credenciales Incorrectas o Usuario NO registrado';
+            throw 'error: ' + response.error;
           }
         });
     } catch (error) {
@@ -280,7 +324,7 @@ export const useSignUp = () => {
   const logIn = async ({ email, identification }) => {
     setLoading(true);
     try {
-      getUser(email, identification);
+      getUserLogin(email, identification);
       /* await supabase.auth.signInWithPassword({
         email,
         password
@@ -303,8 +347,14 @@ export const useSignUp = () => {
   }
 
   const signOut = async () => {
+    console.log('Logout');
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
     const { error } = await supabase.auth.signOut();
-
+    setUser(undefined)
+    nav("/")
     if (error) {
       console.error('Error al cerrar sesión:', error.message);
     }
@@ -315,11 +365,14 @@ export const useSignUp = () => {
     setItsboy,
     english,
     setEnglish,
+    french,
+    setFrench,
     validate,
     signUp,
     logIn,
     signOut,
-    validateLogIn
+    validateLogIn,
+    getUserByEmail
   };
 };
 
@@ -328,4 +381,6 @@ export const useSignInStore = create((set) => ({
   setItsBoy: (value) => set({ itsboy: value }),
   english: true,
   setEnglish: (value) => set({ english: value }),
+  user: undefined,
+  setUser: (values) => set({ user: { ...values } })
 }));
