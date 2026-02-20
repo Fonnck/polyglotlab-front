@@ -1,39 +1,76 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from "react";
 import Isotope from 'isotope-layout';
 import ProductImage1 from '../../assets/images/resource/products/1.jpg';
-import Boy from "../../assets/images/boy.png";
-import Girl from "../../assets/images/girl.png";
 import { useDashboardStore } from '../../hooks/useDashboard';
 import toast from 'react-hot-toast';
 import { supabase } from '../../supabase/client';
+import { Rectangle } from './Rectangle';
+import { useLoader } from '../../hooks/useLoader';
 
-export default function PortfolioFilter2() {
+export default function PortfolioFilter2({ user }) {
 
 	const { selected } = useDashboardStore();
 	const [requests, setRequests] = useState();
-
+	const { setLoading } = useLoader();
 
 	useEffect(() => {
-		getNewRequests();
-	}, []);
+		if (user?.role === 'customer') {
+			getParentRequests(user?.identification)
+		} else {
+			if (selected === 'Nuevas Solicitudes') {
+				getRequests('inactive');
+			} else if (selected === 'Solicitudes Pendientes') {
+				getRequests('pending');
+			} else {
+				getRequests('active');
+			}
+		}
+	}, [selected]);
 
-	const getNewRequests = async () => {
+	const getRequests = async (status) => {
 		try {
-			const { data, error } = await supabase
+			setLoading(true);
+			await supabase
 				.from("students")
 				.select('*')
-				.eq("status", 'inactive')
-				.select();
-			console.log(error);
-			if (error === null) {
-				console.log(data);
-				setRequests(data);
-			}
-			else {
-				throw 'No hay nuevas solicitudes'
-			}
+				.eq("status", status)
+				.select()
+				.then(({ data, error }) => {
+					setLoading(false);
+					if (error === null) {
+						console.log(data);
+						setRequests(data);
+					} else {
+						console.log(error);
+						throw 'No hay nuevas solicitudes'
+					}
+				})
+		} catch (error) {
+			toast.error(error.message)
+		}
+	};
+
+	const getParentRequests = async (parent_identification) => {
+		try {
+			setLoading(true);
+			await supabase
+				.from("students")
+				.select('*')
+				.in("status", ['inactive', 'pending'])
+				.eq('parent_id', parent_identification)
+				.then(({ data, error }) => {
+					setLoading(false);
+					if (error === null) {
+						console.log(data);
+						setRequests(data);
+					} else {
+						console.log(error);
+						throw 'No hay nuevas solicitudes'
+					}
+				})
 		} catch (error) {
 			toast.error(error.message)
 		}
@@ -67,24 +104,9 @@ export default function PortfolioFilter2() {
 			<div className="items-container row">
 				{/* Your product blocks here */}
 				{requests?.map((e, i) => (
-					<div key={i} className="product-block masonry-item small-column all cat-2 product lenses col-lg-4 col-md-6 col-sm-12">
-						<div className="inner-box">
-							<div className="image-box">
-								<div className="image"><Link to="/products-details">
-									<img src={e.gender === 'boy' ? Boy : Girl} alt="Product 1" /></Link>
-								</div>
-								<div className="icon-box">
-									<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-									<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-								</div>
-							</div>
-							<div className="content">
-								<h4><Link to="/products-details">{`${e.first_name} ${e.last_name}`}</Link></h4>
-								<span className="price">{e.language}</span>
-							</div>
-						</div>
-					</div>
+					<Rectangle key={i} e={e} i={i} getNewRequests={getRequests} />
 				))}
+
 				{/* <div className="product-block masonry-item small-column all cat-1 cat-2 product lenses col-lg-4 col-md-6 col-sm-12">
 					<div className="inner-box">
 						<div className="image-box">

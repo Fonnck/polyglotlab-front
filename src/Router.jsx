@@ -26,6 +26,7 @@ import ProductsDetails from "./components/ShopPages/ProductsDetails.jsx";
 import Cart from "./components/ShopPages/Cart.jsx";
 import Checkout from "./components/ShopPages/Checkout.jsx";
 import Grace from "./components/ErrorPages/Grace.jsx";
+import Confirmed from "./components/ErrorPages/Confirmed.jsx";
 
 /** Develop initialized */
 
@@ -138,6 +139,11 @@ const router = createBrowserRouter([
       {
         path: "/thank-you",
         element: <Grace />,
+      },
+
+      {
+        path: "/confirmed",
+        element: <Confirmed />,
       },
 
       {

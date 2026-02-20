@@ -4,7 +4,7 @@ import BackgroundImage from "../../assets/images/background/4.jpg";
 import CtaImage from "../../assets/images/resource/schoolchildren.png";
 import { useSignUp } from "../../hooks/useSignUp";
 
-function CallToAction({ className }) {
+function ConfirmedAction({ className }) {
 
   const { signOut } = useSignUp()
 
@@ -24,11 +24,13 @@ function CallToAction({ className }) {
           <div className="title-column col-lg-8">
             <div className="inner-column">
               <div className="sec-title light">
-                <span className="style-font">¡Gracias por inscribirse!</span>
+                <span className="style-font">¡Todo Listo!</span>
                 <h1>
-                  En breve nos pondremos <br />
-                  en contacto
+                  Estamos listos su cuenta ha sido activada éxitosamente <br /><br />
                 </h1>
+                <h3>
+                  Seguiremos en contacto para informar el siguiente paso...
+                </h3>
                 <Link to="/" onClick={() => { signOut() }} className="theme-btn btn-style-three">
                   <span className="theme-btn btn-style-one bg-theme-color2 pointer">
                     Volver a la página principal
@@ -49,4 +51,4 @@ function CallToAction({ className }) {
   );
 }
 
-export default CallToAction;
+export default ConfirmedAction;

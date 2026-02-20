@@ -6,7 +6,6 @@ function SignupSectionTwo() {
 
   const { wannaLogIn } = useScrollStore();
 
-
   return (
     <section className="signup-section-two">
       <div className="auto-container">

@@ -8,7 +8,8 @@ import toast from "react-hot-toast";
 
 export const useSignUp = () => {
   const [itsboy, setItsboy] = useState(true);
-  const [english, setEnglish] = useState("english");
+  const [english, setEnglish] = useState(true);
+  const [french, setFrench] = useState(false);
   const { setLoading } = useLoader();
   const { user, setUser } = useSignInStore();
 
@@ -161,10 +162,14 @@ export const useSignUp = () => {
         .insert({
           user_id: parent_id,
           first_name: values.child_name,
-          last_name: values.last_name,
+          last_name: values.child_lastname,
           age: values.child_age,
           language: values.language,
           gender: values.gender,
+          parent_firstname: values.first_name,
+          parent_lastname: values.last_name,
+          parent_id: values.identification,
+          parent_email: values.email
         })
         .select()
         .then((response) => {
@@ -184,7 +189,7 @@ export const useSignUp = () => {
     }
   };
 
-  const getUser = async (
+  const getUserLogin = async (
     email,
     identification
   ) => {
@@ -221,6 +226,39 @@ export const useSignUp = () => {
     }
   };
 
+  const getUserByEmail = async (
+    email
+  ) => {
+    setLoading(true);
+    try {
+      await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email)
+        .select()
+        .then((response) => {
+          // console.log('This is the response', response.data[0].email);
+          setLoading(false)
+          if (response.data.length > 0) {
+            console.log('Enviando a: ' + response.data[0].email);
+            console.log('setting up', response.data[0])
+            setUser(response.data[0]);
+            return response.data;
+          } else {
+            throw 'Usuario o Contraseña Incorrectos';
+          }
+        });
+    } catch (error) {
+      setLoading(false);
+      console.log('userinfo: ' + user);
+
+      if (user === undefined) {
+        toast.error(error);
+      }
+      console.error("Error LogIn data: ", error);
+    }
+  };
+
   const getMagicLink = async (
     email
   ) => {
@@ -231,7 +269,7 @@ export const useSignUp = () => {
         options: {
           // set this to false if you do not want the user to be automatically signed up
           shouldCreateUser: false,
-          emailRedirectTo: 'https://polyglotlabacademy.com/products-sidebar',
+          emailRedirectTo: 'https://polyglotlabacademy.com/confirmed',
         },
       })
         .then((response) => {
@@ -286,7 +324,7 @@ export const useSignUp = () => {
   const logIn = async ({ email, identification }) => {
     setLoading(true);
     try {
-      getUser(email, identification);
+      getUserLogin(email, identification);
       /* await supabase.auth.signInWithPassword({
         email,
         password
@@ -327,11 +365,14 @@ export const useSignUp = () => {
     setItsboy,
     english,
     setEnglish,
+    french,
+    setFrench,
     validate,
     signUp,
     logIn,
     signOut,
-    validateLogIn
+    validateLogIn,
+    getUserByEmail
   };
 };
 

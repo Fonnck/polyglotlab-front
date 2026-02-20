@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import BackToTop from '../BackToTop.jsx';
 import HomeOneHeader from '../HomeOne/HomeOneHeader.jsx';
 import FooterHomeOne from '../HomeOne/FooterHomeOne.jsx';
-import RangeSlider from '../../lib/RangeSlider.jsx';
 import HeroPageTitle from '../HeroPageTitle.jsx';
 import PortfolioFilter2 from './PortfolioFilter2.jsx';
 import ProductDetailsImg1 from '../../assets/images/resource/products/thumb-1.jpg';
@@ -48,16 +47,19 @@ const customer_menu = [
 function Products() {
 
     const { signOut } = useSignUp();
-    const { user } = useSignInStore();
+    const { user, setUser } = useSignInStore();
     const { setSelected } = useDashboardStore();
+    const { getUserByEmail } = useSignUp();
     const nav = useNavigate();
 
     useEffect(() => {
-        console.log(user);
-        if (user !== undefined) {
-            supabase.auth.onAuthStateChange((event, session) => {
-                console.log(event);
-                console.log(session);
+        supabase.auth.onAuthStateChange((event, session) => {
+            console.log(event);
+            console.log(session);
+            if (session) {
+                if (user === undefined) {
+                    getUserByEmail(session.user.email)
+                }
                 if (event !== "SIGNED_IN") {
                     if (!session) {
                         nav("/");
@@ -65,10 +67,11 @@ function Products() {
                         nav("/products-sidebar");
                     }
                 }
-            });
-        } else {
-            nav("/");
-        }
+            } else {
+                console.log(session);
+                nav("/confirmed");
+            }
+        });
     }, []);
 
     return (
@@ -149,23 +152,23 @@ function Products() {
                                 {user?.role === 'customer' &&
                                     <div className="sidebar-widget post-widget">
                                         <div className="widget-title">
-                                            <h5 className="widget-title">Popular Products</h5>
+                                            <h5 className="widget-title">Documentos Requeridos</h5>
                                         </div>
                                         <div className="post-inner">
                                             <div className="post">
                                                 <figure className="post-thumb"><Link to="/products-details"><img src={ProductDetailsImg1} alt="Product 1" /></Link></figure>
-                                                <Link to="/products-details">Jilted Juror</Link>
-                                                <span className="price">$45.00</span>
+                                                <Link to="/products-details">Tarjeta de Identidad</Link>
+                                                <span className="price">Pendiente</span>
                                             </div>
                                             <div className="post">
                                                 <figure className="post-thumb"><Link to="/products-details"><img src={ProductDetailsImg2} alt="Product 2" /></Link></figure>
-                                                <Link to="/products-details">Giant Jackal</Link>
-                                                <span className="price">$34.00</span>
+                                                <Link to="/products-details">Cédula Ciudadania (Copia)</Link>
+                                                <span className="price">Pendiente</span>
                                             </div>
                                             <div className="post">
                                                 <figure className="post-thumb"><Link to="/products-details"><img src={ProductDetailsImg3} alt="Product 3" /></Link></figure>
-                                                <Link to="/products-details">Spanish Baker</Link>
-                                                <span className="price">$29.00</span>
+                                                <Link to="/products-details">Registro Civil (Copia)</Link>
+                                                <span className="price">Pendiente</span>
                                             </div>
                                         </div>
                                     </div>}
@@ -175,7 +178,7 @@ function Products() {
                         {/* Products Grid */}
                         <div className="col-lg-9 content-side">
                             <div className="mixitup-gallery">
-                                <PortfolioFilter2 />
+                                <PortfolioFilter2 user={user} />
                             </div>
                         </div>
                     </div>
