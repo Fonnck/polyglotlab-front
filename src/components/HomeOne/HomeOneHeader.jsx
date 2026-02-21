@@ -10,6 +10,7 @@ import Navigation from '../Navigation.jsx';
 import MobileMenu from '../MobileMenu.jsx';
 import { Link } from 'react-router-dom';
 import { useSignUp } from '../../hooks/useSignUp.js';
+import Whatsapp from "../../assets/images/icons/whatsapp.png";
 
 function Header({ className = '', scroll = false }) {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -62,10 +63,20 @@ function Header({ className = '', scroll = false }) {
                         <Navigation />
                     </nav>
                     <div className="outer-box">
-                        <Link href="tel:+92(8800)9806" className="info-btn">
+                        {/* <Link href="tel:+92(8800)9806" className="info-btn">
                             <i className="icon fa fa-phone"></i>
                             <small>Call Anytime</small><br /> +92 (8800) - 8960
-                        </Link>
+                        </Link> */}
+                        <a href="https://wa.link/ri3zlj" target="_blank" className='info-btn'>
+                            <div className="contact-info-box pointer">
+                                {/* <i className="icon lnr-icon-phone-handset"></i> */}
+                                <img className="icon lnr-icon-phone-handset" src={Whatsapp} alt="wspicon" width={40} />
+                                <span className="title">Escribenos o llamanos</span>
+                                <Link to="https://wa.link/ri3zlj" className="text">
+                                    + 57 (315) - 471 86 19
+                                </Link>
+                            </div>
+                        </a>
                         <div className="ui-btn-outer">
                             <button className="ui-btn ui-btn search-btn" onClick={toggleSearchPopup}>
                                 <span className="icon lnr lnr-icon-search"></span>

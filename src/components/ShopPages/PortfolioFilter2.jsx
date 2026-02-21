@@ -9,12 +9,14 @@ import toast from 'react-hot-toast';
 import { supabase } from '../../supabase/client';
 import { Rectangle } from './Rectangle';
 import { useLoader } from '../../hooks/useLoader';
+import { Contract } from './Contract';
 
 export default function PortfolioFilter2({ user }) {
 
-	const { selected } = useDashboardStore();
+	const [contract, setContract] = useState(false);
 	const [requests, setRequests] = useState();
 	const { setLoading } = useLoader();
+	const { selected } = useDashboardStore();
 
 	useEffect(() => {
 		if (user?.role === 'customer') {
@@ -76,21 +78,9 @@ export default function PortfolioFilter2({ user }) {
 		}
 	};
 
-	/* useEffect(() => {
-		if (isotopeInstance) {
-			isotopeInstance.arrange({ filter: filterKey === "*" ? "*" : `.${filterKey}` });
-		}
-	}, [filterKey, isotopeInstance]);
-
-	const handleFilterKeyChange = (key) => () => {
-		setFilterKey(key);
-	};
-
-	const activeBtn = (value) => (value === filterKey ? "filter active" : "filter"); */
-
 	return (
 		<>
-			<div className="filters clearfix">
+			<div className="filters clearfix pt-5">
 				<h3>{selected}</h3>
 				{/* <ul className="filter-tabs filter-btns clearfix">
 					<li className={activeBtn("*")} onClick={handleFilterKeyChange("*")}> All </li>
@@ -101,12 +91,20 @@ export default function PortfolioFilter2({ user }) {
 					<li className={activeBtn("cat-5")} onClick={handleFilterKeyChange("cat-5")}>Studies</li>
 				</ul> */}
 			</div>
-			<div className="items-container row">
+			<div className={`items-container row ${contract ? 'page_container' : ''}`}>
 				{/* Your product blocks here */}
-				{requests?.map((e, i) => (
-					<Rectangle key={i} e={e} i={i} getNewRequests={getRequests} />
-				))}
+				{!contract &&
+					requests?.map((e, i) => (
+						<Rectangle key={i} e={e} i={i}
+							getNewRequests={getRequests}
+							role={user?.role}
+							startContract={() => setContract(true)}
+						/>
+					))}
 
+				{contract &&
+					<Contract />
+				}
 				{/* <div className="product-block masonry-item small-column all cat-1 cat-2 product lenses col-lg-4 col-md-6 col-sm-12">
 					<div className="inner-box">
 						<div className="image-box">
