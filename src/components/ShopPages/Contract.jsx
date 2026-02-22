@@ -1,13 +1,8 @@
-import {
-  Document,
-  Page,
-  Text,
-  StyleSheet,
-  View,
-  Font,
-} from "@react-pdf/renderer";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { Document, Page, Text, StyleSheet, View } from "@react-pdf/renderer";
 
-export const Contract = () => {
+export const Contract = ({ user: student }) => {
   const styles = StyleSheet.create({
     page: { padding: 30, color: "black" },
     title: {
@@ -64,17 +59,15 @@ export const Contract = () => {
     },
     signText: {
       marginLeft: 5,
+      marginTop: 40,
       padding: 10,
       flexGrow: 1,
       fontFamily: "Meow Script",
+      fontSize: 30,
       fontWeight: 400,
       fontStyle: "normal",
+      textDecoration: "underline",
     },
-  });
-
-  Font.register({
-    family: "Meow Script",
-    src: "https://fonts.googleapis.com/css2?family=Meow+Script&display=swap",
   });
 
   const DocPdf = () => (
@@ -91,23 +84,25 @@ export const Contract = () => {
             En el municipio de Bucaramanga, del departamento de Santander, de la
             República de Colombia, a los dieciséis (16) días del mes de Febrero
             de 2026, entre la sociedad 1) POLYGLOTLAB S.A.S., identificada con
-            NIT XXXXXXXX e inscrita en la Cámara de Comercio de Bucaramanga bajo
-            matrícula No. XXXXXXXX, representada legalmente por MARÍA GABRIELA
-            OVIEDO MARTÍNEZ, mayor de edad, identificada con la cédula de
-            ciudadanía número 1.098.801.044, residente en la ciudad de
-            Bucaramanga, quien para efectos del presente contrato se denominará
-            EL CONTRATISTA, y por la otra 2)(_______________________), mayor de
-            edad, identificado(a) con cédula de ciudadanía No. (_______________)
-            de (_______________), obrando como Representante Legal del
-            estudiante (____________________________), identificado con tarjeta
-            de identidad No. (_______________) de (_______________), quien para
-            efectos del presente contrato se denominará EL CONTRATANTE, en
-            conjunto denominadas LAS PARTES, acuerdan celebrar el presente
-            CONTRATO DE PRESTACIÓN DE SERVICIOS PROFESIONALES DE EDUCACIÓN NO
-            FORMAL PARA LA ENSEÑANZA DE IDIOMA(S) EXTRANJERO(S), el cual se
-            regirá por las cláusulas que a continuación se expresan y en general
-            por las disposiciones del Código Civil y Código de Comercio
-            aplicables a la materia que trata este contrato:
+            NIT 902035858-0, representada legalmente por MARÍA GABRIELA OVIEDO
+            MARTÍNEZ, mayor de edad, identificada con la cédula de ciudadanía
+            número 1.098.801.044, residente en la ciudad de Bucaramanga, quien
+            para efectos del presente contrato se denominará EL CONTRATISTA, y
+            por la otra 2){" "}
+            {`${student?.parent_firstname} ${student?.parent_lastname}`.toUpperCase()}
+            , mayor de edad, identificado(a) con cédula de ciudadanía No.{" "}
+            {student?.parent_id} de (_______________), obrando como
+            Representante Legal del estudiante{" "}
+            {`${student?.first_name} ${student?.last_name}`.toUpperCase()},
+            identificado con tarjeta de identidad No. (_______________) de
+            (_______________), quien para efectos del presente contrato se
+            denominará EL CONTRATANTE, en conjunto denominadas LAS PARTES,
+            acuerdan celebrar el presente CONTRATO DE PRESTACIÓN DE SERVICIOS
+            PROFESIONALES DE EDUCACIÓN NO FORMAL PARA LA ENSEÑANZA DE IDIOMA(S)
+            EXTRANJERO(S), el cual se regirá por las cláusulas que a
+            continuación se expresan y en general por las disposiciones del
+            Código Civil y Código de Comercio aplicables a la materia que trata
+            este contrato:
           </Text>
         </View>
         <View style={styles.subtitle}>
@@ -510,11 +505,13 @@ export const Contract = () => {
             notificaciones, sean judiciales o extrajudiciales:
           </Text>
           <Text style={styles.tab}>
-            1. Por el CONTRATANTE en la XXXXXXXX, teléfono XXXXXXXXXXX y correo
-            electrónico XXXXXXXXX.
+            1. Por el CONTRATANTE en la ciudad de Bucaramanga, teléfono
+            {` ${student?.parent_phone}`} y correo electrónico{" "}
+            {` ${student?.parent_email}`}
+            .
             <br />
             2. Por el CONTRATISTA en la ciudad de Bucaramanga , teléfono:
-            3154718619 y correo electtrónico polyglotlab@gmail.com.
+            3154718619 y correo electrónico polyglotlab@gmail.com.
             <br />
             <br />
             Para constancia se firma en la ciudad de Bucaramanga, a los{" "}
@@ -534,15 +531,25 @@ export const Contract = () => {
             </Text>
           </View>
           <View className="d-flex justify-content-between">
-            <Text style={styles.paragraph}>
+            <Text style={styles.signText}>
+              {`${student?.parent_firstname} ${student?.parent_lastname}`}
               <br />
-              JHONATTAN SNEIDER FONSECA MEJIA
+            </Text>
+            <Text style={styles.signText}>
+              Maria Gabriela Oviedo Martinéz
+              <br />
+            </Text>
+          </View>
+          <View className="d-flex justify-content-between">
+            <Text style={{ ...styles.paragraph, paddingTop: 0, marginTop: 0 }}>
+              <br />
+              {`${student?.parent_firstname} ${student?.parent_lastname}`.toUpperCase()}
               <br />
               Acudiente
               <br />
               CC. 1015472242 de Bucaramanga.
             </Text>
-            <Text style={styles.paragraph}>
+            <Text style={{ ...styles.paragraph, paddingTop: 0, marginTop: 0 }}>
               <br />
               MARÍA GABRIELA OVIEDO MARTÍNEZ
               <br />

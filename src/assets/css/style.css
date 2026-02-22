@@ -34,6 +34,7 @@ License: copyright commercial
 27. Main Footer
 **********************************************/
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Satisfy&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Meow+Script&display=swap");
 @import url("animate.css");
 @import url("owl.css");
 @import url("swiper.min.css");
@@ -12100,4 +12101,28 @@ input[type="number"] {
     padding-left: 0px;
     padding-right: 0px;
   }
+}
+
+.meow-script-regular {
+  font-family: "Meow Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Definición de la animación */
+@keyframes parpadeo {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  } /* El valor 0.3 controla la suavidad del parpadeo */
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Aplicación al elemento */
+.blink {
+  animation: parpadeo 2s infinite ease-in-out;
 }
