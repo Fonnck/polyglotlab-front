@@ -1,8 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Document, Page, Text, StyleSheet, View } from "@react-pdf/renderer";
+import { useState } from "react";
+import { supabase } from "../../supabase/client";
+import { useDashboardStore } from "../../hooks/useDashboard";
+import toast from "react-hot-toast";
 
-export const Contract = ({ user: student }) => {
+export const Contract = ({ user: student, formValues, setContract }) => {
+  const [signed, setSigned] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { setSelected } = useDashboardStore();
+
   const styles = StyleSheet.create({
     page: { padding: 30, color: "black" },
     title: {
@@ -70,6 +78,65 @@ export const Contract = ({ user: student }) => {
     },
   });
 
+  function getSignDateRender(date = new Date()) {
+    const meses = [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ];
+
+    const dia = date.getDate();
+    const mes = meses[date.getMonth()];
+    const anio = date.getFullYear();
+
+    return `${dia} días del mes de ${mes} del año ${anio}`;
+  }
+
+  const signContract = async () => {
+    try {
+      await supabase
+        .from("enrollments")
+        .insert({
+          student_id: student?.id,
+          signed_date: new Date().getTime() + "",
+          contract_ip: localStorage.getItem("public_ip"),
+          status: "signed",
+          identificationNumber: formValues?.identificationNumber,
+          identificationPlace: formValues?.identificationPlace,
+          idCardNumber: formValues?.idCardNumber,
+          signingCity: formValues?.signingCity,
+          program: formValues?.program,
+          programRender: formValues?.programRender.render,
+        })
+        .select()
+        .then(({ data, error }) => {
+          console.log("enrollment", data);
+          setLoading(false);
+          if (error === null) {
+            toast.success("Contrato Firmado!");
+            setSigned(true);
+            setTimeout(() => {
+              // setLoading(false);
+            }, 3000);
+          } else {
+            // throw error;
+          }
+        });
+    } catch (error) {
+      setLoading(false);
+      toast.error(error);
+    }
+  };
+
   const DocPdf = () => (
     <Document>
       <Page size="letter" style={styles.page}>
@@ -91,15 +158,15 @@ export const Contract = ({ user: student }) => {
             por la otra 2){" "}
             {`${student?.parent_firstname} ${student?.parent_lastname}`.toUpperCase()}
             , mayor de edad, identificado(a) con cédula de ciudadanía No.{" "}
-            {student?.parent_id} de (_______________), obrando como
-            Representante Legal del estudiante{" "}
+            {student?.parent_id} de {formValues?.identificationPlace}, obrando
+            como Representante Legal del estudiante{" "}
             {`${student?.first_name} ${student?.last_name}`.toUpperCase()},
-            identificado con tarjeta de identidad No. (_______________) de
-            (_______________), quien para efectos del presente contrato se
-            denominará EL CONTRATANTE, en conjunto denominadas LAS PARTES,
-            acuerdan celebrar el presente CONTRATO DE PRESTACIÓN DE SERVICIOS
-            PROFESIONALES DE EDUCACIÓN NO FORMAL PARA LA ENSEÑANZA DE IDIOMA(S)
-            EXTRANJERO(S), el cual se regirá por las cláusulas que a
+            identificado con tarjeta de identidad No. {formValues?.idCardNumber}{" "}
+            de {formValues?.idCardPlace}, quien para efectos del presente
+            contrato se denominará EL CONTRATANTE, en conjunto denominadas LAS
+            PARTES, acuerdan celebrar el presente CONTRATO DE PRESTACIÓN DE
+            SERVICIOS PROFESIONALES DE EDUCACIÓN NO FORMAL PARA LA ENSEÑANZA DE
+            IDIOMA(S) EXTRANJERO(S), el cual se regirá por las cláusulas que a
             continuación se expresan y en general por las disposiciones del
             Código Civil y Código de Comercio aplicables a la materia que trata
             este contrato:
@@ -295,7 +362,8 @@ export const Contract = ({ user: student }) => {
             EL CONTRATANTE pagará al CONTRATISTA el valor de la mensualidad, el
             cual será determinado según el alcance del servicio contratado. Para
             este caso espécifico EL CONTRATANTE ha decidido optar por la opciòn:
-            XXXXXXXXXX con un valor mensual de: $XXXX.XXXXX
+            {` ${formValues?.programRender.render} `} con un valor mensual de: $
+            {`${formValues?.programRender.price} `}
           </Text>
           <Text style={{ ...styles.paragraph, color: "gray" }}>
             *Nota a beneficios en pagos: Si son hermanos, uno de ellos recibe un
@@ -515,7 +583,7 @@ export const Contract = ({ user: student }) => {
             <br />
             <br />
             Para constancia se firma en la ciudad de Bucaramanga, a los{" "}
-            getRenderDate(), en dos ejemplares de igual tenor.
+            {getSignDateRender()}, en dos ejemplares de igual tenor.
           </Text>
           <View
             className="d-flex justify-content-between"
@@ -531,41 +599,67 @@ export const Contract = ({ user: student }) => {
             </Text>
           </View>
           <View className="d-flex justify-content-between">
-            <Text style={styles.signText}>
-              {`${student?.parent_firstname} ${student?.parent_lastname}`}
-              <br />
-            </Text>
-            <Text style={styles.signText}>
-              Maria Gabriela Oviedo Martinéz
-              <br />
-            </Text>
-          </View>
-          <View className="d-flex justify-content-between">
-            <Text style={{ ...styles.paragraph, paddingTop: 0, marginTop: 0 }}>
-              <br />
-              {`${student?.parent_firstname} ${student?.parent_lastname}`.toUpperCase()}
-              <br />
-              Acudiente
-              <br />
-              CC. 1015472242 de Bucaramanga.
-            </Text>
-            <Text style={{ ...styles.paragraph, paddingTop: 0, marginTop: 0 }}>
-              <br />
-              MARÍA GABRIELA OVIEDO MARTÍNEZ
-              <br />
-              Representante Legal de POLYGLOTLAB SAS
-              <br />
-              CC. 1.098.801.044 de Bucaramanga.
-            </Text>
+            <View className="d-flex flex-column">
+              {!signed && (
+                <div className="mt-4">
+                  <button
+                    className="button-74"
+                    type="submit"
+                    name="submit-form"
+                    onClick={() => {
+                      setLoading(true);
+                      setTimeout(() => {
+                        signContract();
+                      }, 1500);
+                    }}
+                  >
+                    <span className={loading ? "blink" : ""}>
+                      {loading ? "Firmando..." : "Firmar Contrato"}
+                    </span>
+                  </button>
+                </div>
+              )}
+              {signed && (
+                <Text style={styles.signText} className="reveal-ltr">
+                  {`${student?.parent_firstname} ${student?.parent_lastname}`}
+                  <br />
+                </Text>
+              )}
+              <Text
+                style={{ ...styles.paragraph, paddingTop: 0, marginTop: 0 }}
+              >
+                <br />
+                {`${student?.parent_firstname} ${student?.parent_lastname}`.toUpperCase()}
+                <br />
+                Acudiente de {` ${student?.first_name} ${student?.last_name}`}
+                <br />
+                CC. {`${student?.parent_id} de ${formValues?.signingCity}`}.
+              </Text>
+            </View>
+            <View className="d-flex flex-column">
+              <Text
+                style={styles.signText}
+                className={`mx-4 ${!signed ? " blink " : " reveal-ltr "}`}
+              >
+                Maria Gabriela Oviedo Martinéz
+                <br />
+              </Text>
+              <Text
+                style={{ ...styles.paragraph, paddingTop: 0, marginTop: 0 }}
+              >
+                <br />
+                MARÍA GABRIELA OVIEDO MARTÍNEZ
+                <br />
+                Representante Legal de POLYGLOTLAB SAS
+                <br />
+                CC. 1.098.801.044 de Bucaramanga.
+              </Text>
+            </View>
           </View>
         </Page>
       </Page>
     </Document>
   );
 
-  return (
-    <div>
-      <DocPdf />
-    </div>
-  );
+  return <DocPdf />;
 };

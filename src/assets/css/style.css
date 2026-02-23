@@ -12126,3 +12126,18 @@ input[type="number"] {
 .blink {
   animation: parpadeo 2s infinite ease-in-out;
 }
+
+@keyframes revealLeftToRight {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+.reveal-ltr {
+  animation: revealLeftToRight 2s ease-out forwards;
+}

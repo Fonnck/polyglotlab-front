@@ -31,15 +31,21 @@ const programs = [
   {
     label: "SOLO INGLÉS (3 horas semanales) - $185.000",
     value: "ingles_3h_185",
+    render: "SOLO INGLÉS (3 horas semanales)",
+    price: "185.000",
   },
   {
     label: "SOLO FRANCÉS (3 horas semanales) - $185.000",
     value: "frances_3h_185",
+    render: "SOLO FRANCÉS (3 horas semanales)",
+    price: "185.000",
   },
   {
     label:
       "ESTUDIANTES POLÍGLOTAS INGLÉS Y FRANCÉS (6 horas semanales) - $285.000",
     value: "poliglotas_6h_285",
+    render: "ESTUDIANTES POLÍGLOTAS INGLÉS Y FRANCÉS (6 horas semanales)",
+    price: "285.000",
   },
 ];
 
@@ -59,19 +65,45 @@ const DocumentForm = ({ setContract, onSubmitForm, parentIdentification }) => {
           idCardNumber: "",
           idCardPlace: "",
           signingCity: "",
+          program: undefined,
         }}
         onSubmit={(values) => {
-          onSubmitForm(values);
+          onSubmitForm({
+            ...values,
+            programRender: programs.find((e) => e.value === values.program),
+          });
         }}
       >
         {({ handleSubmit, handleChange, values }) => (
           <Form onSubmit={handleSubmit}>
+            <Row className="mb-5">
+              <Col md={12}>
+                <Form.Group>
+                  <Form.Label>Programa a matricular</Form.Label>
+                  <Form.Select
+                    required
+                    name="program"
+                    value={values.program}
+                    onChange={handleChange}
+                  >
+                    <option value="">Seleccione un programa</option>
+                    {programs.map((program) => (
+                      <option key={program.value} value={program.value}>
+                        {program.label}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+
             <Row className="mb-3">
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>No. Identificación (Acudiente)</Form.Label>
                   <Form.Control
-                    required
+                    style={{ maxHeight: "40px" }}
+                    readOnly
                     size="sm"
                     name="identificationNumber"
                     value={values.identificationNumber}
@@ -105,6 +137,7 @@ const DocumentForm = ({ setContract, onSubmitForm, parentIdentification }) => {
                 <Form.Group>
                   <Form.Label>No. Tarjeta de Identidad (Estudiante)</Form.Label>
                   <Form.Control
+                    style={{ maxHeight: "40px" }}
                     required
                     size="sm"
                     name="idCardNumber"
@@ -150,26 +183,6 @@ const DocumentForm = ({ setContract, onSubmitForm, parentIdentification }) => {
                     {colombiaMainCities.map((city) => (
                       <option key={city} value={city}>
                         {city}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="mb-5">
-              <Col md={12}>
-                <Form.Group>
-                  <Form.Label>Programa a matricular</Form.Label>
-                  <Form.Select
-                    required
-                    name="program"
-                    value={values.program}
-                    onChange={handleChange}
-                  >
-                    <option value="">Seleccione un programa</option>
-                    {programs.map((program) => (
-                      <option key={program.value} value={program.value}>
-                        {program.label}
                       </option>
                     ))}
                   </Form.Select>

@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../supabase/client.js";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useDashboardStore } from "../../hooks/useDashboard.js";
+import { obtenerIP } from "../../hooks/utils/index.js";
 
 const admin_menu = [
   {
@@ -58,12 +59,16 @@ function Products() {
       if (session) {
         if (user === undefined) {
           getUserByEmail(session.user.email);
+          setSelected("Nuevas Solicitudes");
         }
         if (event !== "SIGNED_IN") {
           if (!session) {
             nav("/");
           } else {
             nav("/products-sidebar");
+            obtenerIP().then((ip) => {
+              localStorage.setItem("public_ip", ip);
+            });
           }
         }
       } else {

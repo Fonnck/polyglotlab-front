@@ -14,6 +14,7 @@ import DocumentForm from "./DocumentForm";
 
 export default function PortfolioFilter2({ user, contract, setContract }) {
   const [requests, setRequests] = useState();
+  const [formValues, setFormValues] = useState();
   const { setLoading } = useLoader();
   const { selected } = useDashboardStore();
 
@@ -77,6 +78,14 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
     }
   };
 
+  const onSubmitForm = (values) => {
+    if (requests.length === 1) {
+      console.log("FormValues:", values);
+      setFormValues(values);
+      setContract(2);
+    }
+  };
+
   return (
     <>
       <div className="filters clearfix pt-5">
@@ -109,139 +118,18 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
           <DocumentForm
             parentIdentification={user?.identification}
             onSubmitForm={(values) => {
-              console.log(values);
+              onSubmitForm(values);
             }}
             setContract={setContract}
           />
         )}
         {contract === 2 && (
-          <Contract user={requests.length === 1 ? requests[0] : undefined} />
+          <Contract
+            user={requests.length === 1 ? requests[0] : undefined}
+            formValues={formValues}
+            setContract={setContract}
+          />
         )}
-        {/* <div className="product-block masonry-item small-column all cat-1 cat-2 product lenses col-lg-4 col-md-6 col-sm-12">
-					<div className="inner-box">
-						<div className="image-box">
-							<div className="image"><Link to="/products-details"><img src={ProductImage2} alt="Product 2" /></Link></div>
-							<div className="icon-box">
-								<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-								<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-							</div>
-						</div>
-						<div className="content">
-							<h4><Link to="/products-details">Case of Giant</Link></h4>
-							<span className="price">$52.00</span>
-							<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-
-						</div>
-					</div>
-				</div>
-				<div className="product-block masonry-item small-column all cat-1 cat-2 cat-4 product lenses col-lg-4 col-md-6 col-sm-12">
-					<div className="inner-box">
-						<div className="image-box">
-							<div className="image"><Link to="/products-details"><img src={ProductImage3} alt="Product 3" /></Link></div>
-							<div className="icon-box">
-								<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-								<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-							</div>
-						</div>
-						<div className="content">
-							<h4><Link to="/products-details">Miniature Goose</Link></h4>
-							<span className="price">$43.00</span>
-							<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-
-						</div>
-					</div>
-				</div>
-				<div className="product-block masonry-item small-column all cat-1 cat-3 product lenses col-lg-4 col-md-6 col-sm-12">
-					<div className="inner-box">
-						<div className="image-box">
-							<div className="image"><Link to="/products-details"><img src={ProductImage4} alt="Product 4" /></Link></div>
-							<div className="icon-box">
-								<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-								<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-							</div>
-						</div>
-						<div className="content">
-							<h4><Link to="/products-details">Thirteenth Tuba</Link></h4>
-							<span className="price">$22.00</span>
-							<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-
-						</div>
-					</div>
-				</div>
-				<div className="product-block masonry-item small-column all cat-1 cat-3 cat-5 product lenses col-lg-4 col-md-6 col-sm-12">
-					<div className="inner-box">
-						<div className="image-box">
-							<div className="image"><Link to="/products-details"><img src={ProductImage5} alt="Product 5" /></Link></div>
-							<div className="icon-box">
-								<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-								<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-							</div>
-						</div>
-						<div className="content">
-							<h4><Link to="/products-details">Jilted Juror</Link></h4>
-							<span className="price">$34.00</span>
-							<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-
-						</div>
-					</div>
-				</div>
-				<div className="product-block masonry-item small-column all cat-2 cat-3 cat-4 product lenses col-lg-4 col-md-6 col-sm-12">
-					<div className="inner-box">
-						<div className="image-box">
-							<div className="image"><Link to="/products-details"><img src={ProductImage6} alt="Product 6" /></Link></div>
-							<div className="icon-box">
-								<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-								<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-							</div>
-						</div>
-						<div className="content">
-							<h4><Link to="/products-details">Jilted Lodger</Link></h4>
-							<span className="price">$52.00</span>
-							<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-
-						</div>
-					</div>
-				</div>
-				<div className="product-block masonry-item small-column all cat-1 cat-2 cat-5 product lenses col-lg-4 col-md-6 col-sm-12">
-					<div className="inner-box">
-						<div className="image-box">
-							<div className="image"><Link to="/products-details"><img src={ProductImage7} alt="Product 7" /></Link></div>
-							<div className="icon-box">
-								<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-								<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-							</div>
-						</div>
-						<div className="content">
-							<h4><Link to="/products-details">Spanish Baker</Link></h4>
-							<span className="price">$25.00</span>
-							<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-
-						</div>
-					</div>
-				</div>
-				<div className="product-block masonry-item small-column all cat-1 cat-4 cat-5 product lenses col-lg-4 col-md-6 col-sm-12">
-					<div className="inner-box">
-						<div className="image-box">
-							<div className="image"><Link to="/products-details"><img src={ProductImage8} alt="Product 8" /></Link></div>
-							<div className="icon-box">
-								<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-								<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-							</div>
-						</div>
-						<div className="content">
-							<h4><Link to="/products-details">Clue Thirteenth</Link></h4>
-							<span className="price">$30.00</span>
-							<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i></span>
-
-						</div>
-					</div>
-				</div> */}
       </div>
     </>
   );
