@@ -3,13 +3,15 @@
 import { Document, Page, Text, StyleSheet, View } from "@react-pdf/renderer";
 import { useState } from "react";
 import { supabase } from "../../supabase/client";
-import { useDashboardStore } from "../../hooks/useDashboard";
+import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const Contract = ({ user: student, formValues, setContract }) => {
   const [signed, setSigned] = useState(false);
   const [loading, setLoading] = useState(false);
   const { setSelected } = useDashboardStore();
+  const { updateStudentStatus } = useDashboard();
 
   const styles = StyleSheet.create({
     page: { padding: 30, color: "black" },
@@ -101,6 +103,8 @@ export const Contract = ({ user: student, formValues, setContract }) => {
     return `${dia} días del mes de ${mes} del año ${anio}`;
   }
 
+  const nav = useNavigate();
+
   const signContract = async () => {
     try {
       await supabase
@@ -125,7 +129,10 @@ export const Contract = ({ user: student, formValues, setContract }) => {
             toast.success("Contrato Firmado!");
             setSigned(true);
             setTimeout(() => {
-              // setLoading(false);
+              updateStudentStatus(student?.id, { status: "active" });
+              setContract(5);
+              nav("/products-sidebar");
+              setSelected("Mi Suscripción");
             }, 3000);
           } else {
             // throw error;

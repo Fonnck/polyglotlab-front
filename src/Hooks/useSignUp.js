@@ -170,6 +170,7 @@ export const useSignUp = () => {
           parent_id: values.identification,
           parent_email: values.email,
           parent_phone: values.phone,
+          status: "pending",
         })
         .select()
         .then((response) => {

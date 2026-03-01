@@ -11,9 +11,66 @@ import { Rectangle } from "./Rectangle";
 import { useLoader } from "../../hooks/useLoader";
 import { Contract } from "./Contract";
 import DocumentForm from "./DocumentForm";
+import {
+  Document,
+  Page,
+  PDFViewer,
+  StyleSheet,
+  Text,
+} from "@react-pdf/renderer";
+import { ContractSigned } from "./ContractSigned";
+import { DownLoadPDF, Quixote } from "./DownLoadPDF";
+
+const styles = StyleSheet.create({
+  body: {
+    paddingTop: 35,
+    paddingBottom: 65,
+    paddingHorizontal: 35,
+  },
+  title: {
+    fontSize: 24,
+    textAlign: "center",
+    fontFamily: "Oswald",
+  },
+  author: {
+    fontSize: 12,
+    textAlign: "center",
+    marginBottom: 40,
+  },
+  subtitle: {
+    fontSize: 18,
+    margin: 12,
+    fontFamily: "Oswald",
+  },
+  text: {
+    margin: 12,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+  },
+  image: {
+    marginVertical: 15,
+    marginHorizontal: 100,
+  },
+  header: {
+    fontSize: 12,
+    marginBottom: 20,
+    textAlign: "center",
+    color: "grey",
+  },
+  pageNumber: {
+    position: "absolute",
+    fontSize: 12,
+    bottom: 30,
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    color: "grey",
+  },
+});
 
 export default function PortfolioFilter2({ user, contract, setContract }) {
-  const [requests, setRequests] = useState();
+  const [requests, setRequests] = useState([]);
   const [formValues, setFormValues] = useState();
   const { setLoading } = useLoader();
   const { selected } = useDashboardStore();
@@ -32,6 +89,10 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
     }
   }, [selected]);
 
+  const refresh = () => {
+    getRequests("active");
+  };
+
   const getRequests = async (status) => {
     try {
       setLoading(true);
@@ -43,7 +104,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
         .then(({ data, error }) => {
           setLoading(false);
           if (error === null) {
-            console.log(data);
+            console.log("request", data);
             setRequests(data);
           } else {
             console.log(error);
@@ -61,7 +122,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
       await supabase
         .from("students")
         .select("*")
-        .in("status", ["inactive", "pending"])
+        // .in("status", ["inactive", "pending"])
         .eq("parent_id", parent_identification)
         .then(({ data, error }) => {
           setLoading(false);
@@ -109,7 +170,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
               key={i}
               e={e}
               i={i}
-              getNewRequests={getRequests}
+              setContract={setContract}
               role={user?.role}
               startContract={() => setContract(1)}
             />
@@ -128,9 +189,28 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
             user={requests.length === 1 ? requests[0] : undefined}
             formValues={formValues}
             setContract={setContract}
+            refresh={refresh}
+          />
+        )}
+        {contract === 4 && (
+          <DownLoadPDF
+            student={requests.length === 1 ? requests[0] : undefined}
           />
         )}
       </div>
+      {contract === 5 && (
+        <button
+          className="button-74"
+          type="submit"
+          name="submit-form"
+          onClick={() => {
+            refresh();
+            setContract(0);
+          }}
+        >
+          <span className="blink">VER SUSCRIPCIÓN</span>
+        </button>
+      )}
     </>
   );
 }

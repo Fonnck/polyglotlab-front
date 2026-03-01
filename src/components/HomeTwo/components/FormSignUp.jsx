@@ -281,7 +281,15 @@ export const FormSignUp = () => {
                 />
                 <label htmlFor="cbtest-19" className="check-box" />
               </div>
-              <small>Acepto términos y condiciones</small>
+              <small>
+                Acepto&nbsp;
+                <a
+                  href="https://docs.google.com/document/d/1VhUEwW0J2lKGzzaAt7zCF1l7gyBwr4LK/edit?usp=sharing&ouid=113865125216594741992&rtpof=true&sd=true"
+                  target="_blank"
+                >
+                  términos y condiciones
+                </a>
+              </small>
             </div>
 
             <div className="mt-4">

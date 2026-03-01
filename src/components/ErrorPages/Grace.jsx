@@ -8,7 +8,7 @@ import CallToActionHomeOne from "../HomeOne/CallToActionHomeOne.jsx";
 import TestimonialSection from "../HomeOne/TestimonialHomeOne.jsx";
 import HomeTwoHeader from "../HomeTwo/HomeTwoHeader.jsx";
 import Loader from "../Helper/Loader.jsx";
-import FooterHomeOne from "../HomeOne/FooterHomeOne.jsx";
+import FooterHomeOne from "../HomeTwo/FooterHomeOne.jsx";
 import BackToTop from "../BackToTop.jsx";
 import ReactConfetti from "react-confetti";
 import { useWindowSize } from "react-use";

@@ -65,6 +65,7 @@ export const useDashboard = (setRequests) => {
 
   return {
     getNewRequests,
+    updateStudentStatus,
   };
 };
 

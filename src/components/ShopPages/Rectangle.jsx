@@ -3,9 +3,12 @@
 import { useState } from "react";
 import Boy from "../../assets/images/boy.png";
 import Girl from "../../assets/images/girl.png";
-import { useDashboard } from "../../hooks/useDashboard";
+import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
+import { DownLoadPDF, Quixote } from "./DownLoadPDF";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { useNavigate } from "react-router-dom";
 
-export const Rectangle = ({ e, i, getNewRequests, role, startContract }) => {
+export const Rectangle = ({ e, i, setContract, role, startContract }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -41,6 +44,9 @@ export const Rectangle = ({ e, i, getNewRequests, role, startContract }) => {
       return "Activo";
     }
   };
+
+  const { setSelected } = useDashboardStore();
+  const nav = useNavigate();
 
   return (
     <>
@@ -121,6 +127,25 @@ export const Rectangle = ({ e, i, getNewRequests, role, startContract }) => {
                   <span className="button_top"> Confirmar </span>
                 </button>
               </div>
+            )}
+            {e.status === "active" && (
+              <PDFDownloadLink document={<Quixote />} fileName="documento.pdf">
+                {({ loading }) =>
+                  loading ? (
+                    <span>Generando PDF...</span>
+                  ) : (
+                    <button
+                      className="button-74"
+                      onClick={() => {
+                        setContract(4);
+                        setSelected("Contrato Firmado");
+                      }}
+                    >
+                      Ver Contrato Firmado
+                    </button>
+                  )
+                }
+              </PDFDownloadLink>
             )}
           </div>
         </div>

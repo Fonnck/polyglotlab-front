@@ -2,12 +2,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import BackToTop from "../BackToTop.jsx";
 import HomeOneHeader from "../HomeOne/HomeOneHeader.jsx";
-import FooterHomeOne from "../HomeOne/FooterHomeOne.jsx";
+import FooterHomeOne from "../HomeTwo/FooterHomeOne.jsx";
 import HeroPageTitle from "../HeroPageTitle.jsx";
 import PortfolioFilter2 from "./PortfolioFilter2.jsx";
-import ProductDetailsImg1 from "../../assets/images/resource/products/thumb-1.jpg";
-import ProductDetailsImg2 from "../../assets/images/resource/products/thumb-2.jpg";
-import ProductDetailsImg3 from "../../assets/images/resource/products/thumb-3.jpg";
+import ProductDetailsImg1 from "../../assets/images/resource/products/thumb-1.png";
+import ProductDetailsImg2 from "../../assets/images/resource/products/thumb-1.png";
+import ProductDetailsImg3 from "../../assets/images/resource/products/thumb-3.png";
 import { useSignInStore, useSignUp } from "../../hooks/useSignUp.js";
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabase/client.js";
@@ -35,10 +35,6 @@ const admin_menu = [
 ];
 const customer_menu = [
   {
-    name: "Nuevas solicitudes",
-    action: () => {},
-  },
-  {
     name: "Mi Suscripción",
     action: () => {},
   },
@@ -57,6 +53,7 @@ function Products() {
       console.log(event);
       console.log(session);
       if (session) {
+        nav("/products-sidebar");
         if (user === undefined) {
           getUserByEmail(session.user.email);
           setSelected("Nuevas Solicitudes");
@@ -118,14 +115,7 @@ function Products() {
                 {/* Category Widget */}
                 <div className="sidebar-widget category-widget">
                   <div className="widget-title">
-                    <h5
-                      className="widget-title pointer"
-                      onClick={() => {
-                        signOut();
-                      }}
-                    >
-                      Matrículas
-                    </h5>
+                    <h5 className="widget-title pointer">Matrículas</h5>
                   </div>
                   <div className="widget-content">
                     {user?.role === "admin" && (
@@ -136,6 +126,7 @@ function Products() {
                             key={i}
                             onClick={() => {
                               setSelected(e.name);
+                              setContract(null);
                             }}
                           >
                             <a>{e.name}</a>
@@ -189,33 +180,29 @@ function Products() {
                     <div className="post-inner">
                       <div className="post">
                         <figure className="post-thumb">
-                          <Link to="/products-details">
-                            <img src={ProductDetailsImg1} alt="Product 1" />
-                          </Link>
+                          {/* <Link to="/products-details"> */}
+                          <img src={ProductDetailsImg1} alt="Product 1" />
+                          {/* </Link> */}
                         </figure>
-                        <Link to="/products-details">Tarjeta de Identidad</Link>
+                        <Link>Tarjeta de Identidad</Link>
                         <span className="price">Pendiente</span>
                       </div>
                       <div className="post">
                         <figure className="post-thumb">
-                          <Link to="/products-details">
+                          <Link>
                             <img src={ProductDetailsImg2} alt="Product 2" />
                           </Link>
                         </figure>
-                        <Link to="/products-details">
-                          Cédula Ciudadania (Copia)
-                        </Link>
+                        <Link>Cédula Ciudadania (Copia)</Link>
                         <span className="price">Pendiente</span>
                       </div>
                       <div className="post">
                         <figure className="post-thumb">
-                          <Link to="/products-details">
+                          <Link>
                             <img src={ProductDetailsImg3} alt="Product 3" />
                           </Link>
                         </figure>
-                        <Link to="/products-details">
-                          Registro Civil (Copia)
-                        </Link>
+                        <Link>Registro Civil (Copia)</Link>
                         <span className="price">Pendiente</span>
                       </div>
                     </div>
