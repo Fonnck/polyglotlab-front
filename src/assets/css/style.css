@@ -34,6 +34,7 @@ License: copyright commercial
 27. Main Footer
 **********************************************/
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Satisfy&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Meow+Script&display=swap");
 @import url("animate.css");
 @import url("owl.css");
 @import url("swiper.min.css");
@@ -12077,4 +12078,66 @@ input[type="number"] {
 
 ._button:hover::before {
   transform: translate3d(100%, 0, 0);
+}
+
+.page_container {
+  margin-left: 0.18rem;
+  padding-left: 60px;
+  padding-right: 60px;
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.1px);
+  -webkit-backdrop-filter: blur(7.1px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 10px 10px 57px -2px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 10px 57px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 57px -2px rgba(0, 0, 0, 0.75);
+}
+
+@media (max-width: 824px) {
+  /* Estilos */
+  .page_container {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+.meow-script-regular {
+  font-family: "Meow Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Definición de la animación */
+@keyframes parpadeo {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  } /* El valor 0.3 controla la suavidad del parpadeo */
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Aplicación al elemento */
+.blink {
+  animation: parpadeo 2s infinite ease-in-out;
+}
+
+@keyframes revealLeftToRight {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+.reveal-ltr {
+  animation: revealLeftToRight 2s ease-out forwards;
 }

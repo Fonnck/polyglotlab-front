@@ -3,8 +3,7 @@ import { scrollWithOffset } from "../hooks/utils";
 import { useScrollStore } from "../hooks/useScrollSrore";
 
 function Navigation() {
-
-  const { sectionRef } = useScrollStore()
+  const { sectionRef } = useScrollStore();
 
   return (
     <ul className="navigation">
@@ -43,7 +42,13 @@ function Navigation() {
         </ul> */}
       </li>
       <li className="dropdown">
-        <Link to="#">Cursos</Link>
+        <span
+          className="pointer"
+          style={{ color: "white" }}
+          onClick={() => scrollWithOffset(sectionRef.current, 11)}
+        >
+          Cursos
+        </span>
         {/* <ul>
           <li>
             <Link to="/about-us">About</Link>
@@ -74,7 +79,9 @@ function Navigation() {
         </ul> */}
       </li>
       <li className="dropdown">
-        <Link to="#">Contacto</Link>
+        <Link to="https://wa.link/ri3zlj" target="_blank">
+          Contacto
+        </Link>
         {/* <ul>
           <li>
             <Link to="/products">Products</Link>
@@ -94,7 +101,12 @@ function Navigation() {
         </ul> */}
       </li>
       <li className="dropdown">
-        <Link to="#">Términos y Condiciones</Link>
+        <Link
+          target="_blank"
+          to="https://drive.google.com/file/d/1HfmF-3U5kPV6yqXN43F7GUE8bGlbOUBt/view?usp=sharing"
+        >
+          Términos y Condiciones
+        </Link>
         {/* <ul>
           <li>
             <Link to="/news">News Grid</Link>

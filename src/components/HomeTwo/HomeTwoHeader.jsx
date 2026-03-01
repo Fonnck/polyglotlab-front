@@ -14,6 +14,7 @@ import Navigation from "../Navigation.jsx";
 import MobileMenu from "../MobileMenu.jsx";
 import { useScrollStore } from "../../hooks/useScrollSrore.js";
 import { scrollWithOffset } from "../../hooks/utils/index.js";
+import { FaTiktok } from "react-icons/fa";
 
 function Header({ className = "", scroll = false }) {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -59,12 +60,12 @@ function Header({ className = "", scroll = false }) {
   const onLogin = () => {
     setWannaLogIn(true);
     scrollWithOffset(sectionRef.current, 11);
-  }
+  };
 
   const onRegister = () => {
     setWannaLogIn(false);
     scrollWithOffset(sectionRef.current, 11);
-  }
+  };
 
   return (
     <>
@@ -90,7 +91,7 @@ function Header({ className = "", scroll = false }) {
                 <ul className="social-icon-one light">
                   <li>
                     <Link to="#">
-                      <span className="fab fa-twitter"></span>
+                      <FaTiktok />
                     </Link>
                   </li>
                   <li>
@@ -99,12 +100,7 @@ function Header({ className = "", scroll = false }) {
                     </Link>
                   </li>
                   <li>
-                    <Link to="#">
-                      <span className="fab fa-pinterest-p"></span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="#">
+                    <Link to="https://www.instagram.com/polyglotlabacademy/">
                       <span className="fab fa-instagram"></span>
                     </Link>
                   </li>
@@ -129,7 +125,12 @@ function Header({ className = "", scroll = false }) {
                   <a href="https://wa.link/ri3zlj" target="_blank">
                     <div className="contact-info-box pointer">
                       {/* <i className="icon lnr-icon-phone-handset"></i> */}
-                      <img className="icon lnr-icon-phone-handset" src={Whatsapp} alt="wspicon" width={40} />
+                      <img
+                        className="icon lnr-icon-phone-handset"
+                        src={Whatsapp}
+                        alt="wspicon"
+                        width={40}
+                      />
                       <span className="title">Escribenos o llamanos</span>
                       <Link to="https://wa.link/ri3zlj" className="text">
                         + 57 (315) - 471 86 19
@@ -138,12 +139,20 @@ function Header({ className = "", scroll = false }) {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:contacto@polyglotlabacademy.com
+                  <a
+                    href="mailto:contacto@polyglotlabacademy.com
         ?subject=Consulta%20sobre%20programas%20de%20idiomas
-        &body=Hola%20Polyglot%20Lab%2C%0A%0AMe%20gustaría%20recibir%20más%20información." target="_blank">
+        &body=Hola%20Polyglot%20Lab%2C%0A%0AMe%20gustaría%20recibir%20más%20información."
+                    target="_blank"
+                  >
                     <div className="contact-info-box pointer">
                       {/* <i className="icon lnr-icon-envelope1"></i> */}
-                      <img className="icon lnr-icon-phone-handset" src={Email} alt="wspicon" width={45} />
+                      <img
+                        className="icon lnr-icon-phone-handset"
+                        src={Email}
+                        alt="wspicon"
+                        width={45}
+                      />
                       <span className="title">Contactanos</span>
                       <Link to="mailto:ambed@company.com" className="text">
                         contacto@polyglotlab.com
@@ -154,8 +163,16 @@ function Header({ className = "", scroll = false }) {
                 <li>
                   <div className="contact-info-box pointer">
                     {/* <i className="icon lnr-icon-map-marker"></i> */}
-                    <a href="https://maps.app.goo.gl/xsWMfi5n1Ye3tZuD8" target="_blank">
-                      <img className="icon lnr-icon-phone-handset" src={Location} alt="wspicon" width={40} />
+                    <a
+                      href="https://maps.app.goo.gl/xsWMfi5n1Ye3tZuD8"
+                      target="_blank"
+                    >
+                      <img
+                        className="icon lnr-icon-phone-handset"
+                        src={Location}
+                        alt="wspicon"
+                        width={40}
+                      />
                       <span className="title">Bucaramanga</span>
                       <div className="text">Bucaramanga, Colombia</div>
                     </a>
@@ -196,7 +213,7 @@ function Header({ className = "", scroll = false }) {
                       className="theme-btn btn-style-two pointer"
                       onClick={() => {
                         setWannaLogIn(false);
-                        scrollWithOffset(sectionRef.current, 11)
+                        scrollWithOffset(sectionRef.current, 11);
                       }}
                     >
                       <span className="btn-title">Inscribirse</span>
@@ -227,30 +244,55 @@ function Header({ className = "", scroll = false }) {
             <ul className="contact-list-one">
               <li>
                 {/*<!-- Contact Info Box -->*/}
-                <div className="contact-info-box">
-                  <i className="icon lnr-icon-phone-handset"></i>
-                  <span className="title">Call Now</span>
-                  <a href="tel:+92880098670">+92 (8800) - 98670</a>
-                </div>
+                <a href="https://wa.link/ri3zlj" target="_blank">
+                  <div className="contact-info-box pointer">
+                    {/* <i className="icon lnr-icon-phone-handset"></i> */}
+                    <img
+                      className="icon lnr-icon-phone-handset"
+                      src={Whatsapp}
+                      alt="wspicon"
+                      width={40}
+                    />
+                    <span className="title">Escribenos o llamanos</span>
+                    <Link to="https://wa.link/ri3zlj" className="text">
+                      + 57 (315) - 471 86 19
+                    </Link>
+                  </div>
+                </a>
               </li>
               <li>
                 {/*<!-- Contact Info Box -->*/}
-                <div className="contact-info-box">
-                  <span className="icon lnr-icon-envelope1"></span>
-                  <span className="title">Send Email</span>
-                  <a href="mailto:help@company.com">help@company.com</a>
-                </div>
+                <a
+                  href="mailto:contacto@polyglotlabacademy.com
+        ?subject=Consulta%20sobre%20programas%20de%20idiomas
+        &body=Hola%20Polyglot%20Lab%2C%0A%0AMe%20gustaría%20recibir%20más%20información."
+                  target="_blank"
+                >
+                  <div className="contact-info-box pointer">
+                    {/* <i className="icon lnr-icon-envelope1"></i> */}
+                    <img
+                      className="icon lnr-icon-phone-handset"
+                      src={Email}
+                      alt="wspicon"
+                      width={45}
+                    />
+                    <span className="title">Contactanos</span>
+                    <Link to="mailto:ambed@company.com" className="text">
+                      contacto@polyglotlab.com
+                    </Link>
+                  </div>
+                </a>
               </li>
               <li>
                 {/*<!-- Contact Info Box -->*/}
                 <div className="contact-info-box">
                   <span className="icon lnr-icon-clock"></span>
-                  <span className="title">Send Email</span>
-                  Mon - Sat 8:00 - 6:30, Sunday - CLOSED
+                  <span className="title">Escribénos</span>
+                  Lunes - Sábado 8:00 - 6:30, Domingo - CERRADO
                 </div>
               </li>
             </ul>
-            <ul className="social-links">
+            {/* <ul className="social-links">
               <li>
                 <a href="#">
                   <i className="fab fa-twitter"></i>
@@ -271,7 +313,22 @@ function Header({ className = "", scroll = false }) {
                   <i className="fab fa-instagram"></i>
                 </a>
               </li>
-            </ul>
+            </ul> */}
+            <div className="social-links">
+              <div className="auto-container">
+                <div className="inner-container">
+                  <div className="copyright-text">
+                    &copy; Copyright reservado{" "}
+                    <Link
+                      style={{ color: "white" }}
+                      to="https://codexdiamonds.com"
+                    >
+                      | Diseñado por CodexDiamonds✨
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </nav>
         </div>
         {/* Header Search */}
@@ -315,7 +372,7 @@ function Header({ className = "", scroll = false }) {
             </div>
           </div>
         </div>
-      </header >
+      </header>
     </>
   );
 }

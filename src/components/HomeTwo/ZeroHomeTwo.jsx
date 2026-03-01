@@ -36,18 +36,20 @@ function BannerSection() {
           <div className="auto-container">
             <div className="row align-items-center">
               <div className="content-column col-lg-7 col-md-6">
-                <div className="content-box">
+                <div className="content-box mt-5">
                   <span className="sub-title">START TO NEW JOURNEY</span>
                   <h2 className="title animate-3">
-                    The best <br />
-                    program to <span className="style-font">enroll</span> <br />
-                    for exchange
+                    En Polyglot<span style={{ color: "#ffae1e" }}>Lab</span>{" "}
+                    <br />
+                    Soñamos y <span className="style-font">
+                      aprendemos
+                    </span>{" "}
+                    <br />
+                    juntos.
                   </h2>
                   <div className="tp-caption">
                     <div className="text">
-                      World-class training and development programs{" "}
-                      <br className="d-none d-lg-block" />
-                      developed by top teachers
+                      <h4>More than languages, une expérience humaine</h4>
                     </div>
                   </div>
                   <div className="btn-box animate-4">
@@ -57,7 +59,7 @@ function BannerSection() {
                         scrollWithOffset(sectionRef.current, 11);
                       }}
                     >
-                      <span className="btn-title">Find Course</span>
+                      <span className="btn-title">Inscribirse</span>
                     </div>
                   </div>
                 </div>
