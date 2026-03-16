@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Formik } from "formik";
+import { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
 const colombiaMainCities = [
@@ -62,8 +64,10 @@ const DocumentForm = ({ setContract, onSubmitForm, parentIdentification }) => {
         initialValues={{
           identificationNumber: parentIdentification,
           identificationPlace: "",
+          identificationPlaceOther: "",
           idCardNumber: "",
           idCardPlace: "",
+          idCardPlaceOther: "",
           signingCity: "",
           program: undefined,
         }}
@@ -127,10 +131,29 @@ const DocumentForm = ({ setContract, onSubmitForm, parentIdentification }) => {
                         {city}
                       </option>
                     ))}
+                    <option value="Otro ¿Cuál?">Otro ¿Cuál?</option>
                   </Form.Select>
                 </Form.Group>
               </Col>
             </Row>
+
+            {values.identificationPlace === "Otro ¿Cuál?" && (
+              <Row className="mb-4">
+                <Col md={12}>
+                  <Form.Group>
+                    <Form.Label>Otro ¿Cuál? (Acudiente)</Form.Label>
+                    <Form.Control
+                      style={{ maxHeight: "40px" }}
+                      required
+                      size="sm"
+                      name="identificationPlaceOther"
+                      value={values.identificationPlaceOther}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>)
+            }
 
             <Row className="mb-3">
               <Col md={6}>
@@ -164,10 +187,29 @@ const DocumentForm = ({ setContract, onSubmitForm, parentIdentification }) => {
                         {city}
                       </option>
                     ))}
+                    <option value="Otro ¿Cuál?">Otro ¿Cuál?</option>
                   </Form.Select>
                 </Form.Group>
               </Col>
             </Row>
+
+            {values.idCardPlace === "Otro ¿Cuál?" && (
+              <Row className="mb-4">
+                <Col md={12}>
+                  <Form.Group>
+                    <Form.Label>Otro ¿Cuál? (Estudiante)</Form.Label>
+                    <Form.Control
+                      style={{ maxHeight: "40px" }}
+                      required
+                      size="sm"
+                      name="idCardPlaceOther"
+                      value={values.idCardPlaceOther}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>)
+            }
 
             <Row className="mb-4">
               <Col md={12}>

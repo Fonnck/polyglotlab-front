@@ -143,7 +143,11 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
   const onSubmitForm = (values) => {
     if (requests.length === 1) {
       console.log("FormValues:", values);
-      setFormValues(values);
+      setFormValues({
+        ...values,
+        indentificationPlace: values.identificationPlace === "Otro ¿Cuál?" ? values.identificationPlaceOther : values.identificationPlace,
+        idCardPlace: values.idCardPlace === "Otro ¿Cuál?" ? values.idCardPlaceOther : values.idCardPlace,
+      });
       setContract(2);
     }
   };
