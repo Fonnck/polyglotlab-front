@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
@@ -7,10 +7,16 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 // Import your client images
+/* import Client1 from '../../assets/images/resource/client.png'; */
+/* import Client2 from '../../assets/images/resource/client.png'; */
+/* import Client3 from '../../assets/images/resource/client.png'; */
+/* import Client4 from '../../assets/images/resource/client.png'; */
+/* import Client5 from '../../assets/images/resource/client.png'; */
 import Client1 from '../../assets/images/resource/client.png';
-import Client2 from '../../assets/images/resource/client.png';
+import Client2 from '../../assets/images/icons/natgeo-png.png';
 import Client3 from '../../assets/images/resource/client.png';
-import Client4 from '../../assets/images/resource/client.png';
+import Client4 from '../../assets/images/icons/natgeo-png.png';
+// import Client4 from '../../assets/images/resource/client.png';
 import Client5 from '../../assets/images/resource/client.png';
 
 const swiperOptions = {

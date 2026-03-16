@@ -1,210 +1,216 @@
-import { Link } from 'react-router-dom';
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import Isotope from 'isotope-layout';
-import ProductImage1 from '../../assets/images/resource/products/1.jpg';
-import ProductImage2 from '../../assets/images/resource/products/2.jpg';
-import ProductImage3 from '../../assets/images/resource/products/3.jpg';
-import ProductImage4 from '../../assets/images/resource/products/4.jpg';
-import ProductImage5 from '../../assets/images/resource/products/5.jpg';
-import ProductImage6 from '../../assets/images/resource/products/6.jpg';
-import ProductImage7 from '../../assets/images/resource/products/7.jpg';
-import ProductImage8 from '../../assets/images/resource/products/8.jpg';
+import Isotope from "isotope-layout";
+import ProductImage1 from "../../assets/images/resource/products/1.jpg";
+import { useDashboardStore } from "../../hooks/useDashboard";
+import toast from "react-hot-toast";
+import { supabase } from "../../supabase/client";
+import { Rectangle } from "./Rectangle";
+import { useLoader } from "../../hooks/useLoader";
+import { Contract } from "./Contract";
+import DocumentForm from "./DocumentForm";
+import {
+  Document,
+  Page,
+  PDFViewer,
+  StyleSheet,
+  Text,
+} from "@react-pdf/renderer";
+import { ContractSigned } from "./ContractSigned";
+import { DownLoadPDF, Quixote } from "./DownLoadPDF";
 
-export default function PortfolioFilter2() {
-    const isotopeContainer = useRef(null);
-    const [filterKey, setFilterKey] = useState("*");
-    const [isotopeInstance, setIsotopeInstance] = useState(null);
+const styles = StyleSheet.create({
+  body: {
+    paddingTop: 35,
+    paddingBottom: 65,
+    paddingHorizontal: 35,
+  },
+  title: {
+    fontSize: 24,
+    textAlign: "center",
+    fontFamily: "Oswald",
+  },
+  author: {
+    fontSize: 12,
+    textAlign: "center",
+    marginBottom: 40,
+  },
+  subtitle: {
+    fontSize: 18,
+    margin: 12,
+    fontFamily: "Oswald",
+  },
+  text: {
+    margin: 12,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+  },
+  image: {
+    marginVertical: 15,
+    marginHorizontal: 100,
+  },
+  header: {
+    fontSize: 12,
+    marginBottom: 20,
+    textAlign: "center",
+    color: "grey",
+  },
+  pageNumber: {
+    position: "absolute",
+    fontSize: 12,
+    bottom: 30,
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    color: "grey",
+  },
+});
 
-    useEffect(() => {
-        if (isotopeContainer.current) {
-            const instance = new Isotope(isotopeContainer.current, {
-                itemSelector: ".masonry-item",
-                percentPosition: true,
-                masonry: {
-                    columnWidth: ".masonry-item",
-                },
-                animationOptions: {
-                    duration: 750,
-                    easing: "linear",
-                    queue: false,
-                },
-            });
-            setIsotopeInstance(instance);
-        }
-    }, []);
+export default function PortfolioFilter2({ user, contract, setContract }) {
+  const [requests, setRequests] = useState([]);
+  const [formValues, setFormValues] = useState();
+  const { setLoading } = useLoader();
+  const { selected } = useDashboardStore();
 
-    useEffect(() => {
-        if (isotopeInstance) {
-            isotopeInstance.arrange({ filter: filterKey === "*" ? "*" : `.${filterKey}` });
-        }
-    }, [filterKey, isotopeInstance]);
+  useEffect(() => {
+    if (user?.role === "customer") {
+      getParentRequests(user?.identification);
+    } else {
+      if (selected === "Nuevas Solicitudes") {
+        getRequests("inactive");
+      } else if (selected === "Solicitudes Pendientes") {
+        getRequests("pending");
+      } else {
+        getRequests("active");
+      }
+    }
+  }, [selected]);
 
-    const handleFilterKeyChange = (key) => () => {
-        setFilterKey(key);
-    };
+  const refresh = () => {
+    getRequests("active");
+  };
 
-    const activeBtn = (value) => (value === filterKey ? "filter active" : "filter");
+  const getRequests = async (status) => {
+    try {
+      setLoading(true);
+      await supabase
+        .from("students")
+        .select("*")
+        .eq("status", status)
+        .select()
+        .then(({ data, error }) => {
+          setLoading(false);
+          if (error === null) {
+            console.log("request", data);
+            setRequests(data);
+          } else {
+            console.log(error);
+            throw "No hay nuevas solicitudes";
+          }
+        });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
-    return (
-        <>
-            <div className="filters clearfix">
-			<ul className="filter-tabs filter-btns clearfix">
-                    <li className={activeBtn("*")} onClick={handleFilterKeyChange("*")}> All </li>
-                    <li className={activeBtn("cat-1")} onClick={handleFilterKeyChange("cat-1")}>Book</li>
-                    <li className={activeBtn("cat-2")} onClick={handleFilterKeyChange("cat-2")}>Digital</li>
-                    <li className={activeBtn("cat-3")} onClick={handleFilterKeyChange("cat-3")}>Language</li>
-                    <li className={activeBtn("cat-4")} onClick={handleFilterKeyChange("cat-4")}>Technology</li>
-                    <li className={activeBtn("cat-5")} onClick={handleFilterKeyChange("cat-5")}>Studies</li>
-                </ul>
-            </div>
-            <div className="items-container row" ref={isotopeContainer}>
-                {/* Your product blocks here */}
-                <div className="product-block masonry-item small-column all cat-2 product lenses mb-50 col-lg-4 col-md-6 col-sm-12">
-                    <div className="inner-box">
-                        <div className="image-box">
-                            <div className="image"><Link to="/products-details"><img src={ProductImage1} alt="Product 1" /></Link></div>
-                            <div className="icon-box">
-                                <Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-                                <Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-                            </div>
-                        </div>
-                        <div className="content">
-                        <h4><Link to="/products-details">Giant Jackal</Link></h4>
-                        <span className="price">$32.00</span>
-                            <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i></span>
-                            
-                        </div>
-                    </div>
-                </div>
-				<div className="product-block masonry-item small-column all cat-1 cat-2 product lenses mb-50 col-lg-4 col-md-6 col-sm-12">
-           		 <div className="inner-box">
-					<div className="image-box">
-						<div className="image"><Link to="/products-details"><img src={ProductImage2} alt="Product 2" /></Link></div>
-						<div className="icon-box">
-							<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-							<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-						</div>
-					</div>
-					<div className="content">
-                    <h4><Link to="/products-details">Case of Giant</Link></h4>
-                    <span className="price">$52.00</span>
-						<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-						className="fa fa-star"></i><i className="fa fa-star"></i></span>
-						
-					</div>
-				</div>
-				</div>
-				<div className="product-block masonry-item small-column all cat-1 cat-2 cat-4 product lenses mb-50 col-lg-4 col-md-6 col-sm-12">
-				<div className="inner-box">
-					<div className="image-box">
-						<div className="image"><Link to="/products-details"><img src={ProductImage3} alt="Product 3" /></Link></div>
-						<div className="icon-box">
-							<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-							<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-						</div>
-					</div>
-					<div className="content">
-                    <h4><Link to="/products-details">Miniature Goose</Link></h4>
-                    <span className="price">$43.00</span>
-						<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-						
-					</div>
-				</div>
-			</div>
-			<div className="product-block masonry-item small-column all cat-1 cat-3 product lenses mb-50 col-lg-4 col-md-6 col-sm-12">
-				<div className="inner-box">
-					<div className="image-box">
-						<div className="image"><Link to="/products-details"><img src={ProductImage4} alt="Product 4" /></Link></div>
-						<div className="icon-box">
-							<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-							<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-						</div>
-					</div>
-					<div className="content">
-                    <h4><Link to="/products-details">Thirteenth Tuba</Link></h4>
-                    <span className="price">$22.00</span>
-						<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-						
-					</div>
-				</div>
-				</div>
-				<div className="product-block masonry-item small-column all cat-1 cat-3 cat-5 product lenses mb-50 col-lg-4 col-md-6 col-sm-12">
-					<div className="inner-box">
-					<div className="image-box">
-						<div className="image"><Link to="/products-details"><img src={ProductImage5} alt="Product 5" /></Link></div>
-						<div className="icon-box">
-							<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-							<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-						</div>
-					</div>
-					<div className="content">
-                    <h4><Link to="/products-details">Jilted Juror</Link></h4>
-                    <span className="price">$34.00</span>
-						<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-						
-					</div>
-				</div>
-			</div>
-			<div className="product-block masonry-item small-column all cat-2 cat-3 cat-4 product lenses mb-50 col-lg-4 col-md-6 col-sm-12">
-				<div className="inner-box">
-					<div className="image-box">
-						<div className="image"><Link to="/products-details"><img src={ProductImage6} alt="Product 6" /></Link></div>
-						<div className="icon-box">
-							<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-							<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-						</div>
-					</div>
-					<div className="content">
-                    <h4><Link to="/products-details">Jilted Lodger</Link></h4>
-                    <span className="price">$52.00</span>
-						<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-						
-					</div>
-				</div>
-			</div>
-			<div className="product-block masonry-item small-column all cat-1 cat-2 cat-5 product lenses mb-50 col-lg-4 col-md-6 col-sm-12">
-				<div className="inner-box">
-					<div className="image-box">
-						<div className="image"><Link to="/products-details"><img src={ProductImage7} alt="Product 7" /></Link></div>
-						<div className="icon-box">
-							<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-							<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-						</div>
-					</div>
-					<div className="content">
-                    <h4><Link to="/products-details">Spanish Baker</Link></h4>
-                    <span className="price">$25.00</span>
-						<span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-								className="fa fa-star"></i><i className="fa fa-star"></i></span>
-						
-					</div>
-				</div>
-			</div>
-			<div className="product-block masonry-item small-column all cat-1 cat-4 cat-5 product lenses mb-50 col-lg-4 col-md-6 col-sm-12">
-			<div className="inner-box">
-			<div className="image-box">
-				<div className="image"><Link to="/products-details"><img src={ProductImage8} alt="Product 8" /></Link></div>
-				<div className="icon-box">
-					<Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-					<Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-				</div>
-			</div>
-			<div className="content">
-              <h4><Link to="/products-details">Clue Thirteenth</Link></h4>
-              <span className="price">$30.00</span>
-                <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i></span>
-               
-            </div>
-        </div>
-   		 </div>
-            </div>
-        </>
-    );
+  const getParentRequests = async (parent_identification) => {
+    try {
+      setLoading(true);
+      await supabase
+        .from("students")
+        .select("*")
+        // .in("status", ["inactive", "pending"])
+        .eq("parent_id", parent_identification)
+        .then(({ data, error }) => {
+          setLoading(false);
+          if (error === null) {
+            console.log(data);
+            setRequests(data);
+          } else {
+            console.log(error);
+            throw "No hay nuevas solicitudes";
+          }
+        });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const onSubmitForm = (values) => {
+    if (requests.length === 1) {
+      console.log("FormValues:", values);
+      setFormValues(values);
+      setContract(2);
+    }
+  };
+
+  return (
+    <>
+      <div className="filters clearfix pt-5">
+        <h3>{selected}</h3>
+        {/* <ul className="filter-tabs filter-btns clearfix">
+					<li className={activeBtn("*")} onClick={handleFilterKeyChange("*")}> All </li>
+					<li className={activeBtn("cat-1")} onClick={handleFilterKeyChange("cat-1")}>Book</li>
+					<li className={activeBtn("cat-2")} onClick={handleFilterKeyChange("cat-2")}>Digital</li>
+					<li className={activeBtn("cat-3")} onClick={handleFilterKeyChange("cat-3")}>Language</li>
+					<li className={activeBtn("cat-4")} onClick={handleFilterKeyChange("cat-4")}>Technology</li>
+					<li className={activeBtn("cat-5")} onClick={handleFilterKeyChange("cat-5")}>Studies</li>
+				</ul> */}
+      </div>
+      <div
+        className={`items-container row ${contract ? "page_container" : ""}`}
+      >
+        {/* Your product blocks here */}
+        {!contract &&
+          requests?.map((e, i) => (
+            <Rectangle
+              key={i}
+              e={e}
+              i={i}
+              setContract={setContract}
+              role={user?.role}
+              startContract={() => setContract(1)}
+            />
+          ))}
+        {contract === 1 && (
+          <DocumentForm
+            parentIdentification={user?.identification}
+            onSubmitForm={(values) => {
+              onSubmitForm(values);
+            }}
+            setContract={setContract}
+          />
+        )}
+        {contract === 2 && (
+          <Contract
+            user={requests.length === 1 ? requests[0] : undefined}
+            formValues={formValues}
+            setContract={setContract}
+            refresh={refresh}
+          />
+        )}
+        {contract === 4 && (
+          <DownLoadPDF
+            student={requests.length === 1 ? requests[0] : undefined}
+          />
+        )}
+      </div>
+      {contract === 5 && (
+        <button
+          className="button-74"
+          type="submit"
+          name="submit-form"
+          onClick={() => {
+            refresh();
+            setContract(0);
+          }}
+        >
+          <span className="blink">VER SUSCRIPCIÓN</span>
+        </button>
+      )}
+    </>
+  );
 }
-
-
-
