@@ -53,10 +53,10 @@ function HomeTwo() {
       <ClientHomeOne />
       {/* <AboutHomeTwo /> */}
       {/* <FunFactSection /> */}
-      {/* <CoursesSectionTwo /> */}
+      {/*<CoursesSectionTwo />
       {/* <PricingSection /> */}
-      {/* <GallerySection />
-      <FeatureHomeTwo /> */}
+      {/* <GallerySection /> 
+      <FeatureHomeTwo />
       {/* <FaqSection /> */}
       {/*   */}
       {/* <EventSection /> */}

@@ -8,7 +8,7 @@ import { DownLoadPDF, Quixote } from "./DownLoadPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useNavigate } from "react-router-dom";
 
-export const Rectangle = ({ e, i, setContract, role, startContract }) => {
+export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSelected }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -139,6 +139,7 @@ export const Rectangle = ({ e, i, setContract, role, startContract }) => {
                       onClick={() => {
                         setContract(4);
                         setSelected("Contrato Firmado");
+                        setIndexSelected(i);
                       }}
                     >
                       Ver Contrato Firmado

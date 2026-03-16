@@ -44,7 +44,7 @@ function Navigation() {
       <li className="dropdown">
         <span
           className="pointer"
-          style={{ color: "white" }}
+          style={{ color: "" }}
           onClick={() => scrollWithOffset(sectionRef.current, 11)}
         >
           Cursos

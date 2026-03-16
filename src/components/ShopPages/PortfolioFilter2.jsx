@@ -74,6 +74,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
   const [formValues, setFormValues] = useState();
   const { setLoading } = useLoader();
   const { selected } = useDashboardStore();
+  const [indexSelected, setIndexSelected] = useState(0);
 
   useEffect(() => {
     if (user?.role === "customer") {
@@ -87,7 +88,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
         getRequests("active");
       }
     }
-  }, [selected]);
+  }, [selected, indexSelected]);
 
   const refresh = () => {
     getRequests("active");
@@ -173,6 +174,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
               setContract={setContract}
               role={user?.role}
               startContract={() => setContract(1)}
+              setIndexSelected={setIndexSelected}
             />
           ))}
         {contract === 1 && (
@@ -194,7 +196,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
         )}
         {contract === 4 && (
           <DownLoadPDF
-            student={requests.length === 1 ? requests[0] : undefined}
+            student={requests.length > 0 ? requests[indexSelected] : undefined}
           />
         )}
       </div>
