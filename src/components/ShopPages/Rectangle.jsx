@@ -138,7 +138,7 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
                       className="button-74"
                       onClick={() => {
                         setContract(4);
-                        setSelected("Contrato Firmado");
+                        setSelected(role === "admin" ? "Contrato Firmado" : "Mi Suscripción");
                         setIndexSelected(i);
                       }}
                     >

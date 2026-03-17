@@ -73,17 +73,17 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
   const [requests, setRequests] = useState([]);
   const [formValues, setFormValues] = useState();
   const { setLoading } = useLoader();
-  const { selected } = useDashboardStore();
+  const { selected, setSelected } = useDashboardStore();
   const [indexSelected, setIndexSelected] = useState(0);
 
   useEffect(() => {
-    if (user?.role === "customer") {
+    if (selected === "Mi Suscripción") {
       getParentRequests(user?.identification);
     } else {
-      if (selected === "Nuevas Solicitudes") {
-        getRequests("inactive");
-      } else if (selected === "Solicitudes Pendientes") {
+      if (selected === "Solicitudes Pendientes") {
         getRequests("pending");
+      } else if (selected === "Agregar Estudiante") {
+        setRequests([])
       } else {
         getRequests("active");
       }
@@ -200,7 +200,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
         )}
         {contract === 4 && (
           <DownLoadPDF
-            student={requests.length > 0 ? requests[indexSelected] : undefined}
+            student={requests.length > 1 ? requests[indexSelected] : requests[0]}
           />
         )}
       </div>
@@ -211,7 +211,8 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
           name="submit-form"
           onClick={() => {
             refresh();
-            setContract(0);
+            setContract(null);
+            setSelected('Mi Suscripción');
           }}
         >
           <span className="blink">VER SUSCRIPCIÓN</span>
