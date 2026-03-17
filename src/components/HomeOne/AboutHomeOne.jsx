@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
 import aboutImage1 from "../../assets/images/resource/about-1.jpg";
 import aboutImage2 from "../../assets/images/resource/about-2.png";
 
@@ -41,10 +40,15 @@ function AboutSection({ className }) {
                 </li>
               </ul>
 
-              <div className="btn-box">
+              {/* <div className="btn-box">
                 <Link to="/about-us" className="theme-btn btn-style-one">
                   <span className="btn-title">Discover more</span>
                 </Link>
+              </div> */}
+              <div className="btn-box">
+                <div className="theme-btn btn-style-one pointer">
+                  <span className="btn-title">Inscribirme</span>
+                </div>
               </div>
             </div>
           </div>

@@ -18,25 +18,29 @@ import { obtenerIP } from "../../hooks/utils/index.js";
 const admin_menu = [
   {
     name: "Nuevas Solicitudes",
-    action: () => {},
+    action: () => { },
   },
   {
     name: "Solicitudes Pendientes",
-    action: () => {},
+    action: () => { },
   },
   {
     name: "Solicitudes Completadas",
-    action: () => {},
+    action: () => { },
   },
   {
     name: "Pagos",
-    action: () => {},
+    action: () => { },
   },
 ];
 const customer_menu = [
   {
     name: "Mi Suscripción",
-    action: () => {},
+    action: () => { },
+  },
+  {
+    name: "Agregar Estudiante",
+    action: () => { },
   },
 ];
 
@@ -105,7 +109,7 @@ function Products() {
                         placeholder="Buscar..."
                         required
                       />
-                      <button disabled onClick={() => {}}>
+                      <button disabled onClick={() => { }}>
                         <i className="lnr lnr-icon-search"></i>
                       </button>
                     </div>
