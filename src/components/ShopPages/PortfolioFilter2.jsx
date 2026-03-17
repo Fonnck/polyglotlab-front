@@ -77,6 +77,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
   const [indexSelected, setIndexSelected] = useState(0);
 
   useEffect(() => {
+
     if (selected === "Mi Suscripción") {
       getParentRequests(user?.identification);
     } else {
@@ -85,7 +86,11 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
       } else if (selected === "Agregar Estudiante") {
         setRequests([])
       } else {
-        getRequests("active");
+        if (user?.role === "customer") {
+          getParentRequests(user?.identification);
+        } else {
+          getRequests("active");
+        }
       }
     }
   }, [selected, indexSelected]);
