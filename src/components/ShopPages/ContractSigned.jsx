@@ -5,6 +5,7 @@ import { useState } from "react";
 import { supabase } from "../../supabase/client";
 import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import toast from "react-hot-toast";
+import { toTitleCase } from "../../hooks/utils";
 
 export const ContractSigned = ({ user: student, formValues }) => {
   const [signed, setSigned] = useState(true);
@@ -598,7 +599,9 @@ export const ContractSigned = ({ user: student, formValues }) => {
         <View className="d-flex justify-content-between">
           <View className="d-flex flex-column">
             <Text style={styles.signText} className="reveal-ltr">
-              {`${student?.parent_firstname} ${student?.parent_lastname}`}
+              {toTitleCase(
+                `${student?.parent_firstname} ${student?.parent_lastname}`,
+              )}
               <br />
             </Text>
             <Text style={{ ...styles.paragraph, paddingTop: 0, marginTop: 0 }}>
