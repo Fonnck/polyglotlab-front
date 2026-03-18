@@ -74,4 +74,5 @@ export const useDashboardStore = create((set) => ({
   setSelected: (value) => set({ selected: value }),
   newRequests: [],
   setNewRequests: (values) => set({ ...values }),
+
 }));

@@ -776,6 +776,10 @@ li {
   display: none;
 }
 
+.dropdown:hover {
+  color: var(--theme-color2);
+}
+
 .bg-image {
   position: absolute;
   left: 0;

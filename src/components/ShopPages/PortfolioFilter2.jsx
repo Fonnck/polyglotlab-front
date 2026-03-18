@@ -73,21 +73,27 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
   const [requests, setRequests] = useState([]);
   const [formValues, setFormValues] = useState();
   const { setLoading } = useLoader();
-  const { selected } = useDashboardStore();
+  const { selected, setSelected } = useDashboardStore();
+  const [indexSelected, setIndexSelected] = useState(0);
 
   useEffect(() => {
-    if (user?.role === "customer") {
+
+    if (selected === "Mi Suscripción") {
       getParentRequests(user?.identification);
     } else {
-      if (selected === "Nuevas Solicitudes") {
-        getRequests("inactive");
-      } else if (selected === "Solicitudes Pendientes") {
+      if (selected === "Solicitudes Pendientes") {
         getRequests("pending");
+      } else if (selected === "Agregar Estudiante") {
+        setRequests([])
       } else {
-        getRequests("active");
+        if (user?.role === "customer") {
+          getParentRequests(user?.identification);
+        } else {
+          getRequests("active");
+        }
       }
     }
-  }, [selected]);
+  }, [selected, indexSelected]);
 
   const refresh = () => {
     getRequests("active");
@@ -142,7 +148,11 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
   const onSubmitForm = (values) => {
     if (requests.length === 1) {
       console.log("FormValues:", values);
-      setFormValues(values);
+      setFormValues({
+        ...values,
+        identificationPlace: values.identificationPlace === "Otro ¿Cuál?" ? values.identificationPlaceOther : values.identificationPlace,
+        idCardPlace: values.idCardPlace === "Otro ¿Cuál?" ? values.idCardPlaceOther : values.idCardPlace,
+      });
       setContract(2);
     }
   };
@@ -173,6 +183,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
               setContract={setContract}
               role={user?.role}
               startContract={() => setContract(1)}
+              setIndexSelected={setIndexSelected}
             />
           ))}
         {contract === 1 && (
@@ -194,7 +205,7 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
         )}
         {contract === 4 && (
           <DownLoadPDF
-            student={requests.length === 1 ? requests[0] : undefined}
+            student={requests.length > 1 ? requests[indexSelected] : requests[0]}
           />
         )}
       </div>
@@ -205,7 +216,8 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
           name="submit-form"
           onClick={() => {
             refresh();
-            setContract(0);
+            setContract(null);
+            setSelected('Mi Suscripción');
           }}
         >
           <span className="blink">VER SUSCRIPCIÓN</span>

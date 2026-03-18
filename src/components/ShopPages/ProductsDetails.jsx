@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react"; // Combined imports
+import { useState } from "react"; // Combined imports
 import { Link } from 'react-router-dom';
 import BackToTop from '../BackToTop.jsx';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -89,17 +89,17 @@ function ProductsDetails() {
                                         className="slider-pager">
                                         <SwiperSlide className="product-thumb wide-100">
                                             <figure className="image">
-                                            <img src={ThumbImg1} alt="Product Thumb" />
+                                                <img src={ThumbImg1} alt="Product Thumb" />
                                             </figure>
                                         </SwiperSlide>
                                         <SwiperSlide className="product-thumb wide-100">
                                             <figure className="image">
-                                            <img src={ThumbImg2} alt="Product Thumb" />
+                                                <img src={ThumbImg2} alt="Product Thumb" />
                                             </figure>
                                         </SwiperSlide>
                                         <SwiperSlide className="product-thumb wide-100">
                                             <figure className="image">
-                                            <img src={ThumbImg3} alt="Product Thumb" />
+                                                <img src={ThumbImg3} alt="Product Thumb" />
                                             </figure>
                                         </SwiperSlide>
                                     </Swiper>
@@ -309,86 +309,86 @@ function ProductsDetails() {
             </section>
             <section className="related-product">
                 <div className="container pt-0 pb-90">
-                  <h3>Related Products</h3>
-                  <div className="row">
-                    {/* Product Block */}
-                    <div className="product-block col-lg-3 col-md-6">
-                      <div className="inner-box">
-                        <div className="image-box">
-                          <div className="image"><Link to="/products-details"><img src={RelatedProduct1} alt="Related Product" /></Link></div>
-                          <div className="icon-box">
-                            <Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-                            <Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-                          </div>
+                    <h3>Related Products</h3>
+                    <div className="row">
+                        {/* Product Block */}
+                        <div className="product-block col-lg-3 col-md-6">
+                            <div className="inner-box">
+                                <div className="image-box">
+                                    <div className="image"><Link to="/products-details"><img src={RelatedProduct1} alt="Related Product" /></Link></div>
+                                    <div className="icon-box">
+                                        <Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
+                                        <Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
+                                    </div>
+                                </div>
+                                <div className="content">
+                                    <h4><Link to="/products-details">Case of Giant</Link></h4>
+                                    <span className="price">$32.00</span>
+                                    <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
+                                        className="fa fa-star"></i><i className="fa fa-star"></i></span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="content">
-                          <h4><Link to="/products-details">Case of Giant</Link></h4>
-                          <span className="price">$32.00</span>
-                          <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-                              className="fa fa-star"></i><i className="fa fa-star"></i></span>
-                        </div>
-                      </div>
-                    </div>
 
-                    {/* Product Block */}
-                    <div className="product-block col-lg-3 col-md-6">
-                      <div className="inner-box">
-                        <div className="image-box">
-                          <div className="image"><Link to="/products-details"><img src={RelatedProduct2} alt="Related Product" /></Link></div>
-                          <div className="icon-box">
-                            <Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-                            <Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-                          </div>
+                        {/* Product Block */}
+                        <div className="product-block col-lg-3 col-md-6">
+                            <div className="inner-box">
+                                <div className="image-box">
+                                    <div className="image"><Link to="/products-details"><img src={RelatedProduct2} alt="Related Product" /></Link></div>
+                                    <div className="icon-box">
+                                        <Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
+                                        <Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
+                                    </div>
+                                </div>
+                                <div className="content">
+                                    <h4><Link to="/products-details">Thirteenth Tuba</Link></h4>
+                                    <span className="price">$32.00</span>
+                                    <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
+                                        className="fa fa-star"></i><i className="fa fa-star"></i></span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="content">
-                          <h4><Link to="/products-details">Thirteenth Tuba</Link></h4>
-                          <span className="price">$32.00</span>
-                          <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-                              className="fa fa-star"></i><i className="fa fa-star"></i></span>
-                        </div>
-                      </div>
-                    </div>
 
-                    {/* Product Block */}
-                    <div className="product-block col-lg-3 col-md-6">
-                      <div className="inner-box">
-                        <div className="image-box">
-                          <div className="image"><Link to="/products-details"><img src={RelatedProduct3} alt="Related Product" /></Link></div>
-                          <div className="icon-box">
-                            <Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-                            <Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-                          </div>
+                        {/* Product Block */}
+                        <div className="product-block col-lg-3 col-md-6">
+                            <div className="inner-box">
+                                <div className="image-box">
+                                    <div className="image"><Link to="/products-details"><img src={RelatedProduct3} alt="Related Product" /></Link></div>
+                                    <div className="icon-box">
+                                        <Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
+                                        <Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
+                                    </div>
+                                </div>
+                                <div className="content">
+                                    <h4><Link to="/products-details">Jilted Juror</Link></h4>
+                                    <span className="price">$32.00</span>
+                                    <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
+                                        className="fa fa-star"></i><i className="fa fa-star"></i></span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="content">
-                          <h4><Link to="/products-details">Jilted Juror</Link></h4>
-                          <span className="price">$32.00</span>
-                          <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-                              className="fa fa-star"></i><i className="fa fa-star"></i></span>
-                        </div>
-                      </div>
-                    </div>
 
-                    {/* Product Block */}
-                    <div className="product-block col-lg-3 col-md-6">
-                      <div className="inner-box">
-                        <div className="image-box">
-                          <div className="image"><Link to="/products-details"><img src={RelatedProduct4} alt="Related Product" /></Link></div>
-                          <div className="icon-box">
-                            <Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
-                            <Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
-                          </div>
+                        {/* Product Block */}
+                        <div className="product-block col-lg-3 col-md-6">
+                            <div className="inner-box">
+                                <div className="image-box">
+                                    <div className="image"><Link to="/products-details"><img src={RelatedProduct4} alt="Related Product" /></Link></div>
+                                    <div className="icon-box">
+                                        <Link to="/products-details" className="ui-btn"><i className="fa fa-heart"></i></Link>
+                                        <Link to="/cart" className="ui-btn"><i className="fa fa-shopping-cart"></i></Link>
+                                    </div>
+                                </div>
+                                <div className="content">
+                                    <h4><Link to="/products-details">Spanish Baker</Link></h4>
+                                    <span className="price">$32.00</span>
+                                    <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
+                                        className="fa fa-star"></i><i className="fa fa-star"></i></span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="content">
-                          <h4><Link to="/products-details">Spanish Baker</Link></h4>
-                          <span className="price">$32.00</span>
-                          <span className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-                              className="fa fa-star"></i><i className="fa fa-star"></i></span>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </section>
+            </section>
             <FooterHomeOne />
             <BackToTop />
         </>
