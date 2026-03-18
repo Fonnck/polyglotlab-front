@@ -14,33 +14,31 @@ import { supabase } from "../../supabase/client.js";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useDashboardStore } from "../../hooks/useDashboard.js";
 import { obtenerIP } from "../../hooks/utils/index.js";
+import { FileUpload } from "./FileUpload.jsx";
+import toast from "react-hot-toast";
 
 const admin_menu = [
   {
-    name: "Nuevas Solicitudes",
-    action: () => { },
-  },
-  {
     name: "Solicitudes Pendientes",
-    action: () => { },
+    action: () => {},
   },
   {
     name: "Solicitudes Completadas",
-    action: () => { },
+    action: () => {},
   },
   {
     name: "Pagos",
-    action: () => { },
+    action: () => {},
   },
 ];
 const customer_menu = [
   {
     name: "Mi Suscripción",
-    action: () => { },
+    action: () => {},
   },
   {
     name: "Agregar Estudiante",
-    action: () => { },
+    action: () => {},
   },
 ];
 
@@ -51,6 +49,13 @@ function Products() {
   const { getUserByEmail } = useSignUp();
   const nav = useNavigate();
   const [contract, setContract] = useState(null);
+  const [show, setShow] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+
+  const handleClose = () => setShow(false);
+  const handleShow = (e) => {
+    (setModalTitle(e), setShow(true));
+  };
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
@@ -78,6 +83,39 @@ function Products() {
       }
     });
   }, []);
+
+  /* async function uploadFile(e) {
+    let fileSelected = e.target.files[0];
+
+    const { data, error } = supabase.storage
+      .from("enrollment-documents")
+      .upload(`${user?.id}/${fileSelected.name}`, fileSelected);
+
+    if (data) {
+      toast.success("Archivo cargado con éxito");
+    } else {
+      toast.error("Error cargando el archivo");
+    }
+  } */
+  const uploadFile = async (e) => {
+    const fileSelected = e.target.files[0];
+
+    if (!fileSelected) return;
+
+    const filePath = `${user?.id}/${Date.now()}-${fileSelected.name}`;
+
+    const { data, error } = await supabase.storage
+      .from("enrollment-documents")
+      .upload(filePath, fileSelected);
+
+    if (error) {
+      console.error(error);
+      toast.error("Error cargando el archivo");
+      return;
+    }
+
+    toast.success("Archivo cargado con éxito");
+  };
 
   return (
     <>
@@ -109,7 +147,7 @@ function Products() {
                         placeholder="Buscar..."
                         required
                       />
-                      <button disabled onClick={() => { }}>
+                      <button disabled onClick={() => {}}>
                         <i className="lnr lnr-icon-search"></i>
                       </button>
                     </div>
@@ -182,31 +220,40 @@ function Products() {
                       <h5 className="widget-title">Documentos Requeridos</h5>
                     </div>
                     <div className="post-inner">
-                      <div className="post">
+                      <div
+                        className="post pointer"
+                        onClick={() => handleShow("Tarjeta de Identidad")}
+                      >
                         <figure className="post-thumb">
                           {/* <Link to="/products-details"> */}
                           <img src={ProductDetailsImg1} alt="Product 1" />
                           {/* </Link> */}
                         </figure>
-                        <Link>Tarjeta de Identidad</Link>
+                        <div className="pointer">Tarjeta de Identidad</div>
                         <span className="price">Pendiente</span>
                       </div>
-                      <div className="post">
+                      <div
+                        className="post"
+                        onClick={() => handleShow("Cédula de ciudadanía")}
+                      >
                         <figure className="post-thumb">
-                          <Link>
+                          <div className="pointer">
                             <img src={ProductDetailsImg2} alt="Product 2" />
-                          </Link>
+                          </div>
                         </figure>
-                        <Link>Cédula Ciudadania (Copia)</Link>
+                        <div className="pointer">Cédula Ciudadania (Copia)</div>
                         <span className="price">Pendiente</span>
                       </div>
-                      <div className="post">
+                      <div
+                        className="post"
+                        onClick={() => handleShow("Registro Civil")}
+                      >
                         <figure className="post-thumb">
-                          <Link>
+                          <div className="pointer">
                             <img src={ProductDetailsImg3} alt="Product 3" />
-                          </Link>
+                          </div>
                         </figure>
-                        <Link>Registro Civil (Copia)</Link>
+                        <div className="pointer">Registro Civil (Copia)</div>
                         <span className="price">Pendiente</span>
                       </div>
                     </div>
@@ -230,6 +277,13 @@ function Products() {
       </section>
       <FooterHomeOne />
       <BackToTop />
+      <FileUpload
+        user={user}
+        show={show}
+        handleClose={handleClose}
+        modalTitle={modalTitle}
+        upload={uploadFile}
+      />
     </>
   );
 }
