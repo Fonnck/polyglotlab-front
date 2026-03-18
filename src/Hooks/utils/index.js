@@ -22,3 +22,14 @@ export async function obtenerIP() {
   const data = await res.json();
   return data.ip;
 }
+
+export function toTitleCase(text) {
+  if (!text) return "";
+
+  return text
+    .toLowerCase()
+    .trim()
+    .split(/\s+/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}

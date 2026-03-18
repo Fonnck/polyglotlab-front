@@ -130,7 +130,7 @@ export const useSignUp = () => {
         .insert({
           first_name: values.first_name,
           last_name: values.last_name,
-          email: values.email,
+          email: values.email.toLowerCase(),
           phone: values.phone + "",
           identification: values.identification,
           password: values.identification + "",
@@ -196,12 +196,13 @@ export const useSignUp = () => {
       await supabase
         .from("users")
         .select("*")
-        .eq("email", email)
+        .eq("email", email.toLowerCase())
         .eq("identification", identification)
         .select()
         .then((response) => {
           // console.log('This is the response', response.data[0].email);
           setLoading(false);
+          console.log(response);
           if (response.data.length > 0) {
             console.log("Enviando a: " + response.data[0].email);
             console.log("Enviando a: " + response.data[0].identification);

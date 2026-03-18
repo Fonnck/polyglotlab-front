@@ -7,6 +7,7 @@ import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import { DownLoadPDF, Quixote } from "./DownLoadPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useNavigate } from "react-router-dom";
+import { toTitleCase } from "../../hooks/utils";
 
 export const Rectangle = ({ e, i, setContract, role, startContract }) => {
   const [show, setShow] = useState(false);
@@ -73,14 +74,15 @@ export const Rectangle = ({ e, i, setContract, role, startContract }) => {
                 {getStatusRender(e.status)}
               </small>
             </small>
-            <h4>{`${e.first_name} ${e.last_name}`}</h4>
+            <h4>{toTitleCase(`${e.first_name} ${e.last_name}`)}</h4>
             <span className="price">
               <b>{getProgram(e.language)}</b>
             </span>
             <div className="d-flex flex-column mt-4">
               <div className="d-flex">
-                <span className="price">{e.parent_firstname}</span>&nbsp;
-                <span className="price">{e.parent_lastname}</span>
+                <span className="price">{toTitleCase(e.parent_firstname)}</span>
+                &nbsp;
+                <span className="price">{toTitleCase(e.parent_lastname)}</span>
               </div>
               <span className="price">{e.parent_id}</span>
             </div>

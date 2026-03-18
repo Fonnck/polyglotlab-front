@@ -186,7 +186,8 @@ export default function PortfolioFilter2({ user, contract, setContract }) {
         )}
         {contract === 2 && (
           <Contract
-            user={requests.length === 1 ? requests[0] : undefined}
+            // user={requests.length === 1 ? requests[0] : undefined}
+            user={requests[0]}
             formValues={formValues}
             setContract={setContract}
             refresh={refresh}

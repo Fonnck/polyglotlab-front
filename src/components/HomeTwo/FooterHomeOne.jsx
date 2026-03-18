@@ -140,8 +140,11 @@ function FooterHomeOne({ className }) {
                             width={45}
                           />
                           <span className="title">Contactanos</span>
-                          <Link to="mailto:ambed@company.com" className="text">
-                            contacto@polyglotlab.com
+                          <Link
+                            to="mailto:contacto@polyglotlabacademy.com"
+                            className="text"
+                          >
+                            contacto@polyglotlabacademy.com
                           </Link>
                         </div>
                       </a>
