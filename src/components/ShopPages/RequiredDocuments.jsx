@@ -23,43 +23,43 @@ const RequiredDocuments = ({ student, handleShow, setStudent, renderFiles, listF
             </div>
             <div className="post-inner" onClick={() => setStudent(student)}>
                 <div
-                    className="post pointer"
-                    onClick={() => handleShow("Tarjeta de Identidad")}
+                    className={"post " + (renderFiles.includes('TI') ? 'disabled_pointer' : 'pointer')}
+                    onClick={() => { !renderFiles.includes('TI') && handleShow("Tarjeta de Identidad") }}
                 >
                     <figure className="post-thumb">
                         {/* <Link to="/products-details"> */}
                         <img src={ProductDetailsImg1} alt="Product 1" />
                         {/* </Link> */}
                     </figure>
-                    <div className="pointer">Tarjeta de Identidad</div>
+                    <div>Tarjeta de Identidad</div>
                     <span className="price" style={{ color: renderFiles.includes('TI') ? 'green' : 'red' }}>
                         {renderFiles.includes('TI') ? 'Archivo cargado' : 'Pendiente'}
                     </span>
                 </div>
                 <div
-                    className="post"
-                    onClick={() => handleShow("Cédula de ciudadanía")}
+                    className={"post " + (renderFiles.includes('CC') ? 'disabled_pointer' : 'pointer')}
+                    onClick={() => { !renderFiles.includes('CC') && handleShow("Cédula de ciudadanía") }}
                 >
                     <figure className="post-thumb">
-                        <div className="pointer">
+                        <div>
                             <img src={ProductDetailsImg2} alt="Product 2" />
                         </div>
                     </figure>
-                    <div className="pointer">Cédula Ciudadania (Copia)</div>
+                    <div>Cédula Ciudadania (Copia)</div>
                     <span className="price" style={{ color: renderFiles.includes('CC') ? 'green' : 'red' }}>
                         {renderFiles.includes('CC') ? 'Archivo cargado' : 'Pendiente'}
                     </span>
                 </div>
                 <div
-                    className="post"
-                    onClick={() => handleShow("Registro Civil")}
+                    className={"post " + (renderFiles.includes('RC') ? 'disabled_pointer' : 'pointer')}
+                    onClick={() => { !renderFiles.includes('RC') && handleShow("Registro Civil") }}
                 >
                     <figure className="post-thumb">
-                        <div className="pointer">
+                        <div>
                             <img src={ProductDetailsImg3} alt="Product 3" />
                         </div>
                     </figure>
-                    <div className="pointer">Registro Civil (Copia)</div>
+                    <div>Registro Civil (Copia)</div>
                     <span className="price" style={{ color: renderFiles.includes('RC') ? 'green' : 'red' }}>
                         {renderFiles.includes('RC') ? 'Archivo cargado' : 'Pendiente'}
                     </span>

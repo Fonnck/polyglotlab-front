@@ -11707,6 +11707,10 @@ Sidebar
   cursor: pointer;
 }
 
+.disabled_pointer {
+  cursor: not-allowed;
+}
+
 .solid_input {
   max-width: 100%;
   max-height: 12px;
