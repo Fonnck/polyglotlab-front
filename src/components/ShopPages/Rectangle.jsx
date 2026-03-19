@@ -8,8 +8,10 @@ import { DownLoadPDF, Quixote } from "./DownLoadPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useNavigate } from "react-router-dom";
 import { toTitleCase } from "../../hooks/utils";
+import { FaDownload } from "react-icons/fa";
+import toast from "react-hot-toast";
 
-export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSelected }) => {
+export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSelected, downLoadFiles }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -47,7 +49,11 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
   };
 
   const { setSelected } = useDashboardStore();
-  const nav = useNavigate();
+
+
+  const downloadFiles = () => {
+    downLoadFiles(e);
+  }
 
   return (
     <>
@@ -61,12 +67,18 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
               className="image"
               style={{ maxWidth: "60%", margin: "0 auto" }}
             >
-              <img src={e.gender === "boy" ? Boy : Girl} alt="Product 1" />
+              <img src={e.gender === "boy" ? Boy : Girl} alt="Img" />
             </div>
-            {/* <div className="icon-box">
-									<button className="ui-btn"><i className="fa fa-heart"></i></button>
-									<button className="ui-btn"><i className="fa-solid fa-file-signature"></i></button>
-								</div> */}
+            {role === "admin" && <div className="icon-box">
+              <button
+                style={{ backgroundColor: 'white', marginRight: '15px' }}
+                title="Decargar Archivos"
+                onClick={() => downloadFiles()}
+              >
+                <FaDownload />
+              </button>
+              {/* <button className="ui-btn"><i className="fa-solid fa-file-signature"></i></button> */}
+            </div>}
           </div>
           <div className="content d-flex flex-column align-items-center pb-0">
             <small>

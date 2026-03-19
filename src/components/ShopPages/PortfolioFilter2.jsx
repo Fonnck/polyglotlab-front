@@ -69,7 +69,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function PortfolioFilter2({ user, contract, setContract, requests, setRequests }) {
+export default function PortfolioFilter2({
+  user,
+  contract,
+  setContract,
+  requests,
+  setRequests,
+  downLoadFiles
+}) {
   const [formValues, setFormValues] = useState();
   const { setLoading } = useLoader();
   const { selected, setSelected } = useDashboardStore();
@@ -157,7 +164,7 @@ export default function PortfolioFilter2({ user, contract, setContract, requests
 
   return (
     <>
-      <div className="filters clearfix pt-5">
+      <div className="filters clearfix">
         <h3>{selected}</h3>
         {/* <ul className="filter-tabs filter-btns clearfix">
 					<li className={activeBtn("*")} onClick={handleFilterKeyChange("*")}> All </li>
@@ -182,6 +189,7 @@ export default function PortfolioFilter2({ user, contract, setContract, requests
               role={user?.role}
               startContract={() => setContract(1)}
               setIndexSelected={setIndexSelected}
+              downLoadFiles={downLoadFiles}
             />
           ))}
         {contract === 1 && (

@@ -14,6 +14,8 @@ import { obtenerIP } from "../../hooks/utils/index.js";
 import { FileUpload } from "./FileUpload.jsx";
 import toast from "react-hot-toast";
 import RequiredDocuments from "./RequiredDocuments.jsx";
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
 
 const admin_menu = [
   {
@@ -128,25 +130,96 @@ function Products() {
     listFiles(student);
   };
 
-  /* const listFiles = async (student) => {
-    const { data, error } = await supabase.storage
-      .from("enrollment-documents")
-      .list(`${student.id}`, {
-        limit: 100,
-        offset: 0,
-        sortBy: { column: "name", order: "asc" },
+  /* const downloadStudentFiles = async (student) => {
+    try {
+      const { data: files, error } = await supabase.storage
+        .from("enrollment-documents")
+        .list(`${student.id}`);
+
+      if (error || !files) {
+        toast.error("Error al listar archivos");
+        return;
+      }
+
+      const zip = new JSZip();
+
+      const downloadPromises = files.map(async (file) => {
+        const filePath = `${student.id}/${file.name}`;
+
+        const { data, error } = await supabase.storage
+          .from("enrollment-documents")
+          .download(filePath);
+
+        if (!error) {
+          zip.file(file.name, data);
+        }
       });
 
-    if (error) {
-      console.error(error);
-      toast.error("Error obteniendo los archivos");
-      return [];
-    }
+      await Promise.all(downloadPromises);
 
-    console.log("Files:", data);
-    setStudentFiles(data);
-    return data;
+      const zipBlob = await zip.generateAsync({ type: "blob" });
+      saveAs(zipBlob, `${student.first_name}_${student.last_name}.zip`);
+
+      toast.success("ZIP descargado con éxito");
+    } catch (err) {
+      console.error(err);
+      toast.error("Error al descargar archivos");
+    }
   }; */
+
+  const downloadStudentFiles = async (student) => {
+
+    console.log(student.id);
+
+    try {
+      // 1. Listar archivos en la carpeta del estudiante
+      const { data: files, error } = await supabase.storage
+        .from("enrollment-documents")
+        .list(`${student.id}`);
+
+      if (error) {
+        console.error(error);
+        toast.error("Error al listar archivos");
+        return;
+      }
+
+      if (!files || files.length === 0) {
+        toast.error("No hay archivos para descargar");
+        return;
+      }
+
+      const zip = new JSZip();
+
+      // 2. Descargar cada archivo y agregarlo al zip
+      for (const file of files) {
+        const filePath = `${student.id}/${file.name}`;
+
+        const { data, error } = await supabase.storage
+          .from("enrollment-documents")
+          .download(filePath);
+
+        if (error) {
+          console.error(`Error descargando ${file.name}`, error);
+          continue;
+        }
+
+        const blob = data;
+        zip.file(file.name, blob);
+      }
+
+      // 3. Generar ZIP
+      const zipBlob = await zip.generateAsync({ type: "blob" });
+
+      // 4. Descargarlo
+      saveAs(zipBlob, `${student.first_name}_${student.last_name}.zip`);
+
+      toast.success("ZIP descargado con éxito");
+    } catch (err) {
+      console.error(err);
+      toast.error("Error al descargar los archivos");
+    }
+  };
+
 
   const listFiles = async (student) => {
     let render = [];
@@ -300,6 +373,7 @@ function Products() {
                   setContract={setContract}
                   requests={students}
                   setRequests={setStudents}
+                  downLoadFiles={downloadStudentFiles}
                 />
               </div>
             </div>
