@@ -69,15 +69,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function PortfolioFilter2({ user, contract, setContract }) {
-  const [requests, setRequests] = useState([]);
+export default function PortfolioFilter2({ user, contract, setContract, requests, setRequests }) {
   const [formValues, setFormValues] = useState();
   const { setLoading } = useLoader();
   const { selected, setSelected } = useDashboardStore();
   const [indexSelected, setIndexSelected] = useState(0);
 
   useEffect(() => {
-
     if (selected === "Mi Suscripción") {
       getParentRequests(user?.identification);
     } else {
