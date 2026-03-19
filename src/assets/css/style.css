@@ -6283,7 +6283,7 @@ Section Title
   -ms-flex-align: center;
   align-items: center;
   position: relative;
-  height: 74vh;
+  /* height: 74vh; */
 }
 .modal-content .modal-nav-button {
   background: rgba(255, 255, 255, 0.8);

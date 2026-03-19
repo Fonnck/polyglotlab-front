@@ -5,21 +5,17 @@ import HomeOneHeader from "../HomeOne/HomeOneHeader.jsx";
 import FooterHomeOne from "../HomeTwo/FooterHomeOne.jsx";
 import HeroPageTitle from "../HeroPageTitle.jsx";
 import PortfolioFilter2 from "./PortfolioFilter2.jsx";
-import ProductDetailsImg1 from "../../assets/images/resource/products/thumb-1.png";
-import ProductDetailsImg2 from "../../assets/images/resource/products/thumb-1.png";
-import ProductDetailsImg3 from "../../assets/images/resource/products/thumb-3.png";
 import { useSignInStore, useSignUp } from "../../hooks/useSignUp.js";
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabase/client.js";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useDashboardStore } from "../../hooks/useDashboard.js";
 import { obtenerIP } from "../../hooks/utils/index.js";
+import { FileUpload } from "./FileUpload.jsx";
+import toast from "react-hot-toast";
+import RequiredDocuments from "./RequiredDocuments.jsx";
 
 const admin_menu = [
-  {
-    name: "Nuevas Solicitudes",
-    action: () => { },
-  },
   {
     name: "Solicitudes Pendientes",
     action: () => { },
@@ -51,6 +47,16 @@ function Products() {
   const { getUserByEmail } = useSignUp();
   const nav = useNavigate();
   const [contract, setContract] = useState(null);
+  const [show, setShow] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [students, setStudents] = useState([]);
+  const [studentSelected, setStudentSelected] = useState(null);
+  const [renderFiles, setRenderFiles] = useState([]);
+
+  const handleClose = () => setShow(false);
+  const handleShow = (e) => {
+    (setModalTitle(e), setShow(true));
+  };
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
@@ -60,7 +66,11 @@ function Products() {
         nav("/products-sidebar");
         if (user === undefined) {
           getUserByEmail(session.user.email);
-          setSelected("Nuevas Solicitudes");
+          if (user?.role === "admin") {
+            setSelected("Nuevas Solicitudes");
+          } else {
+            setSelected("Mi Suscripción");
+          }
         }
         if (event !== "SIGNED_IN") {
           if (!session) {
@@ -79,6 +89,95 @@ function Products() {
     });
   }, []);
 
+  /* async function uploadFile(e) {
+    let fileSelected = e.target.files[0];
+
+    const { data, error } = supabase.storage
+      .from("enrollment-documents")
+      .upload(`${user?.id}/${fileSelected.name}`, fileSelected);
+
+    if (data) {
+      toast.success("Archivo cargado con éxito");
+    } else {
+      toast.error("Error cargando el archivo");
+    }
+  } */
+
+
+
+  const uploadFile = async (file, student, type) => {
+    const fileSelected = file.target.files[0];
+
+    if (!fileSelected) return;
+
+    const filePath = `${student.id}/${type}-${student.first_name}${student.last_name}`;
+
+    const { data, error } = await supabase.storage
+      .from("enrollment-documents")
+      .upload(filePath, fileSelected);
+
+    if (error) {
+      console.error(error);
+      toast.error("Este archivo ya hasido cargado");
+      return;
+    }
+
+    toast.success("Archivo cargado con éxito");
+
+    // Actualizar la lista de archivos después de subir uno nuevo
+    listFiles(student);
+  };
+
+  /* const listFiles = async (student) => {
+    const { data, error } = await supabase.storage
+      .from("enrollment-documents")
+      .list(`${student.id}`, {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: "name", order: "asc" },
+      });
+
+    if (error) {
+      console.error(error);
+      toast.error("Error obteniendo los archivos");
+      return [];
+    }
+
+    console.log("Files:", data);
+    setStudentFiles(data);
+    return data;
+  }; */
+
+  const listFiles = async (student) => {
+    let render = [];
+    const { data, error } = await supabase.storage
+      .from("enrollment-documents")
+      .list(`${student.id}`, {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: "name", order: "asc" },
+      });
+
+    if (error) {
+      console.error(error);
+      toast.error("Error obteniendo los archivos");
+      return [];
+    }
+
+    console.log("Files:", data);
+    data.forEach((file) => {
+      if (file.name.includes("TI")) {
+        render.push('TI');
+      } else if (file.name.includes("CC")) {
+        render.push('CC');
+      } else if (file.name.includes("RC")) {
+        render.push('RC');
+      }
+    });
+    setRenderFiles(render);
+    return data;
+  };
+
   return (
     <>
       <HomeOneHeader />
@@ -96,6 +195,7 @@ function Products() {
             <div className="col-lg-3">
               <div className="shop-sidebar">
                 {/* Sidebar Search */}
+
                 <div className="sidebar-search">
                   <form
                     action="shop-products"
@@ -177,40 +277,16 @@ function Products() {
 
                 {/* Popular Products Widget */}
                 {user?.role === "customer" && (
-                  <div className="sidebar-widget post-widget">
-                    <div className="widget-title">
-                      <h5 className="widget-title">Documentos Requeridos</h5>
-                    </div>
-                    <div className="post-inner">
-                      <div className="post">
-                        <figure className="post-thumb">
-                          {/* <Link to="/products-details"> */}
-                          <img src={ProductDetailsImg1} alt="Product 1" />
-                          {/* </Link> */}
-                        </figure>
-                        <Link>Tarjeta de Identidad</Link>
-                        <span className="price">Pendiente</span>
-                      </div>
-                      <div className="post">
-                        <figure className="post-thumb">
-                          <Link>
-                            <img src={ProductDetailsImg2} alt="Product 2" />
-                          </Link>
-                        </figure>
-                        <Link>Cédula Ciudadania (Copia)</Link>
-                        <span className="price">Pendiente</span>
-                      </div>
-                      <div className="post">
-                        <figure className="post-thumb">
-                          <Link>
-                            <img src={ProductDetailsImg3} alt="Product 3" />
-                          </Link>
-                        </figure>
-                        <Link>Registro Civil (Copia)</Link>
-                        <span className="price">Pendiente</span>
-                      </div>
-                    </div>
-                  </div>
+                  students.map((request, index) => (
+                    <RequiredDocuments
+                      key={index}
+                      student={request}
+                      handleShow={handleShow}
+                      setStudent={setStudentSelected}
+                      listFiles={listFiles}
+                      renderFiles={renderFiles}
+                    />
+                  ))
                 )}
               </div>
             </div>
@@ -222,6 +298,8 @@ function Products() {
                   user={user}
                   contract={contract}
                   setContract={setContract}
+                  requests={students}
+                  setRequests={setStudents}
                 />
               </div>
             </div>
@@ -230,6 +308,13 @@ function Products() {
       </section>
       <FooterHomeOne />
       <BackToTop />
+      <FileUpload
+        student={studentSelected}
+        show={show}
+        handleClose={handleClose}
+        modalTitle={modalTitle}
+        upload={uploadFile}
+      />
     </>
   );
 }
