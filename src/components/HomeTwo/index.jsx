@@ -49,14 +49,14 @@ function HomeTwo() {
       <img className="stickers-img" src={Stickers} alt="Hero Image" />
       <VideoSection />
       <SignupSectionTwo />
-      <AboutHomeOne />
+      {/* <AboutHomeOne /> */}
       <ClientHomeOne />
       {/* <AboutHomeTwo /> */}
       {/* <FunFactSection /> */}
       {/* <PricingSection /> */}
       {/* <GallerySection /> */}
-      <FeatureHomeTwo />
-      <CoursesSectionTwo />
+      {/* <FeatureHomeTwo />
+      <CoursesSectionTwo /> */}
       {/* <FaqSection />*/}
       {/* <EventSection /> */}
       {/* <NewsSectionTwo /> */}
