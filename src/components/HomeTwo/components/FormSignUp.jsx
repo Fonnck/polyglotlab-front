@@ -284,7 +284,7 @@ export const FormSignUp = () => {
               <small>
                 Acepto&nbsp;
                 <a
-                  href="https://docs.google.com/document/d/1VhUEwW0J2lKGzzaAt7zCF1l7gyBwr4LK/edit?usp=sharing&ouid=113865125216594741992&rtpof=true&sd=true"
+                  href="https://drive.google.com/file/d/1HeCSCQjfI8bUHYOjsijKSXBDXflywg-b/view?usp=sharing"
                   target="_blank"
                 >
                   términos y condiciones
