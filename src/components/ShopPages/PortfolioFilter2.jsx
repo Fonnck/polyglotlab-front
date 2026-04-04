@@ -115,7 +115,16 @@ export default function PortfolioFilter2({
   }, [selected, indexSelected]);
 
   const refresh = () => {
-    getRequests("active");
+    if (user?.role === "customer") {
+      if (selected === "Mi Suscripción") {
+        getParentRequests(user?.identification);
+      } else {
+        //Get parent selected
+        setRequests([]);
+      }
+    } else {
+      getRequests("active");
+    }
   };
 
   const getRequests = async (status) => {
