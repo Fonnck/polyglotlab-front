@@ -103,7 +103,7 @@ function Navigation() {
       <li className="dropdown">
         <Link
           target="_blank"
-          to="https://drive.google.com/file/d/1HfmF-3U5kPV6yqXN43F7GUE8bGlbOUBt/view?usp=sharing"
+          to="https://drive.google.com/file/d/1HeCSCQjfI8bUHYOjsijKSXBDXflywg-b/view?usp=sharing"
         >
           Términos y Condiciones
         </Link>

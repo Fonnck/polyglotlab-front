@@ -18,7 +18,6 @@ import {
   StyleSheet,
   Text,
 } from "@react-pdf/renderer";
-import { ContractSigned } from "./ContractSigned";
 import { DownLoadPDF, Quixote } from "./DownLoadPDF";
 
 const styles = StyleSheet.create({
@@ -69,32 +68,58 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function PortfolioFilter2({ user, contract, setContract, requests, setRequests }) {
+export default function PortfolioFilter2({
+  user,
+  contract,
+  setContract,
+  requests,
+  setRequests,
+  downLoadFiles,
+}) {
   const [formValues, setFormValues] = useState();
   const { setLoading } = useLoader();
   const { selected, setSelected } = useDashboardStore();
   const [indexSelected, setIndexSelected] = useState(0);
 
   useEffect(() => {
-    if (selected === "Mi Suscripción") {
-      getParentRequests(user?.identification);
+    if (user?.role === "customer") {
+      setSelected("Mi Suscripción");
+    } else {
+      setSelected("Solicitudes Completadas");
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(selected);
+    if (user?.role === "customer") {
+      if (selected === "Mi Suscripción") {
+        getParentRequests(user?.identification);
+      } else {
+        //Get parent selected
+        setRequests([]);
+      }
     } else {
       if (selected === "Solicitudes Pendientes") {
         getRequests("pending");
-      } else if (selected === "Agregar Estudiante") {
-        setRequests([])
-      } else {
-        if (user?.role === "customer") {
-          getParentRequests(user?.identification);
-        } else {
-          getRequests("active");
-        }
+      } else if (selected === "Solicitudes Completadas") {
+        getRequests("active");
+      } else if (selected === "Pagos") {
+        setRequests([]);
       }
     }
   }, [selected, indexSelected]);
 
   const refresh = () => {
-    getRequests("active");
+    if (user?.role === "customer") {
+      if (selected === "Mi Suscripción") {
+        getParentRequests(user?.identification);
+      } else {
+        //Get parent selected
+        setRequests([]);
+      }
+    } else {
+      getRequests("active");
+    }
   };
 
   const getRequests = async (status) => {
@@ -144,12 +169,20 @@ export default function PortfolioFilter2({ user, contract, setContract, requests
   };
 
   const onSubmitForm = (values) => {
-    if (requests.length === 1) {
+    console.log("sub niggas");
+
+    if (requests.length > 0) {
       console.log("FormValues:", values);
       setFormValues({
         ...values,
-        identificationPlace: values.identificationPlace === "Otro ¿Cuál?" ? values.identificationPlaceOther : values.identificationPlace,
-        idCardPlace: values.idCardPlace === "Otro ¿Cuál?" ? values.idCardPlaceOther : values.idCardPlace,
+        identificationPlace:
+          values.identificationPlace === "Otro ¿Cuál?"
+            ? values.identificationPlaceOther
+            : values.identificationPlace,
+        idCardPlace:
+          values.idCardPlace === "Otro ¿Cuál?"
+            ? values.idCardPlaceOther
+            : values.idCardPlace,
       });
       setContract(2);
     }
@@ -157,7 +190,7 @@ export default function PortfolioFilter2({ user, contract, setContract, requests
 
   return (
     <>
-      <div className="filters clearfix pt-5">
+      <div className="filters clearfix">
         <h3>{selected}</h3>
         {/* <ul className="filter-tabs filter-btns clearfix">
 					<li className={activeBtn("*")} onClick={handleFilterKeyChange("*")}> All </li>
@@ -182,12 +215,15 @@ export default function PortfolioFilter2({ user, contract, setContract, requests
               role={user?.role}
               startContract={() => setContract(1)}
               setIndexSelected={setIndexSelected}
+              downLoadFiles={downLoadFiles}
+              refresh={getParentRequests}
             />
           ))}
         {contract === 1 && (
           <DocumentForm
             parentIdentification={user?.identification}
             onSubmitForm={(values) => {
+              console.log("sup body");
               onSubmitForm(values);
             }}
             setContract={setContract}
@@ -195,8 +231,7 @@ export default function PortfolioFilter2({ user, contract, setContract, requests
         )}
         {contract === 2 && (
           <Contract
-            // user={requests.length === 1 ? requests[0] : undefined}
-            user={requests[0]}
+            user={requests[indexSelected]}
             formValues={formValues}
             setContract={setContract}
             refresh={refresh}
@@ -204,7 +239,12 @@ export default function PortfolioFilter2({ user, contract, setContract, requests
         )}
         {contract === 4 && (
           <DownLoadPDF
-            student={requests.length > 1 ? requests[indexSelected] : requests[0]}
+            requests={requests}
+            index={indexSelected}
+            student={
+              // requests.length > 1 ? requests[indexSelected] : requests[0]
+              requests[indexSelected]
+            }
           />
         )}
       </div>
@@ -216,7 +256,7 @@ export default function PortfolioFilter2({ user, contract, setContract, requests
           onClick={() => {
             refresh();
             setContract(null);
-            setSelected('Mi Suscripción');
+            setSelected("Mi Suscripción");
           }}
         >
           <span className="blink">VER SUSCRIPCIÓN</span>

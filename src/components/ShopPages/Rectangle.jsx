@@ -1,19 +1,34 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
 import Boy from "../../assets/images/boy.png";
 import Girl from "../../assets/images/girl.png";
-import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
-import { DownLoadPDF, Quixote } from "./DownLoadPDF";
+import { useState } from "react";
+import { Quixote } from "./DownLoadPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { useNavigate } from "react-router-dom";
 import { toTitleCase } from "../../hooks/utils";
+import { FaDownload } from "react-icons/fa";
+import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
+import { AuthImage } from "./AuthImage";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
-export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSelected }) => {
+export const Rectangle = ({
+  e,
+  i,
+  setContract,
+  role,
+  startContract,
+  setIndexSelected,
+  downLoadFiles,
+  refresh,
+}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [showAuth, setShowAuth] = useState(false);
+
+  const handleCloseAuth = () => setShowAuth(false);
+  const handleShowAuth = () => setShowAuth(true);
   const { updateStudentStatus } = useDashboard();
 
   const getProgram = (language) => {
@@ -47,7 +62,10 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
   };
 
   const { setSelected } = useDashboardStore();
-  const nav = useNavigate();
+
+  const downloadFiles = () => {
+    downLoadFiles(e);
+  };
 
   return (
     <>
@@ -55,18 +73,14 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
         key={i}
         className="product-block masonry-item small-column all cat-2 product lenses col-lg-4 col-md-6 col-sm-12"
       >
-        <div className="inner-box">
+        <div className="inner-box" style={{ minHeight: "500px" }}>
           <div className="image-box">
             <div
               className="image"
               style={{ maxWidth: "60%", margin: "0 auto" }}
             >
-              <img src={e.gender === "boy" ? Boy : Girl} alt="Product 1" />
+              <img src={e.gender === "boy" ? Boy : Girl} alt="Img" />
             </div>
-            {/* <div className="icon-box">
-									<button className="ui-btn"><i className="fa fa-heart"></i></button>
-									<button className="ui-btn"><i className="fa-solid fa-file-signature"></i></button>
-								</div> */}
           </div>
           <div className="content d-flex flex-column align-items-center pb-0">
             <small>
@@ -86,7 +100,7 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
               </div>
               <span className="price">{e.parent_id}</span>
             </div>
-            <span className="price">{e.parent_email}</span>
+            {/* <span className="price">{e.parent_email}</span> */}
           </div>
           <div className="d-flex justify-content-between gap-2 p-4 flex-column">
             {e.status === "inactive" && role === "customer" && (
@@ -100,6 +114,7 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
                 className="_button"
                 onClick={() => {
                   startContract();
+                  setIndexSelected(i);
                 }}
               >
                 <span className="button_top">Iniciar Mátricula</span>
@@ -130,6 +145,23 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
                 </button>
               </div>
             )}
+            {role === "admin" && (
+              <DropdownButton
+                id="dropdown-basic-button"
+                title="Descargar Documentos"
+                variant="outline-secondary"
+                size="sm"
+                className="mb-2"
+              >
+                <Dropdown.Item href="#/action-1">
+                  Cédula de Ciudadania
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-2">
+                  Tarjeta de Identidad
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Registro Civil</Dropdown.Item>
+              </DropdownButton>
+            )}
             {e.status === "active" && (
               <PDFDownloadLink document={<Quixote />} fileName="documento.pdf">
                 {({ loading }) =>
@@ -139,9 +171,14 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
                     <button
                       className="button-74"
                       onClick={() => {
-                        setContract(4);
-                        setSelected(role === "admin" ? "Contrato Firmado" : "Mi Suscripción");
                         setIndexSelected(i);
+                        console.log(i);
+                        setContract(4);
+                        setSelected(
+                          role === "admin"
+                            ? "Contrato Firmado"
+                            : "Mi Suscripción",
+                        );
                       }}
                     >
                       Ver Contrato Firmado
@@ -150,9 +187,25 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
                 }
               </PDFDownloadLink>
             )}
+            {e.status === "active" && role === "customer" && !e.auth_image && (
+              <div className="mt-3">
+                <a onClick={handleShowAuth}>Autorizar uso de Imagén</a>
+              </div>
+            )}
+            {e.status === "active" && e.auth_image && (
+              <div className="mt-3" style={{ color: "green" }}>
+                <a onClick={handleShowAuth}>Uso de imagén autorizado</a>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      <AuthImage
+        handleClose={handleCloseAuth}
+        show={showAuth}
+        student={e}
+        refresh={refresh}
+      />
     </>
   );
 };
