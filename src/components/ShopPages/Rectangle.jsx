@@ -9,6 +9,7 @@ import { toTitleCase } from "../../hooks/utils";
 import { FaDownload } from "react-icons/fa";
 import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import { AuthImage } from "./AuthImage";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
 export const Rectangle = ({
   e,
@@ -80,18 +81,6 @@ export const Rectangle = ({
             >
               <img src={e.gender === "boy" ? Boy : Girl} alt="Img" />
             </div>
-            {role === "admin" && (
-              <div className="icon-box">
-                <button
-                  style={{ backgroundColor: "white", marginRight: "15px" }}
-                  title="Decargar Archivos"
-                  onClick={() => downloadFiles()}
-                >
-                  <FaDownload />
-                </button>
-                {/* <button className="ui-btn"><i className="fa-solid fa-file-signature"></i></button> */}
-              </div>
-            )}
           </div>
           <div className="content d-flex flex-column align-items-center pb-0">
             <small>
@@ -156,6 +145,23 @@ export const Rectangle = ({
                 </button>
               </div>
             )}
+            {role === "admin" && (
+              <DropdownButton
+                id="dropdown-basic-button"
+                title="Descargar Documentos"
+                variant="outline-secondary"
+                size="sm"
+                className="mb-2"
+              >
+                <Dropdown.Item href="#/action-1">
+                  Cédula de Ciudadania
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-2">
+                  Tarjeta de Identidad
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Registro Civil</Dropdown.Item>
+              </DropdownButton>
+            )}
             {e.status === "active" && (
               <PDFDownloadLink document={<Quixote />} fileName="documento.pdf">
                 {({ loading }) =>
@@ -186,7 +192,7 @@ export const Rectangle = ({
                 <a onClick={handleShowAuth}>Autorizar uso de Imagén</a>
               </div>
             )}
-            {e.status === "active" && role === "customer" && e.auth_image && (
+            {e.status === "active" && e.auth_image && (
               <div className="mt-3" style={{ color: "green" }}>
                 <a onClick={handleShowAuth}>Uso de imagén autorizado</a>
               </div>
