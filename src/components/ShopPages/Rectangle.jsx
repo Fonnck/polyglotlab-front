@@ -73,7 +73,7 @@ export const Rectangle = ({
         key={i}
         className="product-block masonry-item small-column all cat-2 product lenses col-lg-4 col-md-6 col-sm-12"
       >
-        <div className="inner-box">
+        <div className="inner-box" style={{ minHeight: "500px" }}>
           <div className="image-box">
             <div
               className="image"
