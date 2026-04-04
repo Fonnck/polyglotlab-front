@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Document, Page, Text, StyleSheet, View } from "@react-pdf/renderer";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "../../supabase/client";
 import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import toast from "react-hot-toast";
@@ -9,9 +9,15 @@ import { toTitleCase } from "../../hooks/utils";
 
 export const ContractSigned = ({ user: student, formValues }) => {
   const [signed, setSigned] = useState(true);
-  const [loading, setLoading] = useState(false);
   /* const { setSelected } = useDashboardStore();
   const { updateStudentStatus } = useDashboard(); */
+  const tituloRef = useRef(null);
+
+  useEffect(() => {
+    tituloRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
+  console.log(student);
 
   const styles = StyleSheet.create({
     page: { padding: 30, color: "black" },
@@ -143,7 +149,7 @@ export const ContractSigned = ({ user: student, formValues }) => {
 
   const DocPdf = () => (
     <Document>
-      <Page size="letter" style={styles.page}>
+      <Page size="letter" style={styles.page} ref={tituloRef}>
         <View style={styles.title}>
           <Text>
             CONTRATO DE PRESTACIÓN DE SERVICIOS DE EDUCACIÓN NO FORMAL PARA LA

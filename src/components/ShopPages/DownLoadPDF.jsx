@@ -240,12 +240,16 @@ export const Quixote = () => (
   </Document>
 );
 
-export const DownLoadPDF = ({ student }) => {
+export const DownLoadPDF = ({ student, index, requests }) => {
   const [enrrollment, setEnrrolment] = useState();
   const { setLoading } = useLoader();
   useEffect(() => {
     getEnrrolment();
   }, []);
+
+  console.log(index);
+  console.log(student);
+  console.log(requests[index]);
 
   const getEnrrolment = async () => {
     setLoading(true);

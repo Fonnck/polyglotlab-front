@@ -18,7 +18,6 @@ import {
   StyleSheet,
   Text,
 } from "@react-pdf/renderer";
-import { ContractSigned } from "./ContractSigned";
 import { DownLoadPDF, Quixote } from "./DownLoadPDF";
 
 const styles = StyleSheet.create({
@@ -83,8 +82,15 @@ export default function PortfolioFilter2({
   const [indexSelected, setIndexSelected] = useState(0);
 
   useEffect(() => {
-    console.log(selected);
+    if (user?.role === "customer") {
+      setSelected("Mi Suscripción");
+    } else {
+      setSelected("Solicitudes Completadas");
+    }
+  }, []);
 
+  useEffect(() => {
+    console.log(selected);
     if (user?.role === "customer") {
       if (selected === "Mi Suscripción") {
         getParentRequests(user?.identification);
@@ -93,25 +99,14 @@ export default function PortfolioFilter2({
         setRequests([]);
       }
     } else {
-      getRequests("active");
-    }
-
-    /* if (selected === "Mi Suscripción") {
-      console.log("this");
-      getParentRequests(user?.identification);
-    } else {
       if (selected === "Solicitudes Pendientes") {
         getRequests("pending");
-      } else if (selected === "Agregar Estudiante") {
+      } else if (selected === "Solicitudes Completadas") {
+        getRequests("active");
+      } else if (selected === "Pagos") {
         setRequests([]);
-      } else {
-        if (user?.role === "customer") {
-          getParentRequests(user?.identification);
-        } else {
-          getRequests("active");
-        }
       }
-    } */
+    }
   }, [selected, indexSelected]);
 
   const refresh = () => {
@@ -236,7 +231,6 @@ export default function PortfolioFilter2({
         )}
         {contract === 2 && (
           <Contract
-            // user={requests.length === 1 ? requests[0] : undefined}
             user={requests[indexSelected]}
             formValues={formValues}
             setContract={setContract}
@@ -245,8 +239,11 @@ export default function PortfolioFilter2({
         )}
         {contract === 4 && (
           <DownLoadPDF
+            requests={requests}
+            index={indexSelected}
             student={
-              requests.length > 1 ? requests[indexSelected] : requests[0]
+              // requests.length > 1 ? requests[indexSelected] : requests[0]
+              requests[indexSelected]
             }
           />
         )}
