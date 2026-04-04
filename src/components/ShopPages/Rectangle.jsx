@@ -1,21 +1,33 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
 import Boy from "../../assets/images/boy.png";
 import Girl from "../../assets/images/girl.png";
-import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
-import { DownLoadPDF, Quixote } from "./DownLoadPDF";
+import { useState } from "react";
+import { Quixote } from "./DownLoadPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { useNavigate } from "react-router-dom";
 import { toTitleCase } from "../../hooks/utils";
 import { FaDownload } from "react-icons/fa";
-import toast from "react-hot-toast";
+import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
+import { AuthImage } from "./AuthImage";
 
-export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSelected, downLoadFiles }) => {
+export const Rectangle = ({
+  e,
+  i,
+  setContract,
+  role,
+  startContract,
+  setIndexSelected,
+  downLoadFiles,
+  refresh,
+}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [showAuth, setShowAuth] = useState(false);
+
+  const handleCloseAuth = () => setShowAuth(false);
+  const handleShowAuth = () => setShowAuth(true);
   const { updateStudentStatus } = useDashboard();
 
   const getProgram = (language) => {
@@ -50,10 +62,9 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
 
   const { setSelected } = useDashboardStore();
 
-
   const downloadFiles = () => {
     downLoadFiles(e);
-  }
+  };
 
   return (
     <>
@@ -69,16 +80,18 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
             >
               <img src={e.gender === "boy" ? Boy : Girl} alt="Img" />
             </div>
-            {role === "admin" && <div className="icon-box">
-              <button
-                style={{ backgroundColor: 'white', marginRight: '15px' }}
-                title="Decargar Archivos"
-                onClick={() => downloadFiles()}
-              >
-                <FaDownload />
-              </button>
-              {/* <button className="ui-btn"><i className="fa-solid fa-file-signature"></i></button> */}
-            </div>}
+            {role === "admin" && (
+              <div className="icon-box">
+                <button
+                  style={{ backgroundColor: "white", marginRight: "15px" }}
+                  title="Decargar Archivos"
+                  onClick={() => downloadFiles()}
+                >
+                  <FaDownload />
+                </button>
+                {/* <button className="ui-btn"><i className="fa-solid fa-file-signature"></i></button> */}
+              </div>
+            )}
           </div>
           <div className="content d-flex flex-column align-items-center pb-0">
             <small>
@@ -98,7 +111,7 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
               </div>
               <span className="price">{e.parent_id}</span>
             </div>
-            <span className="price">{e.parent_email}</span>
+            {/* <span className="price">{e.parent_email}</span> */}
           </div>
           <div className="d-flex justify-content-between gap-2 p-4 flex-column">
             {e.status === "inactive" && role === "customer" && (
@@ -112,6 +125,7 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
                 className="_button"
                 onClick={() => {
                   startContract();
+                  setIndexSelected(i);
                 }}
               >
                 <span className="button_top">Iniciar Mátricula</span>
@@ -152,7 +166,11 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
                       className="button-74"
                       onClick={() => {
                         setContract(4);
-                        setSelected(role === "admin" ? "Contrato Firmado" : "Mi Suscripción");
+                        setSelected(
+                          role === "admin"
+                            ? "Contrato Firmado"
+                            : "Mi Suscripción",
+                        );
                         setIndexSelected(i);
                       }}
                     >
@@ -162,9 +180,25 @@ export const Rectangle = ({ e, i, setContract, role, startContract, setIndexSele
                 }
               </PDFDownloadLink>
             )}
+            {e.status === "active" && role === "customer" && !e.auth_image && (
+              <div className="mt-3">
+                <a onClick={handleShowAuth}>Autorizar uso de Imagén</a>
+              </div>
+            )}
+            {e.status === "active" && role === "customer" && e.auth_image && (
+              <div className="mt-3" style={{ color: "green" }}>
+                <a onClick={handleShowAuth}>Uso de imagén autorizado</a>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      <AuthImage
+        handleClose={handleCloseAuth}
+        show={showAuth}
+        student={e}
+        refresh={refresh}
+      />
     </>
   );
 };

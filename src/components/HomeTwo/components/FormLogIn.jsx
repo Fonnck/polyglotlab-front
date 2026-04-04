@@ -47,7 +47,10 @@ export const FormLogIn = () => {
           </div>
           {/* Contact Form */}
           <div className="d-flex mt-4">
-            <img style={{ width: "60%", margin: "0 auto" }} src={LoginLogo} />
+            <img
+              style={{ width: "60%", margin: "2rem auto" }}
+              src={LoginLogo}
+            />
           </div>
           <form
             id="login-form"

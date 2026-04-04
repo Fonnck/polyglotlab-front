@@ -75,7 +75,7 @@ export default function PortfolioFilter2({
   setContract,
   requests,
   setRequests,
-  downLoadFiles
+  downLoadFiles,
 }) {
   const [formValues, setFormValues] = useState();
   const { setLoading } = useLoader();
@@ -83,13 +83,27 @@ export default function PortfolioFilter2({
   const [indexSelected, setIndexSelected] = useState(0);
 
   useEffect(() => {
-    if (selected === "Mi Suscripción") {
+    console.log(selected);
+
+    if (user?.role === "customer") {
+      if (selected === "Mi Suscripción") {
+        getParentRequests(user?.identification);
+      } else {
+        //Get parent selected
+        setRequests([]);
+      }
+    } else {
+      getRequests("active");
+    }
+
+    /* if (selected === "Mi Suscripción") {
+      console.log("this");
       getParentRequests(user?.identification);
     } else {
       if (selected === "Solicitudes Pendientes") {
         getRequests("pending");
       } else if (selected === "Agregar Estudiante") {
-        setRequests([])
+        setRequests([]);
       } else {
         if (user?.role === "customer") {
           getParentRequests(user?.identification);
@@ -97,7 +111,7 @@ export default function PortfolioFilter2({
           getRequests("active");
         }
       }
-    }
+    } */
   }, [selected, indexSelected]);
 
   const refresh = () => {
@@ -151,12 +165,20 @@ export default function PortfolioFilter2({
   };
 
   const onSubmitForm = (values) => {
-    if (requests.length === 1) {
+    console.log("sub niggas");
+
+    if (requests.length > 0) {
       console.log("FormValues:", values);
       setFormValues({
         ...values,
-        identificationPlace: values.identificationPlace === "Otro ¿Cuál?" ? values.identificationPlaceOther : values.identificationPlace,
-        idCardPlace: values.idCardPlace === "Otro ¿Cuál?" ? values.idCardPlaceOther : values.idCardPlace,
+        identificationPlace:
+          values.identificationPlace === "Otro ¿Cuál?"
+            ? values.identificationPlaceOther
+            : values.identificationPlace,
+        idCardPlace:
+          values.idCardPlace === "Otro ¿Cuál?"
+            ? values.idCardPlaceOther
+            : values.idCardPlace,
       });
       setContract(2);
     }
@@ -190,12 +212,14 @@ export default function PortfolioFilter2({
               startContract={() => setContract(1)}
               setIndexSelected={setIndexSelected}
               downLoadFiles={downLoadFiles}
+              refresh={getParentRequests}
             />
           ))}
         {contract === 1 && (
           <DocumentForm
             parentIdentification={user?.identification}
             onSubmitForm={(values) => {
+              console.log("sup body");
               onSubmitForm(values);
             }}
             setContract={setContract}
@@ -204,7 +228,7 @@ export default function PortfolioFilter2({
         {contract === 2 && (
           <Contract
             // user={requests.length === 1 ? requests[0] : undefined}
-            user={requests[0]}
+            user={requests[indexSelected]}
             formValues={formValues}
             setContract={setContract}
             refresh={refresh}
@@ -212,7 +236,9 @@ export default function PortfolioFilter2({
         )}
         {contract === 4 && (
           <DownLoadPDF
-            student={requests.length > 1 ? requests[indexSelected] : requests[0]}
+            student={
+              requests.length > 1 ? requests[indexSelected] : requests[0]
+            }
           />
         )}
       </div>
@@ -224,7 +250,7 @@ export default function PortfolioFilter2({
           onClick={() => {
             refresh();
             setContract(null);
-            setSelected('Mi Suscripción');
+            setSelected("Mi Suscripción");
           }}
         >
           <span className="blink">VER SUSCRIPCIÓN</span>
