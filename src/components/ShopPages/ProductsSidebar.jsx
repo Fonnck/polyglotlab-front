@@ -62,7 +62,7 @@ function Products() {
     supabase.auth.onAuthStateChange((event, session) => {
       console.log(event);
       console.log(session);
-      if (session) {
+      /* if (session) {
         nav("/products-sidebar");
         if (user === undefined) {
           getUserByEmail(session.user.email);
@@ -85,7 +85,7 @@ function Products() {
       } else {
         console.log(session);
         nav("/confirmed");
-      }
+      } */
     });
   }, []);
 

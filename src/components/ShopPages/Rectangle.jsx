@@ -9,7 +9,7 @@ import { toTitleCase } from "../../hooks/utils";
 import { FaDownload } from "react-icons/fa";
 import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import { AuthImage } from "./AuthImage";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 import { supabase } from "../../supabase/client";
 import toast from "react-hot-toast";
 
@@ -33,6 +33,7 @@ export const Rectangle = ({
   const [linkCC, setLinkCC] = useState('');
   const [linkTI, setLinkTI] = useState('');
   const [linkRC, setLinkRC] = useState('');
+  const [links, setLinks] = useState([]);
 
   const handleCloseAuth = () => setShowAuth(false);
   const handleShowAuth = () => setShowAuth(true);
@@ -85,11 +86,14 @@ export const Rectangle = ({
      * @returns {Promise<string[]>} Array of file download URLs
      */
   async function getFileDownloadLinks() {
+
+    const bucket = 'enrollment-documents';
+
     try {
       // 1. List files inside the folder
       const { data: files, error } = await supabase
         .storage
-        .from('enrroll-documents')
+        .from(bucket)
         .list(e.id, {
           limit: 100,
           offset: 0
@@ -102,12 +106,12 @@ export const Rectangle = ({
       }
 
       if (!files || files.length === 0) {
-        return []
+        toast.error('No se encontraron documentos para este estudiante');
       }
 
       // 2. Generate public URLs (for public buckets)
       const links = files.map(file => {
-        const filePath = `${folderId}/${file.name}`
+        const filePath = `${e.id}/${file.name}`
 
         const { data } = supabase
           .storage
@@ -115,9 +119,29 @@ export const Rectangle = ({
           .getPublicUrl(filePath)
 
         return data.publicUrl
-      })
+      });
 
-      return links
+      console.log('links', links);
+      const _links = []
+      links.map(link => {
+        if (link.includes('CC-')) {
+          _links.push({
+            linkName: 'Cédula de Ciudadania',
+            link: link
+          });
+        } if (link.includes('TI-')) {
+          _links.push({
+            linkName: 'Tarjeta de Identidad',
+            link: link
+          });
+        } if (link.includes('RC-')) {
+          _links.push({
+            linkName: 'Registro Civil',
+            link: link
+          });
+        }
+      })
+      setLinks(_links);
 
     } catch (err) {
       console.error('Error fetching files:', err.message)
@@ -164,11 +188,11 @@ export const Rectangle = ({
           }
           else {
             toast.success('Enlace de descarga generado correctamente');
-            if (type === 'CC') {
+            if (type === 'CC-') {
               setLinkCC(data);
-            } else if (type === 'TI') {
+            } else if (type === 'TI-') {
               setLinkTI(data);
-            } else {
+            } else if (type === 'RC-') {
               setLinkRC(data);
             }
           }
@@ -232,10 +256,6 @@ export const Rectangle = ({
     const path = `${e.id}/${type}-${e.first_name}-${e.last_name}.pdf`
 
     setLoading(true);
-
-
-
-
     try {
       await supabase
         .storage
@@ -350,7 +370,13 @@ export const Rectangle = ({
                 </button>
               </div>
             )}
-            {role === "admin" && (
+            {role === "admin" && !links.length > 0 && (
+              <Button variant="outline-secondary" size="sm" className="mb-2"
+                onClick={() => getFileDownloadLinks()}>
+                Obtener Documentos
+              </Button>
+            )}
+            {role === "admin" && links.length > 0 && (
               <DropdownButton
                 id="dropdown-basic-button"
                 title="Descargar Documentos"
@@ -358,15 +384,13 @@ export const Rectangle = ({
                 size="sm"
                 className="mb-2"
               >
-                <Dropdown.Item href={''} target="_blank" onClick={() => getStudentDocument('CC')}>
-                  <FaDownload /> {'Cedula de Ciudadania'}
-                </Dropdown.Item>
-                <Dropdown.Item href={''} target="_blank" onClick={() => getStudentDocument('TI')}>
-                  <FaDownload /> {'Tarejta de Identidad'}
-                </Dropdown.Item>
-                <Dropdown.Item href={''} target="_blank" onClick={() => getStudentDocument('RC')}>
-                  <FaDownload /> {'Registro Civil'}
-                </Dropdown.Item>
+                {
+                  links.map((link, index) => (
+                    <Dropdown.Item key={index} href={link.link} target="_blank">
+                      <FaDownload /> {link.linkName}
+                    </Dropdown.Item>
+                  ))
+                }
               </DropdownButton>
             )}
             {e.status === "active" && (

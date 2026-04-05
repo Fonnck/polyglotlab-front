@@ -122,7 +122,6 @@ export default function PortfolioFilter2({
     }
   };
 
-
   const getRequests = async (status) => {
     try {
       setLoading(true);
