@@ -14,8 +14,6 @@ import { obtenerIP } from "../../hooks/utils/index.js";
 import { FileUpload } from "./FileUpload.jsx";
 import toast from "react-hot-toast";
 import RequiredDocuments from "./RequiredDocuments.jsx";
-import { saveAs } from "file-saver";
-import JSZip from "jszip";
 
 const admin_menu = [
   {
@@ -112,7 +110,7 @@ function Products() {
 
     if (!fileSelected) return;
 
-    const filePath = `${student.id}/${type}-${student.first_name}${student.last_name}`;
+    const filePath = `${student.id}/${type}-${student.first_name}-${student.last_name}`;
 
     const { data, error } = await supabase.storage
       .from("enrollment-documents")
@@ -167,7 +165,7 @@ function Products() {
     }
   }; */
 
-  const downloadStudentFiles = async (student) => {
+  /* const downloadStudentFiles = async (student) => {
 
     console.log(student.id);
 
@@ -211,14 +209,13 @@ function Products() {
       const zipBlob = await zip.generateAsync({ type: "blob" });
 
       // 4. Descargarlo
-      saveAs(zipBlob, `${student.first_name}_${student.last_name}.zip`);
 
       toast.success("ZIP descargado con éxito");
     } catch (err) {
       console.error(err);
       toast.error("Error al descargar los archivos");
     }
-  };
+  }; */
 
 
   const listFiles = async (student) => {
@@ -373,7 +370,6 @@ function Products() {
                   setContract={setContract}
                   requests={students}
                   setRequests={setStudents}
-                  downLoadFiles={downloadStudentFiles}
                 />
               </div>
             </div>

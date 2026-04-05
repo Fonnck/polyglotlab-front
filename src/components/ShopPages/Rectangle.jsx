@@ -10,6 +10,8 @@ import { FaDownload } from "react-icons/fa";
 import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import { AuthImage } from "./AuthImage";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import { supabase } from "../../supabase/client";
+import toast from "react-hot-toast";
 
 export const Rectangle = ({
   e,
@@ -19,13 +21,18 @@ export const Rectangle = ({
   startContract,
   setIndexSelected,
   downLoadFiles,
-  refresh,
+  refresh
 }) => {
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [showAuth, setShowAuth] = useState(false);
+  const [linkCC, setLinkCC] = useState('');
+  const [linkTI, setLinkTI] = useState('');
+  const [linkRC, setLinkRC] = useState('');
 
   const handleCloseAuth = () => setShowAuth(false);
   const handleShowAuth = () => setShowAuth(true);
@@ -66,6 +73,204 @@ export const Rectangle = ({
   const downloadFiles = () => {
     downLoadFiles(e);
   };
+  const getFilesLinks = () => {
+    downLoadFiles(e);
+  };
+
+  /**
+     * Get download URLs for all files inside a folder in a Supabase bucket
+     *
+     * @param {string} bucket - Name of the storage bucket
+     * @param {string} folderId - Folder name (usually your ID)
+     * @returns {Promise<string[]>} Array of file download URLs
+     */
+  async function getFileDownloadLinks() {
+    try {
+      // 1. List files inside the folder
+      const { data: files, error } = await supabase
+        .storage
+        .from('enrroll-documents')
+        .list(e.id, {
+          limit: 100,
+          offset: 0
+        })
+
+      console.log('files', files);
+
+      if (error) {
+        throw error
+      }
+
+      if (!files || files.length === 0) {
+        return []
+      }
+
+      // 2. Generate public URLs (for public buckets)
+      const links = files.map(file => {
+        const filePath = `${folderId}/${file.name}`
+
+        const { data } = supabase
+          .storage
+          .from(bucket)
+          .getPublicUrl(filePath)
+
+        return data.publicUrl
+      })
+
+      return links
+
+    } catch (err) {
+      console.error('Error fetching files:', err.message)
+      return []
+    }
+  }
+
+  /**
+   * Get public URL for a single file in Supabase Storage
+   *
+   * @param {string} bucket - Name of the bucket
+   * @param {string} filePath - Full path to the file (e.g. "folderId/file.pdf")
+   * @returns {string|null}
+   */
+  function getFilePublicUrl(bucket, type) {
+
+    const path = `${e.id}/${type}-${e.first_name} ${e.last_name}.pdf`
+    const { data } = supabase
+      .storage
+      .from(bucket)
+      .getPublicUrl(path)
+
+    return data?.publicUrl || null
+  }
+
+  /**
+   * Get a download URL and validate that the file exists
+   *
+   * @param {string} bucket - Bucket name
+   * @param {string} filePath - Full file path (e.g. "folder/file.pdf")
+   * @param {number} expiresIn - Expiration in seconds (default: 1 hour)
+   * @returns {Promise<{ url: string|null, error: string|null }>}
+   */
+  async function getFileUrlSafe(type) {
+    try {
+      const path = `${e.id}/${type}-${e.first_name}-${e.last_name}.pdf`
+      setLoading(true);
+      supabase.storage
+        .from('enrrol-documents')
+        .createSignedUrl(path, 3600)
+        .then(({ data, error }) => {
+          if (error) {
+            toast.error('Documento no cargado aún ');
+          }
+          else {
+            toast.success('Enlace de descarga generado correctamente');
+            if (type === 'CC') {
+              setLinkCC(data);
+            } else if (type === 'TI') {
+              setLinkTI(data);
+            } else {
+              setLinkRC(data);
+            }
+          }
+        })
+
+    } catch (error) {
+      toast.error('Documento no cargado aún) ')
+    }
+  }
+
+  async function loadStudentDocuments(type) {
+    const path = `${e.id}/${type}-${e.first_name}-${e.last_name}.pdf`
+    setLoading(true);
+    try {
+      const bucket = 'enrroll-documents'
+      // 1. List files in student's folder
+      const { data: files, error } = await supabase
+        .storage
+        .from(bucket)
+        .list(e.id)
+
+      if (error) throw error
+
+      if (!files || files.length === 0) return
+
+      // 2. Process each file
+      for (const file of files) {
+        const filePath = `${e.id}/${file.name}`
+
+        // Generate signed URL
+        const { data, error: urlError } = await supabase
+          .storage
+          .from(bucket)
+          .createSignedUrl(filePath, 3600)
+
+        if (urlError) {
+          console.error('Error with file:', file.name)
+          continue
+        }
+
+        const url = data?.signedUrl
+
+        // 3. Detect type by prefix
+        if (file.name.startsWith('CC')) {
+          setLinkCC(url)
+        } else if (file.name.startsWith('TI')) {
+          setLinkTI(url)
+        } else if (file.name.startsWith('RC')) {
+          setLinkRC(url)
+        }
+      }
+
+    } catch (err) {
+      console.error('Error loading student documents:', err.message)
+    }
+  }
+
+  async function getStudentDocument(type) {
+
+    const bucket = 'enrroll-documents'
+    const path = `${e.id}/${type}-${e.first_name}-${e.last_name}.pdf`
+
+    setLoading(true);
+
+
+
+
+    try {
+      await supabase
+        .storage
+        .from(bucket)
+        .getPublicUrl(path)
+        .then(({ data, error }) => {
+          setLoading(false);
+          console.log('doing', data);
+          if (error) {
+            toast.error('Documento no cargado aún');
+          } else {
+            if (!data?.publicUrl) {
+              toast.error('Documento no cargado aún');
+              throw new Error('Documento no cargado aún');
+            }
+            toast.success('Enlace de descarga generado correctamente');
+            if (type === 'CC') {
+              setLinkCC(data.publicUrl);
+            } else if (type === 'TI') {
+              setLinkTI(data.publicUrl);
+            } else {
+              setLinkRC(data.publicUrl);
+            }
+          }
+
+        }
+        )
+
+
+    } catch (error) {
+      setLoading(false);
+      toast.error('Error generando el enlace');
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -153,13 +358,15 @@ export const Rectangle = ({
                 size="sm"
                 className="mb-2"
               >
-                <Dropdown.Item href="#/action-1">
-                  Cédula de Ciudadania
+                <Dropdown.Item href={''} target="_blank" onClick={() => getStudentDocument('CC')}>
+                  <FaDownload /> {'Cedula de Ciudadania'}
                 </Dropdown.Item>
-                <Dropdown.Item href="#/action-2">
-                  Tarjeta de Identidad
+                <Dropdown.Item href={''} target="_blank" onClick={() => getStudentDocument('TI')}>
+                  <FaDownload /> {'Tarejta de Identidad'}
                 </Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Registro Civil</Dropdown.Item>
+                <Dropdown.Item href={''} target="_blank" onClick={() => getStudentDocument('RC')}>
+                  <FaDownload /> {'Registro Civil'}
+                </Dropdown.Item>
               </DropdownButton>
             )}
             {e.status === "active" && (
