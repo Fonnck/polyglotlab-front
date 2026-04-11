@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Document, Page, Text, StyleSheet, View } from "@react-pdf/renderer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../../supabase/client";
 import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import toast from "react-hot-toast";
@@ -12,6 +12,8 @@ export const Contract = ({ user: student, formValues, setContract }) => {
   const [loading, setLoading] = useState(false);
   const { setSelected } = useDashboardStore();
   const { updateStudentStatus } = useDashboard();
+
+  console.log(student);
 
   const styles = StyleSheet.create({
     page: { padding: 30, color: "black" },
@@ -150,7 +152,7 @@ export const Contract = ({ user: student, formValues, setContract }) => {
         <View style={styles.title}>
           <Text>
             CONTRATO DE PRESTACIÓN DE SERVICIOS DE EDUCACIÓN NO FORMAL PARA LA
-            ENSEÑANZA DE IDIOMA(S) EXTRANJERO(S)
+            ENSEÑANZA DE IDIOMA(S) EXTRANJERO(S)SSSSSS
           </Text>
         </View>
         <View style={styles.section}>

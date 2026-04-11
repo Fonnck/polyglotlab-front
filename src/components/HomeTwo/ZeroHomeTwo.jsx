@@ -72,7 +72,7 @@ function BannerSection() {
                   <figure className="cirkle cirkle-1 zoom-two">
                     <img src={Bulb} alt="Bulb Icon" />
                   </figure>
-                  <figure className="cirkle cirkle-2 spin-one">
+                  <figure className="cirkle cirkle-2 zoom-one">
                     <img src={Circle2} alt="Circle Icon 2" />
                   </figure>
                 </div>

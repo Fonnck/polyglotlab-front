@@ -2545,7 +2545,7 @@ Main Header
   display: block;
   font-size: 26px;
   height: 30px;
-  line-height: 30px;
+  /* line-height: 30px; */
   margin-left: 30px;
   position: relative;
   text-align: center;
@@ -5691,7 +5691,7 @@ Section Title
   margin-bottom: 0;
 }
 .signup-form-two form {
-  padding: 60px 55px;
+  padding: 2px 60px;
   padding-top: 25px;
   padding-bottom: 25px;
   border: 2px solid #f1f1f1;
@@ -6283,7 +6283,7 @@ Section Title
   -ms-flex-align: center;
   align-items: center;
   position: relative;
-  height: 74vh;
+  /* height: 74vh; */
 }
 .modal-content .modal-nav-button {
   background: rgba(255, 255, 255, 0.8);
@@ -8483,9 +8483,9 @@ Section Title
 .product-block .ui-btn {
   position: relative;
   display: block;
-  height: 40px;
-  width: 40px;
-  font-size: 14px;
+  height: 35px;
+  width: 35px;
+  font-size: 15px;
   line-height: 40px;
   text-align: center;
   color: #ffffff;
@@ -11705,6 +11705,10 @@ Sidebar
 
 .pointer {
   cursor: pointer;
+}
+
+.disabled_pointer {
+  cursor: not-allowed;
 }
 
 .solid_input {

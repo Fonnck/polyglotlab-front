@@ -167,7 +167,7 @@ const MobileMenu = () => {
         <span
           className="pointer"
           style={{ color: "white", marginLeft: 20 }}
-          to="https://drive.google.com/file/d/1HfmF-3U5kPV6yqXN43F7GUE8bGlbOUBt/view?usp=sharing"
+          to="https://drive.google.com/file/d/1HeCSCQjfI8bUHYOjsijKSXBDXflywg-b/view?usp=sharing"
         >
           Términos y condiciones
         </span>

@@ -72,6 +72,7 @@ const DocumentForm = ({ setContract, onSubmitForm, parentIdentification }) => {
           program: undefined,
         }}
         onSubmit={(values) => {
+          console.log("Enviando forms, no se que pasa mas adelante");
           onSubmitForm({
             ...values,
             programRender: programs.find((e) => e.value === values.program),
@@ -152,8 +153,8 @@ const DocumentForm = ({ setContract, onSubmitForm, parentIdentification }) => {
                     />
                   </Form.Group>
                 </Col>
-              </Row>)
-            }
+              </Row>
+            )}
 
             <Row className="mb-3">
               <Col md={6}>
@@ -208,8 +209,8 @@ const DocumentForm = ({ setContract, onSubmitForm, parentIdentification }) => {
                     />
                   </Form.Group>
                 </Col>
-              </Row>)
-            }
+              </Row>
+            )}
 
             <Row className="mb-4">
               <Col md={12}>
