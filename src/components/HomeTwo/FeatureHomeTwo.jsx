@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -16,8 +17,8 @@ function FeaturesSectionTwo() {
             </div>
             <div className="auto-container">
                 <div className="sec-title text-center">
-                    <span className="sub-title">Our Advantages</span>
-                    <h2>You’ve come to the right <br /> place to learn</h2>
+                    <span className="sub-title">Nuestras Ventajas</span>
+                    <h2>Has llegado al lugar correcto <br /> para aprender</h2>
                 </div>
                 <div className="row">
                     {/* Feature Block */}
@@ -27,9 +28,14 @@ function FeaturesSectionTwo() {
                                 <img src={Feature1} alt="135,00 courses" />
                             </figure>
                             <h4 className="title">
-                                <Link to="/about-us">135,00 courses</Link>
+                                <Link>Motivation</Link>
                             </h4>
-                            <div className="text">Whether you want to learn or to share what you know, you’ve come to the right place.</div>
+                            <div className="text">
+                                Fomentamos el interés por el proceso de aprendizaje,
+                                fortalecemos la confianza de nuestros estudiantes
+                                y los motivamos a enfrentar retos y presentar proyectos
+                                que impulsen su crecimiento y dominio del idioma.
+                            </div>
                         </div>
                     </div>
 
@@ -40,9 +46,9 @@ function FeaturesSectionTwo() {
                                 <img src={Feature2} alt="Industry instructors" />
                             </figure>
                             <h4 className="title">
-                                <Link to="/about-us">Industry instructors</Link>
-                            </h4>
-                            <div className="text">Whether you want to learn or to share what you know, you’ve come to the right place.</div>
+                                <Link to="/about-us">Teaching<br />Methodology</Link>
+                            </h4>Nuestra metodología impulsa el desarrollo de la creatividad a través del outdoor learning, promoviendo el pensamiento crítico, la conciencia ambiental y el trabajo en equipo como pilares del aprendizaje.
+                            <div className="text"></div>
                         </div>
                     </div>
 
@@ -53,9 +59,14 @@ function FeaturesSectionTwo() {
                                 <img src={Feature3} alt="Lifetime access" />
                             </figure>
                             <h4 className="title">
-                                <Link to="/about-us">Lifetime access</Link>
+                                <Link to="/about-us">Educational Support</Link>
                             </h4>
-                            <div className="text">Whether you want to learn or to share what you know, you’ve come to the right place.</div>
+                            <div className="text">
+                                Contamos con docentes especializados,
+                                recursos pedagógicos certificados y un sistema de refuerzo continuo que,
+                                apoyado en tecnología,
+                                garantiza un acompañamiento eficaz y constante en el aprendizaje.
+                            </div>
                         </div>
                     </div>
                 </div>

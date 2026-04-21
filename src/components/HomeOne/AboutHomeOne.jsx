@@ -17,26 +17,28 @@ function AboutSection({ className }) {
           >
             <div className="inner-column">
               <div className="sec-title">
-                <span className="sub-title">Get to know us</span>
-                <h2>Grow your skills learn with us from anywhere</h2>
+                <span className="sub-title">Estudia con Nosotros</span>
+                <h2>Somos la mejor
+                  opción para las familias cuando educar va más allá del contenido
+                </h2>
                 <div className="text">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Porque proyección hacia un mundo
+                  interconectado se improvisa, se forma desde la infancia.
                 </div>
               </div>
 
               <ul className="list-style-one two-column">
                 <li>
-                  <i className="icon fa fa-check"></i> Expert trainers
+                  <i className="icon fa fa-check"></i> Profesores Expertos
                 </li>
                 <li>
-                  <i className="icon fa fa-check"></i> Online learning
+                  <i className="icon fa fa-check"></i> Horarios Flexibles
                 </li>
                 <li>
-                  <i className="icon fa fa-check"></i> Lifetime access
+                  <i className="icon fa fa-check"></i> Educación de Calidad
                 </li>
                 <li>
-                  <i className="icon fa fa-check"></i> Great results
+                  <i className="icon fa fa-check"></i> Resultados Garantizados
                 </li>
               </ul>
 
