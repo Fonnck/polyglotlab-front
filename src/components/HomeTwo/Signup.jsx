@@ -31,9 +31,11 @@ function SignupSectionTwo() {
                   <span style={{ color: "#ffae1e" }}>{" Superpoder"}</span>
                 </h2>
                 <div
-                  className="text"
+                  className="text mt-3"
                   style={{ fontSize: "24px", maxWidth: "85%" }}
                 >
+                  ¿Estamos sembrando hoy las habilidades que exige el mundo del mañana?
+                  <br /><br />
                   Según estudios de la Universidad de Harvard, el cerebro de los
                   niños es mucho más plástico y adaptable, facilitando así la
                   adquisición natural de un segundo idioma.
