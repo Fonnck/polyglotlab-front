@@ -5,7 +5,7 @@ import BackgroundImage from "../../assets/images/background/4.jpg";
 
 function FooterHomeOne({ className }) {
   return (
-    <footer className={`main-footer ${className || ""}`}>
+    <footer className={`main-footer ${className || ""} no-print`}>
       <div
         className="bg-image zoom-two"
         style={{ backgroundImage: `url(${BackgroundImage})` }}

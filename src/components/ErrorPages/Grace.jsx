@@ -39,7 +39,7 @@ function Grace({ className }) {
       )}
       <HomeTwoHeader action={drawerAction.toggle} />
       <CallToActionHomeOne />
-      <TestimonialSection />
+      {/* <TestimonialSection /> */}
       <FooterHomeOne />
       {/* <section className={`${className || ""}`}>
         <div className="auto-container pt-120 pb-70">

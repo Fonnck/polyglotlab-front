@@ -190,7 +190,7 @@ export default function PortfolioFilter2({
 
   return (
     <>
-      <div className="filters clearfix">
+      <div className="filters clearfix no-print">
         <h3>{selected}</h3>
         {/* <ul className="filter-tabs filter-btns clearfix">
 					<li className={activeBtn("*")} onClick={handleFilterKeyChange("*")}> All </li>

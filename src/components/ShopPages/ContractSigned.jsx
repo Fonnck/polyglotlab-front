@@ -1,23 +1,48 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Document, Page, Text, StyleSheet, View } from "@react-pdf/renderer";
+import { Document, Page, Text, StyleSheet, View, PDFDownloadLink } from "@react-pdf/renderer";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "../../supabase/client";
 import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import toast from "react-hot-toast";
 import { toTitleCase } from "../../hooks/utils";
+import { Button } from "react-bootstrap";
 
 export const ContractSigned = ({ user: student, formValues }) => {
   const [signed, setSigned] = useState(true);
+  const [programRender, setProgramRender] = useState('');
   /* const { setSelected } = useDashboardStore();
   const { updateStudentStatus } = useDashboard(); */
   const tituloRef = useRef(null);
 
   useEffect(() => {
     tituloRef.current?.scrollIntoView({ behavior: "smooth" });
+    getProgramRender();
   }, []);
 
   console.log(student);
+
+  const getProgramRenderPrice = () => {
+    if (programRender.includes('3')) {
+      return "185.000";
+    } else if (programRender.includes('6')) {
+      return "285.000";
+    }
+  }
+
+  const getProgramRender = () => {
+    supabase.from("enrollments").select("programRender")
+      .eq("student_id", student?.id)
+      .then(({ data, error }) => {
+        console.log('data', data[0]);
+
+        if (error === null) {
+          setProgramRender(data?.[0]?.programRender || "");
+        } else {
+          return "";
+        }
+      });
+  };
 
   const styles = StyleSheet.create({
     page: { padding: 30, color: "black" },
@@ -147,9 +172,33 @@ export const ContractSigned = ({ user: student, formValues }) => {
     }
   }; */
 
+  const getContractRender = () => {
+    window.print();
+    // const doc = new jsPDF();
+    // doc.html(document.querySelector("#contract"), {
+    //   callback: function (doc) {
+    //     doc.save("contrato.pdf");
+    //   },
+    // });
+  };
+
   const DocPdf = () => (
     <Document>
       <Page size="letter" style={styles.page} ref={tituloRef}>
+        <div className="d-flex justify-content-center">
+          <Button
+            className="no-print"
+            variant="outline-secondary"
+            onClick={getContractRender}
+            style={styles.button}
+          >
+            Imprimir Contrato
+          </Button>
+          {/* <PDFDownloadLink document={<DocPdf />} fileName="archivo.pdf">
+            Descargar PDF
+          </PDFDownloadLink> */}
+        </div>
+
         <View style={styles.title}>
           <Text>
             CONTRATO DE PRESTACIÓN DE SERVICIOS DE EDUCACIÓN NO FORMAL PARA LA
@@ -369,8 +418,8 @@ export const ContractSigned = ({ user: student, formValues }) => {
           EL CONTRATANTE pagará al CONTRATISTA el valor de la mensualidad, el
           cual será determinado según el alcance del servicio contratado. Para
           este caso espécifico EL CONTRATANTE ha decidido optar por la opciòn:
-          {` ${formValues?.programRender.render} `} con un valor mensual de: $
-          {`${formValues?.programRender.price} `}
+          {` ${formValues?.programRender.render !== undefined ? formValues?.programRender.render : programRender} `} con un valor mensual de: $
+          {`${formValues?.programRender.price !== undefined ? formValues?.programRender.price : getProgramRenderPrice()} `}
         </Text>
         <Text style={{ ...styles.paragraph, color: "gray" }}>
           *Nota a beneficios en pagos: Si son hermanos, uno de ellos recibe un
@@ -641,5 +690,12 @@ export const ContractSigned = ({ user: student, formValues }) => {
     </Document>
   );
 
-  return <DocPdf />;
+  return (
+    <div id="contract" className="d-flex flex-column align-items-center">
+      {/* <PDFDownloadLink document={<DocPdf />} fileName="archivo.pdf">
+        Descargar PDF
+      </PDFDownloadLink> */}
+      <DocPdf />
+    </div>
+  );
 };

@@ -263,7 +263,7 @@ function Products() {
         <div className="auto-container">
           <div className="row clearfix">
             <div className="col-lg-3">
-              <div className="shop-sidebar">
+              <div className="shop-sidebar no-print">
                 {/* Sidebar Search */}
 
                 <div className="sidebar-search">

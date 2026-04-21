@@ -44,7 +44,7 @@ function Header({ className = '', scroll = false }) {
     };
 
     return (
-        <header className={`main-header header-style-one ${className}`}>
+        <header className={`main-header header-style-one ${className} no-print`}>
             <div className="main-box">
                 <div className="logo-box me-0">
                     <div className="logo">

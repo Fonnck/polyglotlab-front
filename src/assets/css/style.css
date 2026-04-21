@@ -12146,6 +12146,12 @@ input[type="number"] {
   }
 }
 
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+
 .reveal-ltr {
   animation: revealLeftToRight 2s ease-out forwards;
 }
