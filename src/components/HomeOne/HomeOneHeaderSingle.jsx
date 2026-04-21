@@ -43,7 +43,7 @@ function Header({ className = '', scroll = false }) {
     };
 
     return (
-        <header className={`main-header header-style-one ${className}`}>
+        <header className={`main-header header-style-one ${className} no-print`}>
             <div className="main-box">
                 <div className="logo-box">
                     <div className="logo">
@@ -57,7 +57,7 @@ function Header({ className = '', scroll = false }) {
                     <nav className="nav main-menu">
                         <SingleMenu />
                     </nav>
-                    
+
                     <div className="outer-box">
                         <Link to="tel:+92(8800)9806" className="info-btn">
                             <i className="icon fa fa-phone"></i>
@@ -117,7 +117,7 @@ function Header({ className = '', scroll = false }) {
                         </div>
                         <div className="nav-outer">
                             <nav className="main-menu">
-                            <SingleMenu />
+                                <SingleMenu />
                             </nav>
                         </div>
                     </div>

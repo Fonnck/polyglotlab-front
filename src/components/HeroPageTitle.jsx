@@ -14,6 +14,13 @@ function HeroPageTitle({ className, title, breadcrumb = [] }) {
   useEffect(() => {
     if (user === undefined) {
       // getUser() from localStorage
+      const userFromLocalStorage = localStorage.getItem("user");
+      if (userFromLocalStorage) {
+        const userParsed = JSON.parse(userFromLocalStorage);
+        // setUser(userParsed);
+      } else {
+        signOut();
+      }
     }
     // Usar Local Storage
   }, [user]);
@@ -21,7 +28,7 @@ function HeroPageTitle({ className, title, breadcrumb = [] }) {
   return (
     <>
       <section
-        className={`page-title ${className || ""}`}
+        className={`page-title ${className || ""} no-print`}
         style={{ backgroundImage: `url(${PageTitleBackground})` }}
       >
         <div className="auto-container">
