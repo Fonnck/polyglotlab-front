@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { scrollWithOffset } from "../hooks/utils";
 import { useScrollStore } from "../hooks/useScrollSrore";
 
 function Navigation() {
   const { sectionRef } = useScrollStore();
-
+  const location = useLocation();
   return (
-    <ul className="navigation">
+    <ul className="navigation no-print">
       <li className="current dropdown">
         <Link to="/">Inicio</Link>
         {/* <ul>
@@ -44,7 +44,7 @@ function Navigation() {
       <li className="dropdown">
         <span
           className="pointer"
-          style={{ color: "" }}
+          style={{ color: location.pathname === "/" ? "white" : "" }}
           onClick={() => scrollWithOffset(sectionRef.current, 11)}
         >
           Cursos

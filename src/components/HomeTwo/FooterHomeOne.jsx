@@ -9,7 +9,7 @@ import { FaTiktok } from "react-icons/fa";
 
 function FooterHomeOne({ className }) {
   return (
-    <footer className={`main-footer ${className || ""}`}>
+    <footer className={`main-footer ${className || ""} no-print`}>
       <div
         className="bg-image zoom-two"
         style={{ backgroundImage: `url(${backgroundImage})` }}

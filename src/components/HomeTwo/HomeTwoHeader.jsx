@@ -69,7 +69,7 @@ function Header({ className = "", scroll = false }) {
 
   return (
     <>
-      <header className={`main-header header-style-two ${className || ""}`}>
+      <header className={`main-header header-style-two ${className || ""} no-print`}>
         {/* Header Top */}
         <div className="header-top">
           <div className="auto-container">

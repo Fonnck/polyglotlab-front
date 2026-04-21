@@ -6,6 +6,7 @@ import { supabase } from "../../supabase/client";
 import { useDashboard, useDashboardStore } from "../../hooks/useDashboard";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 export const Contract = ({ user: student, formValues, setContract }) => {
   const [signed, setSigned] = useState(false);
@@ -106,6 +107,16 @@ export const Contract = ({ user: student, formValues, setContract }) => {
   }
 
   const nav = useNavigate();
+
+  const getContractRender = () => {
+    window.print();
+    // const doc = new jsPDF();
+    // doc.html(document.querySelector("#contract"), {
+    //   callback: function (doc) {
+    //     doc.save("contrato.pdf");
+    //   },
+    // });
+  };
 
   const signContract = async () => {
     try {
